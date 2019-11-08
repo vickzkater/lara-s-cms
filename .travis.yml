@@ -2,18 +2,3 @@ language: php
 
 php:
   - 7.2.10
-
-services:
-  - mysql
-
-before_script:
-  - chmod o+w -R storage
-  - chmod o+w -R public/uploads/
-  - cp .env.example .env
-  - mysql -e 'create database larascms_db;'
-  - composer install
-  - php artisan key:generate
-  - php artisan migrate
-
-script:
-  - vendor/bin/phpunit
