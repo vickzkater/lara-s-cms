@@ -2,6 +2,8 @@
 
 # LARA-S-CMS
 
+[![Build Status](https://travis-ci.org/vickzkater/lara-s-cms.svg?branch=master)](https://travis-ci.org/vickzkater/lara-s-cms)
+
 A PHP Laravel Skeleton for CMS/Admin Dashboard (with website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella)
 
 Developed by [KINIDI Tech](https://kiniditech.com/) ([@vickzkater](https://github.com/vickzkater/)) on September 2019
