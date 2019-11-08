@@ -1,0 +1,189 @@
+body {
+  font-family: 'Cabin', sans-serif;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  background: url("../images/avion_bg.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+h1 {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 40px;
+}
+
+h3 {
+  color: #ffffff;
+  font-style: italic;
+  font-size: 25px;
+}
+
+/* 
+Loading section
+*/
+.se-pre-con {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: url("../images/loading.gif") center no-repeat #032b44;
+}
+
+.no-js #loader {
+  display: none;
+}
+
+.js #loader {
+  position: absolute;
+  left: 100px;
+  top: 0;
+  display: block;
+}
+
+/*
+Header Section
+*/
+.header-logo-wrapper {
+  margin: 50px 0px 70px 0px;
+}
+
+/*
+countdown timer section
+*/
+#counter {
+  color: #ffffff;
+}
+
+#counter_wrapper {
+  margin: 1.3em 0px 1em;
+}
+
+.countdown-period {
+  display: block;
+  font-size: 60%;
+}
+
+.countdown-amount {
+  display: block;
+  font-size: 200%;
+}
+
+.countdown-section {
+  display: inline-block;
+  margin-right: 8%;
+}
+
+.countdown-section:last-child {
+  margin-right: 0px;
+}
+
+.subscribe-form-wrapper {
+  margin: 30px 0px 20px 0px;
+}
+
+.subscribe-form-wrapper button {
+  padding: 10px 35px;
+  border-radius: 20px;
+  border: 0;
+  outline: none;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #ff6000;
+  transition-duration: 0.4s;
+}
+
+.subscribe-form-wrapper button:hover,
+.subscribe-form-wrapper button:focus,
+.subscribe-form-wrapper button:active:focus {
+  outline: none;
+  color: #ffffff;
+  background-color: #FF7E00;
+}
+
+.subscribe-form-wrapper input {
+  border: 0;
+  border-radius: 20px;
+}
+
+.subscribe-form-wrapper input,
+.subscribe-form-wrapper button {
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .form-subs-email {
+    margin-left: 10px;
+    margin-right: 10px;
+    width:100% !important;
+  }
+}
+
+/*
+ Social media section
+ */
+.social-media-wrapper {
+  margin-top: 30px;
+  margin-bottom: 80px;
+  font-size: 25px;
+}
+
+.social-media-wrapper a {
+  margin-right: 20px;
+  font-size: 25px;
+  color: #ffffff;
+}
+
+.social-media-wrapper a:last-child {
+  margin-right: 0px;
+}
+
+/*
+Footer and copyright section
+*/
+.copyright {
+  margin: 30px 0px 20px 0px;
+  color: #ffffff;
+}
+
+
+
+/*--- FORMS ---*/
+/*
+This is the bit you need.
+*/
+.subscribe-form-wrapper label{
+  position:absolute;
+  left:-9999px;
+}
+.subscribe-form-wrapper input,
+.subscribe-form-wrapper textarea{
+  font:inherit;
+  resize:none;
+height: 38px;
+width: 234px !important;
+}
+
+
+
+
+
+/*--- THE MAGIC ---*/
+/*
+This is the best bit!
+*/
+[placeholder]{
+  cursor:pointer;
+}
+[placeholder]:active,
+[placeholder]:focus{
+  cursor:text;
+}

@@ -1,0 +1,140 @@
+$primary-color: #ffffff;
+
+body {
+	font-family: 'Cabin', sans-serif;
+	text-shadow: 0px 1px 1px rgba(0,0,0,0.3);
+	color: #fff;
+  background: url('../images/avion_bg.jpg') no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	   -moz-background-size: cover;
+       -o-background-size: cover;
+	        background-size: cover;
+}
+
+h1 {
+  color: $primary-color;
+  font-weight: 700;
+  font-size: 40px;
+}
+
+h3 {
+  color: $primary-color;
+  font-style: italic;
+  font-size: 25px;
+}
+
+/* 
+Loading section
+*/
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('../images/loading.gif') center no-repeat #032b44;
+}
+
+#loader {
+  .no-js & {  display:none; }
+  .js & {
+    position: absolute; 
+    left: 100px; 
+    top: 0; 
+    display: block; 
+  }
+}
+
+/*
+Header Section
+*/
+.header-logo-wrapper { margin: 50px 0px 70px 0px; }
+
+/*
+countdown timer section
+*/
+#counter { color: $primary-color; }
+
+#counter_wrapper { margin: 1.3em 0px 1em; }
+
+.countdown-period {
+	display: block;
+	font-size: 60%;
+}
+.countdown-amount {
+	display: block;
+	font-size: 200%;
+}
+.countdown-section {
+	display: inline-block;
+	margin-right: 8%;
+}
+.countdown-section:last-child { margin-right: 0px; }
+
+.subscribe-form-wrapper { margin: 30px 0px 20px 0px;
+	& button {
+  	padding: 10px 35px;
+  	border-radius: 20px;
+  	border: 0;
+  	outline: none;
+  	font-style: italic;
+  	font-weight: 700;
+  	font-size: 14px;
+  	color: $primary-color;
+  	background-color: #ff6000;
+  	transition-duration: 0.4s;
+	}
+	
+	& button:hover,
+	& button:focus,
+	& button:active:focus {
+  	outline: none;
+  	color: $primary-color;
+  	background-color: #FF7E00;
+	}
+	
+	& input {
+    padding: 20px 80px 20px 20px;
+    border: 0;
+    border-radius: 20px;
+	}
+	
+	& input,
+	& button {
+    -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.3);
+	}
+}
+
+ @media (min-width: 768px) { 
+	.form-subs-email {
+		margin-left: 10px; 
+		margin-right: 10px;
+	}
+ }
+ 
+ /*
+ Social media section
+ */
+ .social-media-wrapper {
+	margin-top: 30px;
+	margin-bottom: 80px;
+	font-size: 25px;
+	
+	& a {
+  	margin-right: 40px;
+  	font-size: 30px;
+  	color:$primary-color;
+	}
+  & a:last-child { margin-right:0px; }
+}
+
+/*
+Footer and copyright section
+*/
+.copyright {
+	margin: 30px 0px 20px 0px;
+	color: $primary-color;
+}

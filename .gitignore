@@ -1,0 +1,17 @@
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+/public/uploads/product/seller/
+/public/uploads/product/modif/
+/public/uploads/product/qc/
+/public/uploads/product/
+/public/uploads/banner/

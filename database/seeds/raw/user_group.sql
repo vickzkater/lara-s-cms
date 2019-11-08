@@ -1,0 +1,1 @@
+INSERT INTO `user_group` (`user`, `group`) VALUES (1, 1);
