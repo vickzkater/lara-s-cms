@@ -1,54 +1,79 @@
-![LARA-S-CMS](https://github.com/vickzkater/lara-s-cms/raw/master/logo.png)
+<p align="center"><img src="https://github.com/vickzkater/lara-s-cms/raw/master/logo.png" width="200" alt="LARA-S-CMS"></p>
 
 # LARA-S-CMS
 
-A PHP Laravel Skeleton for CMS (with website)
+A PHP Laravel Skeleton for CMS/Admin Dashboard (with website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella)
 
-Developed by KINIDI Tech on September 2019
+Developed by [KINIDI Tech](https://kiniditech.com/) ([@vickzkater](https://github.com/vickzkater/)) on September 2019
 
 
-## LIVE URL
+## DEMO URL
 
-[LIVE](http://localhost.com/)
+**[DEMO](https://lara-s-cms.kiniditech.com/)**
 
-## STAGING URL
-
-[DEMO](http:/localhost.com/lara-s-cms/public/)
+- Login as Super Admin: `superadmin - admin123`
+- Login as User: `user - user123`
 
 ## ADMIN URL
 
-Please check `ADMIN_DIR` in each `.env` file
+Please check `ADMIN_DIR` in `.env` file
 
 ## Environment
 
 - [x] PHP 7.2.10
 - [x] MySQL 5.0.12-dev - 20150407
 - [x] Laravel 5.8.35
+- [x] Gentelella 1.4.0
 
 ## How to Implement
 
-- Run `composer install`
-- Copy `.env` file from `.env.example` using command `cp .env.example .env` then make some configs in `.env` file (please check `Config .env` Section)
-- Generate application key using command `php artisan key:generate`
-- Make sure `DB_DATABASE` is set correctly in `.env` file then run `php artisan migrate`
-- If migration is failed, please run `composer dump-autoload` first and remove any table(s) in database before execute migrate again
-- After migration finish, you can open the admin login page by browse to the application URL with addition `/ADMIN_DIR` (based on `.env`)
-- Default admin user is `superadmin` with password `admin123`
+1. Install the dependencies first
+```
+composer install
+```
+
+2. Copy `.env.example` into `.env` then make some configs in `.env` file (please check `Config .env` Section)
+```
+cp .env.example .env (for UNIX/Linux/MacOSX)
+
+copy .env.example .env (for Windows)
+```
+
+3. Generate application key using command 
+```
+php artisan key:generate
+```
+
+4. Make sure `DB_DATABASE` is set correctly in `.env` file then run migrations to create the structure database and some system data
+```
+php artisan migrate
+```
+
+5. If migration is failed, please run command below first and remove any table(s) in database before execute migrate again
+```
+composer dump-autoload
+```
+
+6. After migration finish, you can open the admin login page by browse to the application URL with addition `/ADMIN_DIR` (based on `.env`)
+
+7. Default admin user is `superadmin` with password `admin123`
 
 ## Config .env
 
 - Set `APP_NAME` for application name
 - Set `APP_URL` for website URL (front website)
 - Set `APP_TIMEZONE` for set timezone application
+- Set `APP_VERSION` for set application version
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
-- Set `APP_FAVICON` for set application favicon based on file image (input with image's path)
-- Set `APP_LOGO` for application logo based on Font Awesome (input without 'fa-' just the icon name, example: star/laptop/bank)
-- Set `APP_LOGO_IMAGE` for application logo based on file image (input with image's path)
 - Set `MAIL_FROM_NAME` for set sender email's name
 - Set `MAIL_FROM_ACCOUNT` for set sender email's account
 - Set `MAIL_CONTACT_NAME` for set contact email's name (used for receive email from "contact us" page)
 - Set `MAIL_CONTACT_ACCOUNT` for set contact email's account (used for receive email from "contact us" page)
 - Set `DISPLAY_SESSION` for display session data in footer web page (development purpose only)
+- Set `APP_FAVICON_TYPE` for set application favicon based on file image (input with image's path)
+- Set `APP_FAVICON` for set application favicon based on file image (input with image's path)
+- Set `APP_LOGO` for application logo based on Font Awesome (input without 'fa-' just the icon name, example: star/laptop/bank)
+- Set `APP_LOGO_IMAGE` for application logo based on file image (input with image's path)
 - Set `ADMIN_DIR` for application or admin directory name
 - Set `POWERED` for display developer name
 - Set `POWERED_URL` for display developer URL
@@ -100,11 +125,20 @@ Please check `ADMIN_DIR` in each `.env` file
 
 ## Maintenance Mode
 
-- Enable Maintenance Mode using command `php artisan down`
-- Disable Maintenance Mode using command `php artisan up`
+**Enable Maintenance Mode**
+```
+php artisan down
+```
+**Disable Maintenance Mode (go to live again)**
+```
+php artisan up
+```
 
-Even while in maintenance mode, specific IP addresses or networks may be allowed to access the application using the command `php artisan down --allow=127.0.0.1 --allow=192.168.0.0/16`
+Even while in maintenance mode, specific IP addresses or networks may be allowed to access the application using the command
+```
+php artisan down --allow=127.0.0.1 --allow=192.168.0.0/16
+```
 
-Source: [Laravel 5.8 Documentations](https://laravel.com/docs/5.7/configuration#maintenance-mode)
+Source: [Laravel Documentations](https://laravel.com/docs/6.x/configuration#maintenance-mode)
 
 There is custom page for maintenance mode in `resources/views/errors/503.blade.php`

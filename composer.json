@@ -1,10 +1,11 @@
 {
-    "name": "laravel/laravel",
-    "type": "project",
-    "description": "The Laravel Framework.",
+    "name": "vickzkater/lara-s-cms",
+    "type": "cms",
+    "description": "The Lara-S-CMS - CMS based on Laravel.",
     "keywords": [
-        "framework",
-        "laravel"
+        "cms",
+        "laravel",
+        "lara-s-cms"
     ],
     "license": "MIT",
     "require": {

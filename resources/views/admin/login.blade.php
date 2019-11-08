@@ -59,7 +59,7 @@
                 <br />
 
                 <div>
-                  <h1><?php echo $app_logo; ?> &nbsp;{{ env('APP_NAME') }}</h1>
+                  <h1><?php echo $app_logo; ?> &nbsp;{{ env('APP_NAME') }} (v{{ env('APP_VERSION')</h1>
                   <p>
                     &copy; {{ date('Y') }} {{ env('APP_NAME') }} 
                     @if (env('POWERED'))
@@ -100,7 +100,7 @@
                 <br />
 
                 <div>
-                  <h1><?php echo $app_logo; ?> &nbsp;{{ env('APP_NAME') }}</h1>
+                  <h1><?php echo $app_logo; ?> &nbsp;{{ env('APP_NAME') }} (v{{ env('APP_VERSION')</h1>
                   <p>
                     &copy; {{ date('Y') }} {{ env('APP_NAME') }} 
                     @if (env('POWERED'))
