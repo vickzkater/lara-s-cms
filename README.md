@@ -2,7 +2,12 @@
 
 # LARA-S-CMS
 
-[![Build Status](https://travis-ci.org/vickzkater/lara-s-cms.svg?branch=master)](https://travis-ci.org/vickzkater/lara-s-cms)
+<p align="center">
+<a href="https://travis-ci.org/vickzkater/lara-s-cms"><img src="https://travis-ci.org/vickzkater/lara-s-cms.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms"><img src="https://poser.pugx.org/vickzkater/lara-s-cms/d/total.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms"><img src="https://poser.pugx.org/vickzkater/lara-s-cms/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms"><img src="https://poser.pugx.org/vickzkater/lara-s-cms/license.svg" alt="License"></a>
+</p>
 
 A PHP Laravel Skeleton for CMS/Admin Dashboard (with website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella)
 
@@ -22,7 +27,7 @@ Please check `ADMIN_DIR` in `.env` file
 
 ## Environment
 
-- [x] PHP 7.2.10
+- [x] PHP 7.2
 - [x] MySQL 5.0.12-dev - 20150407
 - [x] Laravel 5.8.35
 - [x] Gentelella 1.4.0
@@ -82,14 +87,20 @@ composer dump-autoload
 - Set `HELP` for display description of application
 - Set `DEFAULT_LANGUAGE` for set default language in application
 - Set `API_URL` for set API URL (if use it)
-- Set `CAPTCHA_SITE_KEY` for set Google reCAPTCHA
-- Set `CAPTCHA_SECRET_KEY` for set Google reCAPTCHA
-- Set `FACEBOOK_APP_ID` for set Facebook API - Login
-- Set `FACEBOOK_APP_SECRET` for set Facebook API - Login
-- Set `FACEBOOK_REDIRECT` for set Facebook API Redirect - Login
-- Set `GOOGLE_APP_ID` for set Google API - Login
-- Set `GOOGLE_APP_SECRET` for set Google API - Login
-- Set `GOOGLE_REDIRECT` for set Google API Redirect - Login
+- Set `RECAPTCHA_SITE_KEY` for set GOOGLE reCAPTCHA
+- Set `RECAPTCHA_SECRET_KEY` for set GOOGLE reCAPTCHA
+- Set `GOOGLE_CLIENT_ID` for set GOOGLE API Authentication
+- Set `GOOGLE_CLIENT_SECRET` for set GOOGLE API Authentication
+- Set `GOOGLE_CALLBACK_URL` for set GOOGLE API Authentication Callback URL
+- Set `FACEBOOK_CLIENT_ID` for set FACEBOOK API Authentication
+- Set `FACEBOOK_CLIENT_SECRET` for set FACEBOOK API Authentication
+- Set `FACEBOOK_CALLBACK_URL` for set FACEBOOK API Authentication Callback URL
+- Set `TWITTER_CLIENT_ID` for set TWITTER API Authentication
+- Set `TWITTER_CLIENT_SECRET` for set TWITTER API Authentication
+- Set `TWITTER_CALLBACK_URL` for set TWITTER API Authentication Callback URL
+- Set `LINKEDIN_CLIENT_ID` for set LINKEDIN API Authentication
+- Set `LINKEDIN_CLIENT_SECRET` for set LINKEDIN API Authentication
+- Set `LINKEDIN_CALLBACK_URL` for set LINKEDIN API Authentication Callback URL
 - Set `FCM_SERVER_KEY` for set Firebase Push Notification
 - Set `FCM_SENDER_ID` for set Firebase Push Notification
 
