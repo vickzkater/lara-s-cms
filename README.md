@@ -16,10 +16,13 @@ Developed by [KINIDI Tech](https://kiniditech.com/) ([@vickzkater](https://githu
 
 ## DEMO URL
 
-**[DEMO](https://lara-s-cms.kiniditech.com/)**
+**[https://lara-s-cms.kiniditech.com/](https://lara-s-cms.kiniditech.com/)**
 
-- Login as Super Admin: `superadmin - admin123`
-- Login as User: `user - user123`
+### Login details
+```
+Username: superadmin
+Password: admin123
+```
 
 ## ADMIN URL
 
@@ -27,45 +30,31 @@ Please check `ADMIN_DIR` in `.env` file
 
 ## Environment
 
-- [x] PHP 7.2
+- [x] PHP >= 7.2
 - [x] MySQL 5.0.12-dev - 20150407
 - [x] Laravel 5.8.35
 - [x] Gentelella 1.4.0
 
-## How to Implement
+## Installing Lara-S-CMS
 
-1. Install the dependencies first
-```
-composer install
-```
+Lara-S-CMS utilizes [Composer](http://getcomposer.org/) to manage its dependencies. So, before using Lara-S-CMS, make sure you have Composer installed on your machine.
 
-2. Copy `.env.example` into `.env` then make some configs in `.env` file (please check `Config .env` Section)
-```
-cp .env.example .env (for UNIX/Linux/MacOSX)
+### Composer Create-Project
 
-copy .env.example .env (for Windows)
+You may also install Lara-S-CMS by issuing the Composer `create-project` command in your terminal:
+```
+composer create-project vickzkater/lara-s-cms --prefer-dist website
 ```
 
-3. Generate application key using command 
+### Setup
+
+After creating the project move to the project root folder eg: `cd website` and run the command to set up database and configuration files.
+
 ```
-php artisan key:generate
+php artisan key:generate // run this command if key not generated while installing.
 ```
 
-4. Make sure `DB_DATABASE` is set correctly in `.env` file then run migrations to create the structure database and some system data
-```
-php artisan migrate
-```
-
-5. If migration is failed, please run command below first and remove any table(s) in database before execute migrate again
-```
-composer dump-autoload
-```
-
-6. After migration finish, you can open the admin login page by browse to the application URL with addition `/ADMIN_DIR` (based on `.env`)
-
-7. Default admin user is `superadmin` with password `admin123`
-
-## Config .env
+Next, setup configuration `.env` file
 
 - Set `APP_NAME` for application name
 - Set `APP_URL` for website URL (front website)
@@ -104,6 +93,27 @@ composer dump-autoload
 - Set `FCM_SERVER_KEY` for set Firebase Push Notification
 - Set `FCM_SENDER_ID` for set Firebase Push Notification
 
+Make sure `DB_DATABASE` is set correctly in `.env` file then run migrations to create the structure database and some system data
+```
+php artisan migrate
+```
+
+After migration finish, you can open the admin login page by browse to the application URL with addition `/ADMIN_DIR` (based on `.env`)
+
+After migration finish run the command `php artisan serve` or browse the link to view the admin login page (application URL with addition `/ADMIN_DIR` - based on `.env`).
+
+```
+http://path-to-project-folder/public/manager
+```
+
+### Login details (default)
+
+**Administrator**
+```
+Username: superadmin
+Password: admin123
+```
+
 ## CMS Modules
 
 - [x] Login
@@ -127,14 +137,24 @@ composer dump-autoload
 - [x] Maintenance Mode
 
 
-## List of Directories that (Maybe) Need Special Permissions
+## Configurations
 
-- /public/uploads/
+### Basic Configurations
 
-## Somethings that maybe you must know
+**Directory Permissions**
+
+After installing Lara-S-CMS, you may need to configure some permissions. Directories within the `storage` and the `bootstrap/cache` directories should be writable by your web server. If you are using the Homestead virtual machine, these permissions should already be set.
+
+And with additionally configure the permission for directory `public/uploads/`. So upload photos feature in Product Module can work well.
+```
+chmod o+w -R public/uploads/
+```
+
+**Somethings that maybe you must know**
 
 - `Helper.php` in `app\Libraries\` that can be called in Controller/View by line code `use App\Libraries\Helper;`
 - `CustomFunction.php` in `app\Libraries\` that automatically called in the load of web because it has been set in `composer.json`
+
 
 ## Maintenance Mode
 
