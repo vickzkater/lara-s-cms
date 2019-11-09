@@ -32,7 +32,7 @@ Please check `ADMIN_DIR` in `.env` file
 
 - [x] PHP >= 7.2
 - [x] MySQL 5.0.12-dev - 20150407
-- [x] Laravel 5.8.35
+- [x] Laravel 6.2.0
 - [x] Gentelella 1.4.0
 
 ## Installing Lara-S-CMS
@@ -54,7 +54,7 @@ After creating the project move to the project root folder eg: `cd website` and 
 php artisan key:generate // run this command if key not generated while installing.
 ```
 
-Next, setup configuration `.env` file
+Next, setup environment configuration in `.env` file
 
 - Set `APP_NAME` for application name
 - Set `APP_URL_SITE` for website URL (front website)
@@ -153,6 +153,10 @@ And with additionally configure the permission for directory `public/uploads/`. 
 chmod o+w -R public/uploads/
 ```
 
+**Application Key**
+
+The next thing you should do after installing Lara-S-CMS is set your application key to a random string. If you installed Lara-S-CMS via Composer or the Lara-S-CMS installer, this key has already been set for you by the `key:generate` command. Typically, this string should be 32 characters long. The key can be set in the `.env` environment file. If you have not renamed the .env.example file to .env, you should do that now. **If the application key is not set, your user sessions and other encrypted data will not be secure!**
+
 **Somethings that maybe you must know**
 
 - `Helper.php` in `app\Libraries\` that can be called in Controller/View by line code `use App\Libraries\Helper;`
@@ -161,11 +165,13 @@ chmod o+w -R public/uploads/
 
 ## Maintenance Mode
 
-**Enable Maintenance Mode**
+When your application is in maintenance mode, a custom view will be displayed for all requests into your application. This makes it easy to "disable" your application while it is updating or when you are performing maintenance. A maintenance mode check is included in the default middleware stack for your application. If the application is in maintenance mode, an HttpException will be thrown with a status code of 503.
+
+To enable maintenance mode, simply execute the `down` Artisan command:
 ```
 php artisan down
 ```
-**Disable Maintenance Mode (go to live again)**
+To disable maintenance mode, use the `up` command:
 ```
 php artisan up
 ```
@@ -179,4 +185,10 @@ Source: [Laravel Documentations](https://laravel.com/docs/6.x/configuration#main
 
 <p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_maintenance.jpg" alt="LARA-S-CMS"></p>
 
-There is custom page for maintenance mode in `resources/views/errors/503.blade.php` and `public/maintenance/`
+### Maintenance Mode Response Template
+
+The default template for maintenance mode responses is located in `resources/views/errors/503.blade.php` and `public/maintenance/`
+
+## Documentation
+
+
