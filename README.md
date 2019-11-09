@@ -1,12 +1,12 @@
-<p align="center"><img src="https://github.com/vickzkater/lara-s-cms/raw/master/logo.png" width="200" alt="LARA-S-CMS"></p>
+<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_logo.png" width="200" alt="LARA-S-CMS"></p>
 
 # LARA-S-CMS
 
 <p align="center">
-<a href="https://travis-ci.org/vickzkater/lara-s-cms"><img src="https://travis-ci.org/vickzkater/lara-s-cms.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/vickzkater/lara-s-cms"><img src="https://poser.pugx.org/vickzkater/lara-s-cms/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/vickzkater/lara-s-cms"><img src="https://poser.pugx.org/vickzkater/lara-s-cms/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/vickzkater/lara-s-cms"><img src="https://poser.pugx.org/vickzkater/lara-s-cms/license.svg" alt="License"></a>
+<a href="https://travis-ci.org/vickzkater/lara-s-cms" target="_blank"><img src="https://travis-ci.org/vickzkater/lara-s-cms.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="latest_stable_version_img" src="https://poser.pugx.org/vickzkater/lara-s-cms/v/stable" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="total_img" src="https://poser.pugx.org/vickzkater/lara-s-cms/downloads" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="license_img" src="https://poser.pugx.org/vickzkater/lara-s-cms/license" alt="License"></a>
 </p>
 
 A PHP Laravel Skeleton for CMS/Admin Dashboard (with website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella)
@@ -57,7 +57,7 @@ php artisan key:generate // run this command if key not generated while installi
 Next, setup configuration `.env` file
 
 - Set `APP_NAME` for application name
-- Set `APP_URL` for website URL (front website)
+- Set `APP_URL_SITE` for website URL (front website)
 - Set `APP_TIMEZONE` for set timezone application
 - Set `APP_VERSION` for set application version
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
@@ -106,6 +106,8 @@ After migration finish run the command `php artisan serve` or browse the link to
 http://path-to-project-folder/public/manager
 ```
 
+<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_loginpage.jpg" alt="LARA-S-CMS Login Page"></p>
+
 ### Login details (default)
 
 **Administrator**
@@ -136,6 +138,7 @@ Password: admin123
 - [x] Set Access modules (User Manager, Usergroup manager, Branch) per Division
 - [x] Maintenance Mode
 
+<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_modules.jpg" alt="LARA-S-CMS Modules"></p>
 
 ## Configurations
 
@@ -174,4 +177,6 @@ php artisan down --allow=127.0.0.1 --allow=192.168.0.0/16
 
 Source: [Laravel Documentations](https://laravel.com/docs/6.x/configuration#maintenance-mode)
 
-There is custom page for maintenance mode in `resources/views/errors/503.blade.php`
+<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_maintenance.jpg" alt="LARA-S-CMS"></p>
+
+There is custom page for maintenance mode in `resources/views/errors/503.blade.php` and `public/maintenance/`

@@ -82,7 +82,7 @@
               <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('profile', $translation)) }}" href="{{ route('admin_profile') }}">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('go to website', $translation)) }}" href="{{ env('APP_URL') }}" target="_blank">
+              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('go to website', $translation)) }}" href="{{ env('APP_URL_SITE') }}" target="_blank">
                   <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
               </a>
               <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('help', $translation)) }}" onclick="alert('{{ env('HELP') }}')">

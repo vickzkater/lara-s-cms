@@ -129,12 +129,15 @@ class AuthController extends Controller
 
     public function logout()
     {
-        // logging
-        $log = new LogsSystem();
-        $log->subject = Session::get('admin')->id;
-        $log->action = 2;
-        $log->save();
-
+        if(Session::get('admin'))
+        {
+            // logging
+            $log = new LogsSystem();
+            $log->subject = Session::get('admin')->id;
+            $log->action = 2;
+            $log->save();
+        }
+        
         Session::forget('admin');
         return redirect()->route('admin_login')->with('success', 'Logout successfully');
     }
