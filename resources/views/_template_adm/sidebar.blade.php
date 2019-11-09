@@ -56,14 +56,6 @@ if($incoming_items > 0){
                 <?php $priv_admin++; ?>
                 <li><a href="{{ route('admin_rule_list') }}"><i class="fa fa-gavel"></i> {{ ucwords(lang('rule manager', $translation)) }}</a></li>
             @endif
-            @if (Helper::authorizing('Language', 'View List')['status'] == 'true')
-                <?php $priv_admin++; ?>
-                <li><a href="{{ route('admin_language_list') }}"><i class="fa fa-language"></i> {{ ucwords(lang('language', $translation)) }} </a></li>
-            @endif
-            @if (Helper::authorizing('Language Master', 'View List')['status'] == 'true')
-                <?php $priv_admin++; ?>
-                <li><a href="{{ route('admin_langmaster_list') }}"><i class="fa fa-book"></i> {{ ucwords(lang('language master', $translation)) }}</a></li>
-            @endif
             @if (Helper::authorizing('Division', 'View List')['status'] == 'true')
                 <?php $priv_admin++; ?>
                 <li><a href="{{ route('admin_division_list') }}"><i class="fa fa-bank"></i> {{ ucwords(lang('division', $translation)) }}</a></li>
@@ -71,6 +63,14 @@ if($incoming_items > 0){
             @if (Helper::authorizing('Branch', 'View List')['status'] == 'true')
                 <?php $priv_admin++; ?>
                 <li><a href="{{ route('admin_branch_list') }}"><i class="fa fa-sitemap"></i> {{ ucwords(lang('branch', $translation)) }}</a></li>
+            @endif
+            @if (Helper::authorizing('Language', 'View List')['status'] == 'true')
+                <?php $priv_admin++; ?>
+                <li><a href="{{ route('admin_language_list') }}"><i class="fa fa-language"></i> {{ ucwords(lang('language', $translation)) }} </a></li>
+            @endif
+            @if (Helper::authorizing('Language Master', 'View List')['status'] == 'true')
+                <?php $priv_admin++; ?>
+                <li><a href="{{ route('admin_langmaster_list') }}"><i class="fa fa-book"></i> {{ ucwords(lang('language master', $translation)) }}</a></li>
             @endif
         </ul>
     </div>

@@ -108,7 +108,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            &copy; {{ date('Y') }} {{ env('APP_NAME') }} (v{{ env('APP_VERSION')
+            &copy; {{ date('Y') }} {{ env('APP_NAME') }} v{{ env('APP_VERSION') }}
             @if (env('POWERED'))
               - Powered By <a href="{{ env('POWERED_URL') }}">{{ env('POWERED') }}</a>
             @endif
