@@ -10,6 +10,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 
+composer.lock
 /public/uploads/product/seller/
 /public/uploads/product/modif/
 /public/uploads/product/qc/

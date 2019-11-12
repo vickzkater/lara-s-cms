@@ -1,5 +1,6 @@
 {
     "name": "vickzkater/lara-s-cms",
+    "version": "v1.0.1",
     "type": "cms",
     "description": "The Lara-S-CMS - CMS based on Laravel.",
     "keywords": [
