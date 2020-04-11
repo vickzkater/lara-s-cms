@@ -16,7 +16,7 @@ Developed by [KINIDI Tech](https://kiniditech.com/) ([@vickzkater](https://githu
 
 ## DEMO URL
 
-**[https://lara-s-cms.kiniditech.com/](https://lara-s-cms.kiniditech.com/)**
+**COMING SOON**
 
 ### Login details
 ```
