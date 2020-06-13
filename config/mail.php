@@ -60,6 +60,12 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    // In addition, you may define a global "reply_to" address
+    'reply_to' => [
+        'address' => env('MAIL_REPLYTO_ADDRESS', 'hello@example.com'),
+        'name' => env('MAIL_REPLYTO_NAME', 'Example'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol

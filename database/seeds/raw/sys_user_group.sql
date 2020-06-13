@@ -1,0 +1,1 @@
+INSERT INTO `sys_user_group` (`user`, `group`) VALUES (1, 1);

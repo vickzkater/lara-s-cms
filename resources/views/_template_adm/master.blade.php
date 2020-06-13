@@ -6,9 +6,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <link rel="icon" href="{{ asset(env('APP_FAVICON')) }}" type="image/{{ env('APP_FAVICON_TYPE', 'png') }}" />
+	  <link rel="icon" href="{{ asset(env('APP_FAVICON', 'favicon.ico')) }}" type="image/{{ env('APP_FAVICON_TYPE', 'ico') }}" />
 
-    <title>{{ env('APP_NAME') }} Admin | @yield('title')</title>
+    <title>
+      @if(View::hasSection('title')) 
+        @yield('title') -
+      @endif
+      {{ env('APP_NAME', 'My Website') }} Admin
+    </title>
 
     <!-- Bootstrap -->
     <link href="{{ asset('/admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -18,7 +23,6 @@
     <link href="{{ asset('/admin/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
     <!-- jQuery custom content scroller -->
     <link href="{{ asset('/admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet">
-
     <!-- bootstrap-progressbar -->
     <link href="{{ asset('/admin/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
     
@@ -26,23 +30,23 @@
     <link href="{{ asset('/admin/build/css/custom.css') }}" rel="stylesheet">
 
     <style>
-    .scroll-top {
-        width: 40px;
-        height: 30px;
-        position: fixed;
-        bottom: 50px;
-        right: 17px;
-        display: none;
-        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";       /* IE 8 */
-        filter: alpha(opacity=50);  /* IE 5-7 */
-        -moz-opacity: 0.5;          /* Netscape */
-        -khtml-opacity: 0.5;        /* Safari 1.x */
-        opacity: 0.5;               /* Good browsers */
-    }
-    .scroll-top i {
-        display: inline-block;
-        color: #FFFFFF;
-    }
+      .scroll-top {
+          width: 40px;
+          height: 30px;
+          position: fixed;
+          bottom: 50px;
+          right: 17px;
+          display: none;
+          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";       /* IE 8 */
+          filter: alpha(opacity=50);  /* IE 5-7 */
+          -moz-opacity: 0.5;          /* Netscape */
+          -khtml-opacity: 0.5;        /* Safari 1.x */
+          opacity: 0.5;               /* Good browsers */
+      }
+      .scroll-top i {
+          display: inline-block;
+          color: #FFFFFF;
+      }
     </style>
 
     @yield('css')
@@ -56,7 +60,7 @@
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="{{ route('admin_home') }}" class="site_title"><?php echo $app_logo; ?> <span>{{ env('APP_NAME') }}</span></a>
+              <a href="{{ route('admin.home') }}" class="site_title"><?php echo $app_logo; ?> <span>{{ env('APP_NAME') }}</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -79,16 +83,16 @@
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('profile', $translation)) }}" href="{{ route('admin_profile') }}">
+              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('my profile', $translation)) }}" href="{{ route('admin.profile') }}">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('go to website', $translation)) }}" href="{{ env('APP_URL_SITE') }}" target="_blank">
+              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('view website', $translation)) }}" href="{{ env('APP_URL_SITE') }}" target="_blank">
                   <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
               </a>
               <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('help', $translation)) }}" onclick="alert('{{ env('HELP') }}')">
                 <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('log out', $translation)) }}" href="{{ route('admin_logout') }}">
+              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('log out', $translation)) }}" href="{{ route('admin.logout') }}">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
@@ -108,9 +112,9 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            &copy; {{ date('Y') }} {{ env('APP_NAME') }} v{{ env('APP_VERSION') }}
+            &copy; {{ date('Y') }} {{ env('APP_NAME') }} {{ 'v'.env('APP_VERSION') }}
             @if (env('POWERED'))
-              - Powered By <a href="{{ env('POWERED_URL') }}">{{ env('POWERED') }}</a>
+              - {{ lang('Powered by', $translation) }} <a href="{{ env('POWERED_URL') }}">{{ env('POWERED') }}</a>
             @endif
           </div>
           <div class="clearfix"></div>
@@ -137,36 +141,36 @@
     <script src="{{ asset('/admin/vendors/nprogress/nprogress.js') }}"></script>
     <!-- jQuery custom content scroller -->
     <script src="{{ asset('/admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-
     <!-- bootstrap-progressbar -->
     <script src="{{ asset('/admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
 
     @yield('script-sidebar')
-    @yield('script')
 
     <!-- Custom Theme Scripts -->
-    <script src="{{ asset('/admin/build/js/custom.min.js') }}"></script>
+    <script src="{{ asset('/admin/build/js/custom.js?v=4') }}"></script>
     <!-- Custom Script -->
-    <script src="{{ asset('/admin/js/vcustom.js') }}"></script>
+    <script src="{{ asset('/admin/js/vcustom.js?v=2') }}"></script>
 
     <script>
-    $(document).ready(function () {
-      $(window).scroll(function () {
-          if ($(this).scrollTop() > 100) {
-              $('.scroll-top').fadeIn();
-          } else {
-              $('.scroll-top').fadeOut();
-          }
-      });
+      $(document).ready(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('.scroll-top').fadeIn();
+            } else {
+                $('.scroll-top').fadeOut();
+            }
+        });
 
-      $('.scroll-top').click(function () {
-          $("html, body").animate({
-              scrollTop: 0
-          }, 500);
-          return false;
-      });
+        $('.scroll-top').click(function () {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 500);
+            return false;
+        });
 
       });
     </script>
+
+    @yield('script')
   </body>
 </html>

@@ -13,8 +13,8 @@
                     <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="{{ route('admin_profile') }}"> {{ ucwords(lang('profile', $translation)) }}</a></li>
-                        <li><a href="{{ route('admin_logout') }}"><i class="fa fa-sign-out pull-right"></i> {{ ucwords(lang('log out', $translation)) }}</a></li>
+                        <li><a href="{{ route('admin.profile') }}"> {{ ucwords(lang('my profile', $translation)) }}</a></li>
+                        <li><a href="{{ route('admin.logout') }}"><i class="fa fa-sign-out pull-right"></i> {{ ucwords(lang('log out', $translation)) }}</a></li>
                     </ul>
                 </li>
                 <li role="presentation" class="dropdown">
@@ -37,7 +37,7 @@
                                     }
                                 @endphp
                                 <li>
-                                    <a href="{{ route('admin_change_language', $value->alias) }}">
+                                    <a href="{{ route('admin.change_language', $value->alias) }}">
                                         <span>{{ $value->alias . ' - ' . $value->name }} <?php echo $lang_stat; ?></span>
                                     </a>
                                 </li>

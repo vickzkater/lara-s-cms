@@ -1,2 +1,0 @@
-INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`, `status`, `isDeleted`) VALUES
-	(1, 'Super Admin', 'superadmin', 'superadmin@admin.com', '2019-09-17 10:09:31', '23a7bbd73250516f069df18b5', NULL, '2019-09-17 10:09:35', '2019-09-17 10:09:36', NULL, 1, 0);
