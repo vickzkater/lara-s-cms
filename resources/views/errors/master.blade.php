@@ -6,9 +6,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <link rel="icon" href="{{ asset('/images/favicon.ico') }}" type="image/ico" />
+	  <link rel="icon" href="{{ asset(env('APP_FAVICON', 'favicon.ico')) }}" type="image/{{ env('APP_FAVICON_TYPE', 'ico') }}" />
 
-    <title>{{ env('APP_NAME') }} Admin | @yield('title')</title>
+    <title>
+      @if(View::hasSection('title')) 
+        @yield('title') -
+      @endif
+      {{ env('APP_NAME', 'My Website') }} Admin
+    </title>
 
     <!-- Bootstrap -->
     <link href="{{ asset('/admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -24,7 +29,7 @@
   <body class="nav-md">
     <div class="container body">
         <div class="main_container">
-        @yield('content')
+          @yield('content')
         </div>
     </div>
 

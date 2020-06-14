@@ -11,171 +11,157 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+// WEBSITE
+Route::group(['namespace' => 'Web'], function () {
+    // HOME
+    Route::get('/', 'SiteController@home')->name('web.home');
 
-Route::get('/', 'Admin\AuthController@login');
+    // ABOUT
+    Route::get('/about', 'SiteController@about')->name('web.about');
 
-// Route::get('/', 'Web\HomeController@index')->name('home');
+    // PRODUCTS
+    Route::get('/products', 'SiteController@products')->name('web.products');
 
-// Route::get('/login', 'Web\AuthController@login')->name('login');
-// Route::post('/do_login', 'Web\AuthController@do_login')->name('do_login');
-// Route::get('/logout', 'Web\AuthController@logout')->name('logout');
+    // STORE
+    Route::get('/store', 'SiteController@store')->name('web.store');
+});
 
-// PRODUCTS
-// Route::get('/products', 'Web\ProductController@list')->name('product_list');
-// Route::get('/product/{id}', 'Web\ProductController@detail')->name('product_detail');
+// ADMIN
+Route::group([
+    'prefix' => env('ADMIN_DIR'),
+    'namespace' => 'Admin'
+], function () {
+    Route::get('/login', 'system\AuthController@login')->name('admin.login');
+    Route::post('/do-login', 'system\AuthController@do_login')->name('admin.do_login');
+    Route::get('/logout', 'system\AuthController@logout')->name('admin.logout');
 
-Route::group(['prefix' => env('ADMIN_DIR')], function() {
-    Route::get('/login', 'Admin\AuthController@login')->name('admin_login');
-    Route::post('/do_login', 'Admin\AuthController@do_login')->name('admin_do_login');
-    Route::get('/logout', 'Admin\AuthController@logout')->name('admin_logout');
-
+    // NEED AUTH
     Route::group(['middleware' => 'check.admin'], function () {
-        Route::get('/', 'Admin\HomeController@index')->name('admin_home');
 
-        Route::get('profile', 'Admin\UserController@profile')->name('admin_profile');
-        Route::post('edit_profile', 'Admin\UserController@profile_edit')->name('admin_profile_edit');
+        // LARA-S-CMS - SKELETON (PLEASE DO NOT MODIFY, UNLESS YOU UNDERSTAND WHAT YOU ARE DOING)
+        Route::group(['namespace' => 'system'], function () {
+            // CHANGE LANGUAGE
+            Route::get('change-language/{alias}', 'UserController@change_language')->name('admin.change_language');
 
-        Route::get('change_language/{alias}', 'Admin\UserController@change_language')->name('admin_change_language');
+            // LOGS
+            Route::get('system-logs', 'LogController@list')->name('admin.logs');
 
-        // USER MANAGER
-        Route::group(['prefix' => 'user'], function() {
-            Route::get('/', 'Admin\UserController@list')->name('admin_user_manager');
-            Route::get('/create', 'Admin\UserController@create')->name('admin_user_create');
-            Route::post('/do_create', 'Admin\UserController@do_create')->name('admin_user_do_create');
-            Route::get('/edit/{id}', 'Admin\UserController@edit')->name('admin_user_edit');
-            Route::post('/do_edit/{id}', 'Admin\UserController@do_edit')->name('admin_user_do_edit');
-            Route::get('/delete/{id}', 'Admin\UserController@delete')->name('admin_user_delete');
-            Route::get('/deleted', 'Admin\UserController@list_deleted')->name('admin_user_manager_deleted');
-            Route::get('/restore/{id}', 'Admin\UserController@restore')->name('admin_user_restore');
+            // PROFILE
+            Route::get('profile', 'UserController@profile')->name('admin.profile');
+            Route::post('edit-profile', 'UserController@profile_edit')->name('admin.profile.edit');
+
+            // SYSTEM
+            Route::group(['prefix' => 'system'], function () {
+                // DIVISION
+                Route::group(['prefix' => 'division'], function () {
+                    Route::get('/', 'DivisionController@list')->name('admin.division.list');
+                    Route::get('/create', 'DivisionController@create')->name('admin.division.create');
+                    Route::post('/do-create', 'DivisionController@do_create')->name('admin.division.do_create');
+                    Route::get('/edit/{id}', 'DivisionController@edit')->name('admin.division.edit');
+                    Route::post('/do-edit/{id}', 'DivisionController@do_edit')->name('admin.division.do_edit');
+                    Route::post('/delete', 'DivisionController@delete')->name('admin.division.delete');
+                    Route::get('/deleted', 'DivisionController@list_deleted')->name('admin.division.deleted');
+                    Route::post('/restore', 'DivisionController@restore')->name('admin.division.restore');
+                });
+
+                // BRANCH
+                Route::group(['prefix' => 'branch'], function () {
+                    Route::get('/', 'BranchController@list')->name('admin.branch.list');
+                    Route::get('/get-data', 'BranchController@get_data')->name('admin.branch.get_data');
+                    Route::get('/create', 'BranchController@create')->name('admin.branch.create');
+                    Route::post('/do-create', 'BranchController@do_create')->name('admin.branch.do_create');
+                    Route::get('/edit/{id}', 'BranchController@edit')->name('admin.branch.edit');
+                    Route::post('/do-edit/{id}', 'BranchController@do_edit')->name('admin.branch.do_edit');
+                    Route::post('/delete', 'BranchController@delete')->name('admin.branch.delete');
+                    Route::get('/deleted', 'BranchController@list_deleted')->name('admin.branch.deleted');
+                    Route::get('/get-data-deleted', 'BranchController@get_data_deleted')->name('admin.branch.get_data_deleted');
+                    Route::post('/restore', 'BranchController@restore')->name('admin.branch.restore');
+                });
+
+                // RULE
+                Route::group(['prefix' => 'rule'], function () {
+                    Route::get('/', 'RuleController@list')->name('admin.rule.list');
+                    Route::get('/get-data', 'RuleController@get_data')->name('admin.rule.get_data');
+                    Route::get('/create', 'RuleController@create')->name('admin.rule.create');
+                    Route::post('/do-create', 'RuleController@do_create')->name('admin.rule.do_create');
+                    Route::get('/edit/{id}', 'RuleController@edit')->name('admin.rule.edit');
+                    Route::post('/do-edit/{id}', 'RuleController@do_edit')->name('admin.rule.do_edit');
+                    Route::post('/delete', 'RuleController@delete')->name('admin.rule.delete');
+                    Route::get('/deleted', 'RuleController@list_deleted')->name('admin.rule.deleted');
+                    Route::get('/get-data-deleted', 'RuleController@get_data_deleted')->name('admin.rule.get_data_deleted');
+                    Route::post('/restore', 'RuleController@restore')->name('admin.rule.restore');
+                });
+
+                // USERGROUP
+                Route::group(['prefix' => 'usergroup'], function () {
+                    Route::get('/', 'UsergroupController@list')->name('admin.usergroup.list');
+                    Route::get('/get-data', 'UsergroupController@get_data')->name('admin.usergroup.get_data');
+                    Route::get('/create', 'UsergroupController@create')->name('admin.usergroup.create');
+                    Route::post('/do-create', 'UsergroupController@do_create')->name('admin.usergroup.do_create');
+                    Route::get('/edit/{id}', 'UsergroupController@edit')->name('admin.usergroup.edit');
+                    Route::post('/do-edit/{id}', 'UsergroupController@do_edit')->name('admin.usergroup.do_edit');
+                    Route::post('/delete', 'UsergroupController@delete')->name('admin.usergroup.delete');
+                    Route::get('/deleted', 'UsergroupController@list_deleted')->name('admin.usergroup.deleted');
+                    Route::get('/get-data-deleted', 'UsergroupController@get_data_deleted')->name('admin.usergroup.get_data_deleted');
+                    Route::post('/restore', 'UsergroupController@restore')->name('admin.usergroup.restore');
+                });
+
+                // USER
+                Route::group(['prefix' => 'user'], function () {
+                    Route::get('/', 'UserController@list')->name('admin.user.list');
+                    Route::get('/get-data', 'UserController@get_data')->name('admin.user.get_data');
+                    Route::get('/create', 'UserController@create')->name('admin.user.create');
+                    Route::post('/do-create', 'UserController@do_create')->name('admin.user.do_create');
+                    Route::get('/edit/{id}', 'UserController@edit')->name('admin.user.edit');
+                    Route::post('/do-edit/{id}', 'UserController@do_edit')->name('admin.user.do_edit');
+                    Route::post('/delete', 'UserController@delete')->name('admin.user.delete');
+                    Route::get('/deleted', 'UserController@list_deleted')->name('admin.user.deleted');
+                    Route::get('/get-deleted-data', 'UserController@get_data_deleted')->name('admin.user.get_data_deleted');
+                    Route::post('/restore', 'UserController@restore')->name('admin.user.restore');
+                    Route::get('/enable/{id}', 'UserController@enable')->name('admin.user.enable');
+                    Route::get('/disable/{id}', 'UserController@disable')->name('admin.user.disable');
+                });
+
+                // LANGUAGE
+                Route::group(['prefix' => 'language'], function () {
+                    Route::get('/', 'LanguageController@list')->name('admin.language.list');
+                    Route::get('/create', 'LanguageController@create')->name('admin.language.create');
+                    Route::post('/do-create', 'LanguageController@do_create')->name('admin.language.do_create');
+                    Route::get('/edit/{id}', 'LanguageController@edit')->name('admin.language.edit');
+                    Route::post('/do-edit/{id}', 'LanguageController@do_edit')->name('admin.language.do_edit');
+                });
+
+                // DICTIONARY
+                Route::group(['prefix' => 'dictionary'], function () {
+                    Route::get('/', 'LangMasterController@list')->name('admin.langmaster.list');
+                    Route::get('/get-data', 'LangMasterController@get_data')->name('admin.langmaster.get_data');
+                    Route::get('/create', 'LangMasterController@create')->name('admin.langmaster.create');
+                    Route::post('/do-create', 'LangMasterController@do_create')->name('admin.langmaster.do_create');
+                    Route::get('/edit/{id}', 'LangMasterController@edit')->name('admin.langmaster.edit');
+                    Route::post('/do-edit/{id}', 'LangMasterController@do_edit')->name('admin.langmaster.do_edit');
+                });
+            });
         });
 
-        // USERGROUP MANAGER
-        Route::group(['prefix' => 'usergroup'], function() {
-            Route::get('/', 'Admin\UsergroupController@list')->name('admin_group_manager');
-            Route::get('/create', 'Admin\UsergroupController@create')->name('admin_group_create');
-            Route::post('/do_create', 'Admin\UsergroupController@do_create')->name('admin_group_do_create');
-            Route::get('/edit/{id}', 'Admin\UsergroupController@edit')->name('admin_group_edit');
-            Route::post('/do_edit/{id}', 'Admin\UsergroupController@do_edit')->name('admin_group_do_edit');
-            Route::get('/delete/{id}', 'Admin\UsergroupController@delete')->name('admin_group_delete');
-            Route::get('/deleted', 'Admin\UsergroupController@list_deleted')->name('admin_group_manager_deleted');
-            Route::get('/restore/{id}', 'Admin\UsergroupController@restore')->name('admin_group_restore');
-        });
+        /**
+         * ******************* ADD ANOTHER CUSTOM ROUTES BELOW *******************
+         */
 
-        // BRAND
-        Route::group(['prefix' => 'brand'], function() {
-            Route::get('/', 'Admin\BrandController@list')->name('admin_brand_list');
-            Route::get('/create', 'Admin\BrandController@create')->name('admin_brand_create');
-            Route::post('/do_create', 'Admin\BrandController@do_create')->name('admin_brand_do_create');
-            Route::get('/edit/{id}', 'Admin\BrandController@edit')->name('admin_brand_edit');
-            Route::post('/do_edit/{id}', 'Admin\BrandController@do_edit')->name('admin_brand_do_edit');
-            Route::get('/delete/{id}', 'Admin\BrandController@delete')->name('admin_brand_delete');
-            Route::get('/deleted', 'Admin\BrandController@list_deleted')->name('admin_brand_deleted');
-            Route::get('/restore/{id}', 'Admin\BrandController@restore')->name('admin_brand_restore');
-        });
+        // HOME
+        Route::get('/', 'system\HomeController@index')->name('admin.home');
 
         // PRODUCT
-        Route::group(['prefix' => 'product'], function() {
-            Route::get('/', 'Admin\ProductController@list')->name('admin_product_list');
-            Route::get('/create', 'Admin\ProductController@create')->name('admin_product_create');
-            Route::post('/do_create', 'Admin\ProductController@do_create')->name('admin_product_do_create');
-            Route::get('/edit/{id}', 'Admin\ProductController@edit')->name('admin_product_edit');
-            Route::post('/do_edit/{id}', 'Admin\ProductController@do_edit')->name('admin_product_do_edit');
-            Route::get('/delete/{id}', 'Admin\ProductController@delete')->name('admin_product_delete');
-            Route::get('/deleted', 'Admin\ProductController@list_deleted')->name('admin_product_deleted');
-            Route::get('/restore/{id}', 'Admin\ProductController@restore')->name('admin_product_restore');
-            Route::post('/submit-qc/{id}', 'Admin\ProductController@submit_qc')->name('admin_product_submit_qc');
-            Route::post('/upload-photos/{id}', 'Admin\ProductController@upload_photos')->name('admin_product_upload_photos');
-            Route::post('/publish/{id}', 'Admin\ProductController@publish')->name('admin_product_publish');
-            Route::post('/booking/{id}', 'Admin\ProductController@set_booked')->name('admin_product_booking');
-        });
-
-        // INCOMING UNIT
-        Route::group(['prefix' => 'incoming'], function() {
-            Route::get('/', 'Admin\IncomingController@list')->name('admin_incoming_list');
-            Route::get('/edit/{id}', 'Admin\ProductController@edit')->name('admin_incoming_edit');
-            Route::post('/do_edit/{id}', 'Admin\ProductController@do_edit')->name('admin_incoming_do_edit');
-        });
-
-        // BANNER
-        Route::group(['prefix' => 'banner'], function() {
-            Route::get('/', 'Admin\BannerController@list')->name('admin_banner_list');
-            Route::get('/create', 'Admin\BannerController@create')->name('admin_banner_create');
-            Route::post('/do_create', 'Admin\BannerController@do_create')->name('admin_banner_do_create');
-            Route::get('/edit/{id}', 'Admin\BannerController@edit')->name('admin_banner_edit');
-            Route::post('/do_edit/{id}', 'Admin\BannerController@do_edit')->name('admin_banner_do_edit');
-            Route::get('/delete/{id}', 'Admin\BannerController@delete')->name('admin_banner_delete');
-            Route::get('/deleted', 'Admin\BannerController@list_deleted')->name('admin_banner_deleted');
-            Route::get('/restore/{id}', 'Admin\BannerController@restore')->name('admin_banner_restore');
-        });
-
-        // DIVISION
-        Route::group(['prefix' => 'division'], function() {
-            Route::get('/', 'Admin\DivisionController@list')->name('admin_division_list');
-            Route::get('/create', 'Admin\DivisionController@create')->name('admin_division_create');
-            Route::post('/do_create', 'Admin\DivisionController@do_create')->name('admin_division_do_create');
-            Route::get('/edit/{id}', 'Admin\DivisionController@edit')->name('admin_division_edit');
-            Route::post('/do_edit/{id}', 'Admin\DivisionController@do_edit')->name('admin_division_do_edit');
-            Route::get('/delete/{id}', 'Admin\DivisionController@delete')->name('admin_division_delete');
-            Route::get('/deleted', 'Admin\DivisionController@list_deleted')->name('admin_division_deleted');
-            Route::get('/restore/{id}', 'Admin\DivisionController@restore')->name('admin_division_restore');
-        });
-
-        // BRANCH
-        Route::group(['prefix' => 'branch'], function() {
-            Route::get('/', 'Admin\BranchController@list')->name('admin_branch_list');
-            Route::get('/create', 'Admin\BranchController@create')->name('admin_branch_create');
-            Route::post('/do_create', 'Admin\BranchController@do_create')->name('admin_branch_do_create');
-            Route::get('/edit/{id}', 'Admin\BranchController@edit')->name('admin_branch_edit');
-            Route::post('/do_edit/{id}', 'Admin\BranchController@do_edit')->name('admin_branch_do_edit');
-            Route::get('/delete/{id}', 'Admin\BranchController@delete')->name('admin_branch_delete');
-            Route::get('/deleted', 'Admin\BranchController@list_deleted')->name('admin_branch_deleted');
-            Route::get('/restore/{id}', 'Admin\BranchController@restore')->name('admin_branch_restore');
-        });
-
-        // CUSTOMER
-        Route::group(['prefix' => 'customer'], function() {
-            Route::get('/', 'Admin\CustomerController@list')->name('admin_customer_list');
-            Route::get('/create', 'Admin\CustomerController@create')->name('admin_customer_create');
-            Route::post('/do_create', 'Admin\CustomerController@do_create')->name('admin_customer_do_create');
-            Route::get('/edit/{id}', 'Admin\CustomerController@edit')->name('admin_customer_edit');
-            Route::post('/do_edit/{id}', 'Admin\CustomerController@do_edit')->name('admin_customer_do_edit');
-            Route::get('/delete/{id}', 'Admin\CustomerController@delete')->name('admin_customer_delete');
-            Route::get('/deleted', 'Admin\CustomerController@list_deleted')->name('admin_customer_deleted');
-            Route::get('/restore/{id}', 'Admin\CustomerController@restore')->name('admin_customer_restore');
-        });
-
-        // RULE
-        Route::group(['prefix' => 'rule'], function() {
-            Route::get('/', 'Admin\RuleController@list')->name('admin_rule_list');
-            Route::get('/create', 'Admin\RuleController@create')->name('admin_rule_create');
-            Route::post('/do_create', 'Admin\RuleController@do_create')->name('admin_rule_do_create');
-            Route::get('/edit/{id}', 'Admin\RuleController@edit')->name('admin_rule_edit');
-            Route::post('/do_edit/{id}', 'Admin\RuleController@do_edit')->name('admin_rule_do_edit');
-            Route::get('/delete/{id}', 'Admin\RuleController@delete')->name('admin_rule_delete');
-            Route::get('/deleted', 'Admin\RuleController@list_deleted')->name('admin_rule_deleted');
-            Route::get('/restore/{id}', 'Admin\RuleController@restore')->name('admin_rule_restore');
-        });
-
-        // LANGUAGE
-        Route::group(['prefix' => 'language'], function() {
-            Route::get('/', 'Admin\LanguageController@list')->name('admin_language_list');
-            Route::get('/create', 'Admin\LanguageController@create')->name('admin_language_create');
-            Route::post('/do_create', 'Admin\LanguageController@do_create')->name('admin_language_do_create');
-            Route::get('/edit/{id}', 'Admin\LanguageController@edit')->name('admin_language_edit');
-            Route::post('/do_edit/{id}', 'Admin\LanguageController@do_edit')->name('admin_language_do_edit');
-        });
-
-        // LANGUAGE MASTER
-        Route::group(['prefix' => 'language_master'], function() {
-            Route::get('/', 'Admin\LangMasterController@list')->name('admin_langmaster_list');
-            Route::get('/create', 'Admin\LangMasterController@create')->name('admin_langmaster_create');
-            Route::post('/do_create', 'Admin\LangMasterController@do_create')->name('admin_langmaster_do_create');
-            Route::get('/edit/{id}', 'Admin\LangMasterController@edit')->name('admin_langmaster_edit');
-            Route::post('/do_edit/{id}', 'Admin\LangMasterController@do_edit')->name('admin_langmaster_do_edit');
+        Route::group(['prefix' => 'product'], function () {
+            Route::get('/', 'ProductController@list')->name('admin.product.list');
+            Route::get('/get-data', 'ProductController@get_data')->name('admin.product.get_data');
+            Route::get('/create', 'ProductController@create')->name('admin.product.create');
+            Route::post('/do-create', 'ProductController@do_create')->name('admin.product.do_create');
+            Route::get('/edit/{id}', 'ProductController@edit')->name('admin.product.edit');
+            Route::post('/do-edit/{id}', 'ProductController@do_edit')->name('admin.product.do_edit');
+            Route::post('/delete', 'ProductController@delete')->name('admin.product.delete');
+            Route::get('/deleted', 'ProductController@list_deleted')->name('admin.product.deleted');
+            Route::get('/get-data-deleted', 'ProductController@get_data_deleted')->name('admin.product.get_data_deleted');
+            Route::post('/restore', 'ProductController@restore')->name('admin.product.restore');
         });
     });
-    
 });

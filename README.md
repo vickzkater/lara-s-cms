@@ -9,7 +9,9 @@
 <a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="license_img" src="https://poser.pugx.org/vickzkater/lara-s-cms/license" alt="License"></a>
 </p>
 
-A PHP Laravel Skeleton for CMS/Admin Dashboard (with website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella)
+A PHP Laravel Skeleton for Content Management System (CMS) or Admin Dashboard (within/without website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella) as Admin Template.
+
+For sample as website, we are using [Business Casual](https://startbootstrap.com/themes/business-casual/) a free Bootstrap 4 website template
 
 Developed by [KINIDI Tech](https://kiniditech.com/) ([@vickzkater](https://github.com/vickzkater/)) on September 2019
 
@@ -32,8 +34,9 @@ Please check `ADMIN_DIR` in `.env` file
 
 - [x] PHP >= 7.2
 - [x] MySQL 5.0.12-dev - 20150407
-- [x] Laravel 6.2.0
-- [x] Gentelella 1.4.0
+- [x] Laravel 5.8.36
+- [x] Gentelella 1.4.0 (Admin Template)
+- [x] Start Bootstrap - Business Casual 5.0.9 (Website Template)
 
 ## Installing Lara-S-CMS
 
@@ -48,50 +51,79 @@ composer create-project vickzkater/lara-s-cms --prefer-dist website
 
 ### Setup
 
-After creating the project move to the project root folder eg: `cd website` and run the command to set up database and configuration files.
+After creating the project move to the project root folder eg: `cd website` and run the command to set up database and configuration files (if key is not generated while installing).
 
 ```
-php artisan key:generate // run this command if key not generated while installing.
+php artisan key:generate
 ```
+
+**Application Key**
+
+The next thing you should do after installing Lara-S-CMS is set your application key to a random string. If you installed Lara-S-CMS via Composer or the Lara-S-CMS installer, this key has already been set for you by the `key:generate` command. Typically, this string should be 32 characters long. The key can be set in the `.env` environment file. If you have not renamed the .env.example file to .env, you should do that now. **If the application key is not set, your user sessions and other encrypted data will not be secure!**
 
 Next, setup environment configuration in `.env` file
 
 - Set `APP_NAME` for application name
-- Set `APP_URL_SITE` for website URL (front website)
-- Set `APP_TIMEZONE` for set timezone application
+- Set `APP_BACKEND` for choose application back-end mode (MODEL or API)
+- Set `DISPLAY_SESSION` for display session data (debugging) in footer admin web page (development purpose only)
+- Set `APP_URL_SITE` for set website URL (public website), if any
+- Set `APP_URL_MAIN` for set main website URL, if this project is a microsite
+- Set `APP_URL_API` for set API URL, if this project using back-end mode: API
+- Set `APP_TIMEZONE` for set timezone application, sample: UTC or Asia/Jakarta
 - Set `APP_VERSION` for set application version
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
-- Set `MAIL_FROM_NAME` for set sender email's name
-- Set `MAIL_FROM_ACCOUNT` for set sender email's account
-- Set `MAIL_CONTACT_NAME` for set contact email's name (used for receive email from "contact us" page)
-- Set `MAIL_CONTACT_ACCOUNT` for set contact email's account (used for receive email from "contact us" page)
-- Set `DISPLAY_SESSION` for display session data in footer web page (development purpose only)
-- Set `APP_FAVICON_TYPE` for set application favicon based on file image (input with image's path)
-- Set `APP_FAVICON` for set application favicon based on file image (input with image's path)
-- Set `APP_LOGO` for application logo based on Font Awesome (input without 'fa-' just the icon name, example: star/laptop/bank)
-- Set `APP_LOGO_IMAGE` for application logo based on file image (input with image's path)
-- Set `ADMIN_DIR` for application or admin directory name
+- Set `ADMIN_DIR` for set application or admin system directory name (or leave it blank if using the admin dashboard only)
+- Set `DEFAULT_LANGUAGE` for set default language in application
+- Set `APP_FAVICON_TYPE` for set favicon type (ico/png/etc)
+- Set `APP_FAVICON` for set application favicon based on file image (input with image's path), sample: the favicon file is in public/images directory path, then set 'images/favicon.ico'
+- Set `APP_LOGO` for set application logo based on Font Awesome (input without 'fa-' just the icon name, example: star/laptop/bank)
+- Set `APP_LOGO_IMAGE` for set application logo based on file image (input with image's path), sample: the logo image is in public/images directory path, then set 'images/logo.png'
+- Set `HELP` for set description of application
 - Set `POWERED` for display developer name
 - Set `POWERED_URL` for display developer URL
-- Set `HELP` for display description of application
-- Set `DEFAULT_LANGUAGE` for set default language in application
-- Set `API_URL` for set API URL (if use it)
+- Set `META_KEYWORDS` for set meta keywords
+- Set `META_TITLE` for set meta title
+- Set `META_DESCRIPTION` for set meta description
+- Set `META_AUTHOR` for set meta author
+
+- Set `MAIL_FROM_NAME` for set sender email's name
+- Set `MAIL_FROM_ADDRESS` for set sender email's address
+- Set `MAIL_REPLYTO_NAME` for set reply-to email's name
+- Set `MAIL_REPLYTO_ADDRESS` for set reply-to email's address
+- Set `MAIL_CONTACT_NAME` for set contact email's name (used for receive email from "contact us" page)
+- Set `MAIL_CONTACT_ADDRESS` for set contact email's address (used for receive email from "contact us" page)
+
 - Set `RECAPTCHA_SITE_KEY` for set GOOGLE reCAPTCHA
 - Set `RECAPTCHA_SECRET_KEY` for set GOOGLE reCAPTCHA
+- Set `RECAPTCHA_SITE_KEY_ADMIN` for set GOOGLE reCAPTCHA in Admin Dashboard
+- Set `RECAPTCHA_SECRET_KEY_ADMIN` for set GOOGLE reCAPTCHA in Admin Dashboard
+
+- Set `GOOGLE_CLIENT_MODULE` for enable/disable GOOGLE API Authentication
 - Set `GOOGLE_CLIENT_ID` for set GOOGLE API Authentication
 - Set `GOOGLE_CLIENT_SECRET` for set GOOGLE API Authentication
 - Set `GOOGLE_CALLBACK_URL` for set GOOGLE API Authentication Callback URL
+
+- Set `FACEBOOK_CLIENT_MODULE` for enable/disable FACEBOOK API Authentication
 - Set `FACEBOOK_CLIENT_ID` for set FACEBOOK API Authentication
 - Set `FACEBOOK_CLIENT_SECRET` for set FACEBOOK API Authentication
 - Set `FACEBOOK_CALLBACK_URL` for set FACEBOOK API Authentication Callback URL
+
+- Set `TWITTER_CLIENT_MODULE` for enable/disable TWITTER API Authentication
 - Set `TWITTER_CLIENT_ID` for set TWITTER API Authentication
 - Set `TWITTER_CLIENT_SECRET` for set TWITTER API Authentication
 - Set `TWITTER_CALLBACK_URL` for set TWITTER API Authentication Callback URL
+
+- Set `LINKEDIN_CLIENT_MODULE` for enable/disable LINKEDIN API Authentication
 - Set `LINKEDIN_CLIENT_ID` for set LINKEDIN API Authentication
 - Set `LINKEDIN_CLIENT_SECRET` for set LINKEDIN API Authentication
 - Set `LINKEDIN_CALLBACK_URL` for set LINKEDIN API Authentication Callback URL
+
 - Set `FCM_SERVER_KEY` for set Firebase Push Notification
 - Set `FCM_SENDER_ID` for set Firebase Push Notification
+
+### Database Setup
+
+**You must run the database migration for running this application.**
 
 Make sure `DB_DATABASE` is set correctly in `.env` file then run migrations to create the structure database and some system data
 ```
@@ -104,7 +136,7 @@ After migration finish run the command `php artisan serve` or browse the link to
 http://path-to-project-folder/public/manager
 ```
 
-<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_loginpage.jpg" alt="LARA-S-CMS Login Page"></p>
+<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_loginpage_v1.1.0.jpg" alt="LARA-S-CMS Login Page"></p>
 
 ### Login details (default)
 
@@ -114,29 +146,24 @@ Username: superadmin
 Password: admin123
 ```
 
-## CMS Modules
+## Features
 
-- [x] Login
-- [x] Profile
-- [x] User Manager
-- [x] Usergroup Manager
-- [x] Division
-- [x] Branch per Division
-- [x] Banner
-- [x] Brand
-- [x] Product (Purchase Details, QC Task List, Upload Photos, Publish Details, Booking)
-- [x] Customer
+- [x] Support Multi Languages
+- [x] Admin Login
+- [x] My Profile
+- [x] Division Management
+- [x] Branch per Division Management
+- [x] Rule Management
+- [x] Usergroup Management
+- [x] User Management
+- [x] Access/Privilege Management
+- [x] System Logs
 - [x] Restore Deleted Data
-- [x] System Log
-- [x] Rule
-- [x] Set Access per Module by Usergroup
-- [x] Incoming Unit - if product is posted without Sell Price, it is Incoming Unit
-- [x] Multi Language
 - [x] Custom 404 Error Page
-- [x] Set Access modules (User Manager, Usergroup manager, Branch) per Division
-- [x] Maintenance Mode
+- [x] Custom Maintenance Mode
+- [x] Product Management
 
-<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_modules.jpg" alt="LARA-S-CMS Modules"></p>
+<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_modules_v1.1.0.jpg" alt="LARA-S-CMS Modules"></p>
 
 ## Configurations
 
@@ -151,14 +178,10 @@ And with additionally configure the permission for directory `public/uploads/`. 
 chmod o+w -R public/uploads/
 ```
 
-**Application Key**
-
-The next thing you should do after installing Lara-S-CMS is set your application key to a random string. If you installed Lara-S-CMS via Composer or the Lara-S-CMS installer, this key has already been set for you by the `key:generate` command. Typically, this string should be 32 characters long. The key can be set in the `.env` environment file. If you have not renamed the .env.example file to .env, you should do that now. **If the application key is not set, your user sessions and other encrypted data will not be secure!**
-
 **Somethings that maybe you must know**
 
-- `Helper.php` in `app\Libraries\` that can be called in Controller/View by line code `use App\Libraries\Helper;`
 - `CustomFunction.php` in `app\Libraries\` that automatically called in the load of web because it has been set in `composer.json`
+- `Helper.php` in `app\Libraries\` that can be called in Controller/View by line code `use App\Libraries\Helper;` for call some helper functions
 
 
 ## Maintenance Mode
@@ -211,7 +234,8 @@ Lara-S-CMS is open-sourced software built by KINIDI Tech and contributors and li
 
 - Laravel (https://github.com/laravel/laravel)
 - ColorlibHQ (https://github.com/ColorlibHQ/gentelella)
+- Start Bootstrap (https://startbootstrap.com/)
 
 <p align="center">Brought to you by</p>
-<p align="center"><img src="https://kiniditech.com/hosting/kiniditech_logo.jpg" width="200" alt="KINDI Tech"></p>
+<p align="center"><img src="https://kiniditech.com/hosting/kiniditech_logo.png" width="200" alt="KINDI Tech"></p>
 <p align="center">KINIDI Tech</p>

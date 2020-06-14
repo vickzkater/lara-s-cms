@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <meta name="keywords" content="mitra prestasi abadi, mitra prestasi, mpa, mpagrup, mpagroup">
-    <meta name="description" content="PT. Mitra Prestasi Abadi merupakan perusahaan pertama dari MITRA PRESTASI GROUP yang bergerak di bidang supplier perdagangan barang dan jasa yang berada di bawah naungan MITRA GROUP.">
+    <meta name="keywords" content="{{ env('META_KEYWORDS', 'Your Website') }}">
+    <meta name="description" content="{{ env('META_DESCRIPTION', 'Your Website') }}">
 
     <title>We will be back with new and exciting features!</title>
 
@@ -16,10 +16,12 @@
 
     <!-- Bootstrap -->
     <link href="{{ asset('/maintenance/css/bootstrap.min.css') }}" rel="stylesheet">
-
     
     <!-- google font -->
     <link href='https://fonts.googleapis.com/css?family=Cabin:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Font Awesome -->
+    <link href="{{ asset('/admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 
     <!-- custom css -->
     <link href="{{ asset('/maintenance/css/custom.css') }}" rel="stylesheet">
@@ -37,7 +39,8 @@
       <div class="row">
         <div class="col-md-12">
           <div class="header-logo-wrapper">
-            <img src="{{ asset(env('APP_LOGO_IMAGE')) }}" alt="logo" title="logo" class="img-responsive center-block" style="max-width:300px !important;" />
+            <img src="{{ asset(env('APP_LOGO_IMAGE')) }}" alt="{{ env('APP_NAME', 'Your Website') }}" title="{{ env('APP_NAME', 'Your Website') }}" class="img-responsive center-block" style="max-width:300px !important;" />
+            <h1 class="text-center">{{ env('APP_NAME', 'Your Website') }}</h1>
           </div>
         </div>
       </div>
@@ -57,7 +60,7 @@
         </div>
       </div>
 
-      <!--<div class="text-center subscribe-form-wrapper">
+      {{-- <div class="text-center subscribe-form-wrapper">
         <form action="#" class="form-inline">
           <div class="form-group">
            <label for="subscriberName">name</label>
@@ -71,27 +74,35 @@
 
           <button type="submit" class="btn btn-default">Subscribe</button>
         </form>
-      </div>-->
+      </div> --}}
 
-    <div class="row">
-      <div class="col-md-12">
-        <div class="social-media-wrapper text-center">
-          <!--
-		  <a href="#"><i class="fa fa-pinterest"></i></a>
-          <a href="#"><i class="fa fa-google-plus-official"></i></a> 
-          <a href="https://facebook.com/vickzkater" target="_blank"><i class="fa fa-facebook-official"></i></a>
-          <a href="https://twitter.com/vickzkater" target="_blank"><i class="fa fa-twitter"></i></a>
-		  <a href="https://instagram.com/vickzkater" target="_blank"><i class="fa fa-instagram"></i></a>
-		  -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="social-media-wrapper text-center">
+            @if (env('SOCMED_FACEBOOK_MODULE', 'OFF') == 'ON')
+              <a href="{{ env('SOCMED_FACEBOOK_LINK', '#') }}" target="_blank"><i class="fa fa-facebook-official"></i></a>
+            @endif
+            @if (env('SOCMED_TWITTER_MODULE', 'OFF') == 'ON')
+              <a href="{{ env('SOCMED_TWITTER_LINK', '#') }}" target="_blank"><i class="fa fa-twitter"></i></a>
+            @endif
+            @if (env('SOCMED_INSTAGRAM_MODULE', 'OFF') == 'ON')
+              <a href="{{ env('SOCMED_INSTAGRAM_LINK', '#') }}" target="_blank"><i class="fa fa-instagram"></i></a>
+            @endif
+            @if (env('SOCMED_INSTAGRAM2_MODULE', 'OFF') == 'ON')
+              <a href="{{ env('SOCMED_INSTAGRAM2_LINK', '#') }}" target="_blank"><i class="fa fa-instagram"></i></a>
+            @endif
+            @if (env('SOCMED_YOUTUBE_MODULE', 'OFF') == 'ON')
+              <a href="{{ env('SOCMED_YOUTUBE_LINK', '#') }}" target="_blank"><i class="fa fa-youtube"></i></a>
+            @endif
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-12">
-        <div class="text-center copyright">Copyright &copy; {{ date('Y') }} {{ env('APP_NAME') }} - Powered By {{ env('POWERED', 'Kinidi Tech') }}</div> 
+      <div class="row">
+        <div class="col-md-12">
+          <div class="text-center copyright">Copyright &copy; {{ date('Y') }} {{ env('APP_NAME', 'Your Website') }} - Powered By {{ env('POWERED', 'Kinidi Tech') }}</div> 
+        </div>
       </div>
-    </div>
     
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

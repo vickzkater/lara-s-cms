@@ -19,7 +19,10 @@ class CheckAdmin
         if (Session::has('admin')) {
             return $next($request);
         }else{
-            return redirect()->route('admin_login')->with('error', 'You must login first!');
+            $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            Session::put('redirect_uri', $actual_link);
+
+            return redirect()->route('admin.login')->with('error', lang('You must login first!'));
         }
         
     }

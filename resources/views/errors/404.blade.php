@@ -1,31 +1,128 @@
-@extends('errors.master')
+@php
+    $homepage = route('web.home');
+    if(Session::get('admin')){
+        $homepage = route('admin.home');
+    }
+@endphp
 
-@section('title', '404 (PAGE NOT FOUND)')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>404 ({{ lang("PAGE NOT FOUND") }}) | {{ env('APP_NAME', 'Your Website') }}</title>
+    <meta name="keywords" content="{{ env('META_KEYWORDS', 'Your Website') }}" />
+    <meta name="description" content="{{ env('META_DESCRIPTION', 'Your Website') }}" />
+    <meta name="Author" content="{{ env('META_AUTHOR', 'Your Website') }}" />
 
-@section('content')
-<div class="col-md-12">
-    <div class="col-middle">
-            <div class="text-center text-center">
-            <h1 class="error-number">404</h1>
-            <h2>Sorry but we couldn't find this page</h2>
-            <p>
-                This page you are looking for does not exist/removed.<br>
-                <a href="#">Report this</a> or <a href="{{ route('admin_home') }}">Back to Home</a>
-            </p>
-            <div class="mid_center">
-                <h3>Search</h3>
-                <form>
-                    <div class="col-xs-12 form-group pull-right top_search">
-                        <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Go!</button>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
+    <link rel="icon" type="image/{{ env('APP_FAVICON_TYPE', 'png') }}" href="{{ asset(env('APP_FAVICON')) }}" />
+
+    <!-- Latest compiled and minified CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> --}}
+
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+        }
+
+        .bg-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url({{ asset('images/background_404.jpg') }}) no-repeat center center fixed;
+            background-size: cover;
+            background-color: #000;
+            opacity: .5;
+            filter: alpha(opacity=50);
+        }
+
+        .content {
+            font-family: 'Avenir-Next',Avenir,Helvetica,sans-serif;
+            color: #fff;
+            background-color: none;
+            z-index: 2;
+            position: absolute;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+        h1 {
+            font-size: 160px;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+
+        h2 {
+            margin-top: 0;
+            max-width: 700px;
+            font-size: 30px;
+            width: 90%;
+        }
+
+        p {
+            text-align: left;
+            padding-bottom: 32px;
+        }
+
+        .btn {
+            display: inline-block;
+            border: 1px solid #aaa;
+            border-radius: 40px;
+            padding: 15px 30px;
+            margin-right: 15px;
+            margin-bottom: 10px;
+            color: white;
+        }
+        .btn:hover {
+            color: #e2e2e2;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @media only screen and (max-width: 480px) {
+            .btn {
+                background-color: white;
+                color: #444444;
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+      <div class='row content'>
+        <div class='col-lg-12'></div>
+        <div class='col-lg-12'>
+          <h1>404</h1>
+          <h2>{{ lang("Oops, the page you're looking for does not exist.") }}</h2>
+          <p>
+            {{ lang("You may want to head back to the homepage.") }}
+            {{-- <br>
+              If you think something is broken, report a problem.
+            <br> --}}
+          </p>
+          <a href="{{ $homepage }}" class='btn'>{{ lang("RETURN HOME") }}</a>
+          {{-- <span class='btn'>REPORT PROBLEM</span> --}}
         </div>
+      </div>
     </div>
-</div>
-@endsection
+    <div class='bg-img'></div>
+  </body>  
+</html>
