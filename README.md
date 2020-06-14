@@ -1,148 +1,241 @@
-![KJV Motosport](https://gitlab.com/vickzkater/kjvmotosport/raw/master/logo.png)
+<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_logo.png" width="200" alt="LARA-S-CMS"></p>
 
-# KJV Motosport / SIMIDAS (Sistem Informasi Administrasi Dealer Showroom)
+# LARA-S-CMS
 
-E-commerce website with a CMS built based on the Laravel Framework
+<p align="center">
+<a href="https://travis-ci.org/vickzkater/lara-s-cms" target="_blank"><img src="https://travis-ci.org/vickzkater/lara-s-cms.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="latest_stable_version_img" src="https://poser.pugx.org/vickzkater/lara-s-cms/v/stable" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="total_img" src="https://poser.pugx.org/vickzkater/lara-s-cms/downloads" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="license_img" src="https://poser.pugx.org/vickzkater/lara-s-cms/license" alt="License"></a>
+</p>
 
-Developed by KINIDI Tech on September 2019
+A PHP Laravel Skeleton for Content Management System (CMS) or Admin Dashboard (within/without website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella) as Admin Template.
+
+For sample as website, we are using [Business Casual](https://startbootstrap.com/themes/business-casual/) a free Bootstrap 4 website template
+
+Developed by [KINIDI Tech](https://kiniditech.com/) ([@vickzkater](https://github.com/vickzkater/)) on September 2019
 
 
-## LIVE URL
+## DEMO URL
 
-[KJV Motosport](https://kjvmotosport.com/)
+**COMING SOON**
 
-## STAGING URL
-
-[Staging](https://dealer.kiniditech.com/)
+### Login details
+```
+Username: superadmin
+Password: admin123
+```
 
 ## ADMIN URL
 
-Please check `ADMIN_DIR` in each `.env` file
+Please check `ADMIN_DIR` in `.env` file
 
 ## Environment
 
-- [x] PHP 7.2.10
+- [x] PHP >= 7.2
 - [x] MySQL 5.0.12-dev - 20150407
 - [x] Laravel 5.8.36
+- [x] Gentelella 1.4.0 (Admin Template)
+- [x] Start Bootstrap - Business Casual 5.0.9 (Website Template)
 
-## How to Implement
+## Installing Lara-S-CMS
 
-- Run `composer install`
-- Copy `.env` file from `.env.example` using command `cp .env.example .env` then make some configs in `.env` file (please check `Config .env` Section)
-- Generate application key using command `php artisan key:generate`
-- Make sure `DB_DATABASE` is set correctly in `.env` file then run `php artisan migrate`
-- If migration is failed, please run `composer dump-autoload` first and remove any table(s) in database before execute migrate again
-- After migration finish, you can open the admin login page by browse to the application URL with addition `/ADMIN_DIR` (based on `.env`)
-- Default admin user is `superadmin` with password `admin123`
+Lara-S-CMS utilizes [Composer](http://getcomposer.org/) to manage its dependencies. So, before using Lara-S-CMS, make sure you have Composer installed on your machine.
 
-## Config .env
+### Composer Create-Project
+
+You may also install Lara-S-CMS by issuing the Composer `create-project` command in your terminal:
+```
+composer create-project vickzkater/lara-s-cms --prefer-dist website
+```
+
+### Setup
+
+After creating the project move to the project root folder eg: `cd website` and run the command to set up database and configuration files (if key is not generated while installing).
+
+```
+php artisan key:generate
+```
+
+**Application Key**
+
+The next thing you should do after installing Lara-S-CMS is set your application key to a random string. If you installed Lara-S-CMS via Composer or the Lara-S-CMS installer, this key has already been set for you by the `key:generate` command. Typically, this string should be 32 characters long. The key can be set in the `.env` environment file. If you have not renamed the .env.example file to .env, you should do that now. **If the application key is not set, your user sessions and other encrypted data will not be secure!**
+
+Next, setup environment configuration in `.env` file
 
 - Set `APP_NAME` for application name
-- Set `URL_MAIN` for provide website URL when generate image link
-- Set `APP_URL_SITE` for website URL (public website)
-- Set `APP_TIMEZONE` for set timezone application
+- Set `APP_BACKEND` for choose application back-end mode (MODEL or API)
+- Set `DISPLAY_SESSION` for display session data (debugging) in footer admin web page (development purpose only)
+- Set `APP_URL_SITE` for set website URL (public website), if any
+- Set `APP_URL_MAIN` for set main website URL, if this project is a microsite
+- Set `APP_URL_API` for set API URL, if this project using back-end mode: API
+- Set `APP_TIMEZONE` for set timezone application, sample: UTC or Asia/Jakarta
 - Set `APP_VERSION` for set application version
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
-
-- Set `MAIL_FROM_NAME` for set Global sender email's name
-- Set `MAIL_FROM_ADDRESS` for set Global sender email's address
-- Set `MAIL_REPLYTO_NAME` for set Global Reply-To email's name
-- Set `MAIL_REPLYTO_ADDRESS` for set Global Reply-To email's address
-- Set `MAIL_CONTACT_NAME` for set Global contact email's name (used for receive email from "contact us" page)
-- Set `MAIL_CONTACT_ADDRESS` for set Global contact email's address (used for receive email from "contact us" page)
-
-- Set `DISPLAY_SESSION` for display session data in footer web page (development purpose only)
-
-- Set `APP_FAVICON_TYPE` for set application favicon type (ico/png/jpg)
-- Set `APP_FAVICON` for set application favicon based on file image (input with image's path)
-- Set `APP_LOGO` for application logo based on Font Awesome (input without 'fa-' just the icon name, example: motorcycle/laptop/bank)
-- Set `APP_LOGO_IMAGE` for application logo based on file image (input with image's path)
-
-- Set `ADMIN_DIR` for application or admin directory name
+- Set `ADMIN_DIR` for set application or admin system directory name (or leave it blank if using the admin dashboard only)
+- Set `DEFAULT_LANGUAGE` for set default language in application
+- Set `APP_FAVICON_TYPE` for set favicon type (ico/png/etc)
+- Set `APP_FAVICON` for set application favicon based on file image (input with image's path), sample: the favicon file is in public/images directory path, then set 'images/favicon.ico'
+- Set `APP_LOGO` for set application logo based on Font Awesome (input without 'fa-' just the icon name, example: star/laptop/bank)
+- Set `APP_LOGO_IMAGE` for set application logo based on file image (input with image's path), sample: the logo image is in public/images directory path, then set 'images/logo.png'
+- Set `HELP` for set description of application
 - Set `POWERED` for display developer name
 - Set `POWERED_URL` for display developer URL
-- Set `HELP` for display description of application
-- Set `DEFAULT_LANGUAGE` for set default language in application
-- Set `API_URL` for set API URL (if use it)
+- Set `META_KEYWORDS` for set meta keywords
+- Set `META_TITLE` for set meta title
+- Set `META_DESCRIPTION` for set meta description
+- Set `META_AUTHOR` for set meta author
 
-- Set `RECAPTCHA_SITE_KEY` for set Google reCAPTCHA
-- Set `RECAPTCHA_SECRET_KEY` for set Google reCAPTCHA
+- Set `MAIL_FROM_NAME` for set sender email's name
+- Set `MAIL_FROM_ADDRESS` for set sender email's address
+- Set `MAIL_REPLYTO_NAME` for set reply-to email's name
+- Set `MAIL_REPLYTO_ADDRESS` for set reply-to email's address
+- Set `MAIL_CONTACT_NAME` for set contact email's name (used for receive email from "contact us" page)
+- Set `MAIL_CONTACT_ADDRESS` for set contact email's address (used for receive email from "contact us" page)
 
-- Set `GOOGLE_CLIENT_ID` for set Google API - Login
-- Set `GOOGLE_CLIENT_SECRET` for set Google API - Login
-- Set `GOOGLE_CALLBACK_URL` for set Google API Redirect - Login
+- Set `RECAPTCHA_SITE_KEY` for set GOOGLE reCAPTCHA
+- Set `RECAPTCHA_SECRET_KEY` for set GOOGLE reCAPTCHA
+- Set `RECAPTCHA_SITE_KEY_ADMIN` for set GOOGLE reCAPTCHA in Admin Dashboard
+- Set `RECAPTCHA_SECRET_KEY_ADMIN` for set GOOGLE reCAPTCHA in Admin Dashboard
 
-- Set `FACEBOOK_CLIENT_ID` for set Facebook API - Login
-- Set `FACEBOOK_CLIENT_SECRET` for set Facebook API - Login
-- Set `FACEBOOK_CALLBACK_URL` for set Facebook API Redirect - Login
+- Set `GOOGLE_CLIENT_MODULE` for enable/disable GOOGLE API Authentication
+- Set `GOOGLE_CLIENT_ID` for set GOOGLE API Authentication
+- Set `GOOGLE_CLIENT_SECRET` for set GOOGLE API Authentication
+- Set `GOOGLE_CALLBACK_URL` for set GOOGLE API Authentication Callback URL
 
-- Set `TWITTER_CLIENT_ID` for set Twitter API - Login
-- Set `TWITTER_CLIENT_SECRET` for set Twitter API - Login
-- Set `TWITTER_CALLBACK_URL` for set Twitter API Redirect - Login
+- Set `FACEBOOK_CLIENT_MODULE` for enable/disable FACEBOOK API Authentication
+- Set `FACEBOOK_CLIENT_ID` for set FACEBOOK API Authentication
+- Set `FACEBOOK_CLIENT_SECRET` for set FACEBOOK API Authentication
+- Set `FACEBOOK_CALLBACK_URL` for set FACEBOOK API Authentication Callback URL
 
-- Set `LINKEDIN_CLIENT_ID` for set LinkedIn API - Login
-- Set `LINKEDIN_CLIENT_SECRET` for set LinkedIn API - Login
-- Set `LINKEDIN_CALLBACK_URL` for set LinkedIn API Redirect - Login
+- Set `TWITTER_CLIENT_MODULE` for enable/disable TWITTER API Authentication
+- Set `TWITTER_CLIENT_ID` for set TWITTER API Authentication
+- Set `TWITTER_CLIENT_SECRET` for set TWITTER API Authentication
+- Set `TWITTER_CALLBACK_URL` for set TWITTER API Authentication Callback URL
+
+- Set `LINKEDIN_CLIENT_MODULE` for enable/disable LINKEDIN API Authentication
+- Set `LINKEDIN_CLIENT_ID` for set LINKEDIN API Authentication
+- Set `LINKEDIN_CLIENT_SECRET` for set LINKEDIN API Authentication
+- Set `LINKEDIN_CALLBACK_URL` for set LINKEDIN API Authentication Callback URL
 
 - Set `FCM_SERVER_KEY` for set Firebase Push Notification
 - Set `FCM_SENDER_ID` for set Firebase Push Notification
 
-- Set `META_KEYWORDS` for set metadata website (public) - SEO purpose
-- Set `META_DESCRIPTION` for set metadata website (public) - SEO purpose
-- Set `META_AUTHOR` for set metadata website (public) - SEO purpose
+### Database Setup
 
-- Set `SELL_MY_BIKE_WA_MOTOSTART` for set contact person in feature SELL MY BIKE
-- Set `SELL_MY_BIKE_WA_MOTOSPORT` for set contact person in feature SELL MY BIKE
+**You must run the database migration for running this application.**
 
-## CMS Modules
+Make sure `DB_DATABASE` is set correctly in `.env` file then run migrations to create the structure database and some system data
+```
+php artisan migrate
+```
 
-- [x] Login
-- [x] Profile
-- [x] User
-- [x] Usergroup
-- [x] Division
-- [x] Branch per Division
-- [x] Banner
-- [x] Brand
-- [x] Product (Purchase Details, QC Task List, Upload Photos, Publish Details, Booking)
-- [x] Customer
+After migration finish run the command `php artisan serve` or browse the link to view the admin login page (application URL with addition `/ADMIN_DIR` - based on `.env`).
+
+```
+http://path-to-project-folder/public/manager
+```
+
+<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_loginpage_v1.1.0.jpg" alt="LARA-S-CMS Login Page"></p>
+
+### Login details (default)
+
+**Administrator**
+```
+Username: superadmin
+Password: admin123
+```
+
+## Features
+
+- [x] Support Multi Languages
+- [x] Admin Login
+- [x] My Profile
+- [x] Division Management
+- [x] Branch per Division Management
+- [x] Rule Management
+- [x] Usergroup Management
+- [x] User Management
+- [x] Access/Privilege Management
+- [x] System Logs
 - [x] Restore Deleted Data
-- [x] System Log
-- [x] Rule
-- [x] Set Access per Module by Usergroup
-- [x] Incoming Unit - if product is posted without Sell Price, it is Incoming Unit
-- [x] Multi Language
 - [x] Custom 404 Error Page
-- [x] Set Access modules (User, Usergroup, Branch) per Division
-- [x] Maintenance Mode
+- [x] Custom Maintenance Mode
+- [x] Product Management
 
-## Website Public Features
+<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_modules_v1.1.0.jpg" alt="LARA-S-CMS Modules"></p>
 
-- [x] Register Account
-- [x] Login Account
-- [x] Inventory Motorcycles per Division (with advanced filter tools)
-- [x] Privacy Policy Page
-- [x] Terms & Conditions Page
-- [x] SELL MY BIKE (connect to WhatsApp)
-- [x] Order/booking Motorcycle (connect to WhatsApp)
+## Configurations
 
-## List of Directories that (Maybe) Need Special Permissions
+### Basic Configurations
 
-- /public/uploads/
+**Directory Permissions**
 
-## Somethings that maybe you must know
+After installing Lara-S-CMS, you may need to configure some permissions. Directories within the `storage` and the `bootstrap/cache` directories should be writable by your web server. If you are using the Homestead virtual machine, these permissions should already be set.
 
-- `Helper.php` in `app\Libraries\` that can be called in Controller/View by line code `use App\Libraries\Helper;`
+And with additionally configure the permission for directory `public/uploads/`. So upload photos feature in Product Module can work well.
+```
+chmod o+w -R public/uploads/
+```
+
+**Somethings that maybe you must know**
+
 - `CustomFunction.php` in `app\Libraries\` that automatically called in the load of web because it has been set in `composer.json`
-- `rotate.php` in `public` that used for rotating image
+- `Helper.php` in `app\Libraries\` that can be called in Controller/View by line code `use App\Libraries\Helper;` for call some helper functions
+
 
 ## Maintenance Mode
 
-- Enable Maintenance Mode using command `php artisan down`
-- Disable Maintenance Mode using command `php artisan up`
+When your application is in maintenance mode, a custom view will be displayed for all requests into your application. This makes it easy to "disable" your application while it is updating or when you are performing maintenance. A maintenance mode check is included in the default middleware stack for your application. If the application is in maintenance mode, an HttpException will be thrown with a status code of 503.
 
-Even while in maintenance mode, specific IP addresses or networks may be allowed to access the application using the command `php artisan down --allow=127.0.0.1 --allow=192.168.0.0/16`
+To enable maintenance mode, simply execute the `down` Artisan command:
+```
+php artisan down
+```
+To disable maintenance mode, use the `up` command:
+```
+php artisan up
+```
 
-Source: [Laravel 5.8 Documentations](https://laravel.com/docs/5.7/configuration#maintenance-mode)
+Even while in maintenance mode, specific IP addresses or networks may be allowed to access the application using the command
+```
+php artisan down --allow=127.0.0.1 --allow=192.168.0.0/16
+```
 
-There is custom page for maintenance mode in `resources/views/errors/503.blade.php`
+Source: [Laravel Documentations](https://laravel.com/docs/6.x/configuration#maintenance-mode)
+
+<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_maintenance.jpg" alt="LARA-S-CMS"></p>
+
+### Maintenance Mode Response Template
+
+The default template for maintenance mode responses is located in `resources/views/errors/503.blade.php` and `public/maintenance/`
+
+## Documentation
+
+Coming soon
+
+## Contributing
+
+Thank you for considering contributing to the Lara-S-CMS.
+
+## Bugs, Improvements & Security Vulnerabilities
+
+If you discover a bug or security vulnerability within Lara-S-CMS, please send an email to Vicky Budiman at [vicky@kiniditech.com](mailto:vicky@kiniditech.com). All requests will be addressed promptly.
+
+## Issues
+
+If you come across any issue/bug please [report them here](https://github.com/vickzkater/lara-s-cms/issues).
+
+## License
+
+Lara-S-CMS is open-sourced software built by KINIDI Tech and contributors and licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
+## Credits
+
+- Laravel (https://github.com/laravel/laravel)
+- ColorlibHQ (https://github.com/ColorlibHQ/gentelella)
+- Start Bootstrap (https://startbootstrap.com/)
+
+<p align="center">Brought to you by</p>
+<p align="center"><img src="https://kiniditech.com/hosting/kiniditech_logo.png" width="200" alt="KINDI Tech"></p>
+<p align="center">KINIDI Tech</p>
