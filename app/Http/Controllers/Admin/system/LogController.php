@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Session;
 use App\Libraries\Helper;
 
 // MODELS
-use App\Models\SysLog;
+use App\Models\system\SysLog;
 
 class LogController extends Controller
 {
     // set this module
-    private $module = 'System Log';
+    private $module = 'System Logs';
 
     public function list()
     {

@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Session;
 use App\Libraries\Helper;
 
 // MODELS
-use App\Models\SysLog;
-use App\Models\SysDivision;
+use App\Models\system\SysLog;
+use App\Models\system\SysDivision;
 
 class DivisionController extends Controller
 {

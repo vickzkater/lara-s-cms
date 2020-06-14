@@ -11,9 +11,9 @@ use Yajra\Datatables\Datatables;
 use App\Libraries\Helper;
 
 // MODELS
-use App\Models\SysLog;
-use App\Models\SysBranch;
-use App\Models\SysDivision;
+use App\Models\system\SysLog;
+use App\Models\system\SysBranch;
+use App\Models\system\SysDivision;
 
 class BranchController extends Controller
 {
@@ -187,7 +187,6 @@ class BranchController extends Controller
             $phone = $valid_phone['data'];
         }
         $gmaps = Helper::validate_input_url($request->gmaps);
-        $ordinal = (int) $request->ordinal;
         $status = (int) $request->status;
 
         // SAVE THE DATA
@@ -197,7 +196,6 @@ class BranchController extends Controller
         $data->location = $location;
         $data->phone = $phone;
         $data->gmaps = $gmaps;
-        $data->ordinal = $ordinal;
         $data->status = $status;
 
         if ($data->save()) {
@@ -339,7 +337,6 @@ class BranchController extends Controller
             $phone = $valid_phone['data'];
         }
         $gmaps = Helper::validate_input_url($request->gmaps);
-        $ordinal = (int) $request->ordinal;
         $status = (int) $request->status;
 
         // GET THE DATA BASED ON ID
@@ -359,7 +356,6 @@ class BranchController extends Controller
         $data->location = $location;
         $data->phone = $phone;
         $data->gmaps = $gmaps;
-        $data->ordinal = $ordinal;
         $data->status = $status;
 
         if ($data->save()) {

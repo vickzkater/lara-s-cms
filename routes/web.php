@@ -15,6 +15,15 @@
 Route::group(['namespace' => 'Web'], function () {
     // HOME
     Route::get('/', 'SiteController@home')->name('web.home');
+
+    // ABOUT
+    Route::get('/about', 'SiteController@about')->name('web.about');
+
+    // PRODUCTS
+    Route::get('/products', 'SiteController@products')->name('web.products');
+
+    // STORE
+    Route::get('/store', 'SiteController@store')->name('web.store');
 });
 
 // ADMIN
@@ -140,5 +149,19 @@ Route::group([
 
         // HOME
         Route::get('/', 'system\HomeController@index')->name('admin.home');
+
+        // PRODUCT
+        Route::group(['prefix' => 'product'], function () {
+            Route::get('/', 'ProductController@list')->name('admin.product.list');
+            Route::get('/get-data', 'ProductController@get_data')->name('admin.product.get_data');
+            Route::get('/create', 'ProductController@create')->name('admin.product.create');
+            Route::post('/do-create', 'ProductController@do_create')->name('admin.product.do_create');
+            Route::get('/edit/{id}', 'ProductController@edit')->name('admin.product.edit');
+            Route::post('/do-edit/{id}', 'ProductController@do_edit')->name('admin.product.do_edit');
+            Route::post('/delete', 'ProductController@delete')->name('admin.product.delete');
+            Route::get('/deleted', 'ProductController@list_deleted')->name('admin.product.deleted');
+            Route::get('/get-data-deleted', 'ProductController@get_data_deleted')->name('admin.product.get_data_deleted');
+            Route::post('/restore', 'ProductController@restore')->name('admin.product.restore');
+        });
     });
 });

@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 use App\Libraries\Helper;
 
 // MODELS
-use App\Models\SysLanguage;
-use App\Models\SysLanguageMaster;
-use App\Models\SysLanguageMasterDetail;
+use App\Models\system\SysLanguage;
+use App\Models\system\SysLanguageMaster;
+use App\Models\system\SysLanguageMasterDetail;
 
 class LanguageController extends Controller
 {

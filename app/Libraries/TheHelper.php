@@ -117,7 +117,7 @@ class TheHelper
      * 
      * @return String
      */
-    public static function validate_input_text($string, $backslash = false)
+    public static function validate_input_text($string, $htmlspecialchars = false, $backslash = false)
     {
         if ($string == '' || !$string) {
             return null;
@@ -126,7 +126,10 @@ class TheHelper
         if ($backslash) {
             $val = stripslashes($val);
         }
-        return htmlspecialchars($val);
+        if ($htmlspecialchars) {
+            $val = htmlspecialchars($val);
+        }
+        return $val;
     }
 
     /**

@@ -11,9 +11,9 @@ use Yajra\Datatables\Datatables;
 use App\Libraries\Helper;
 
 // MODELS
-use App\Models\SysRule;
-use App\Models\SysModule;
-use App\Models\SysLog;
+use App\Models\system\SysRule;
+use App\Models\system\SysModule;
+use App\Models\system\SysLog;
 
 class RuleController extends Controller
 {

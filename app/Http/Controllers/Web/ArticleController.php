@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 // Models
-use App\Models\Article;
+use App\Models\system\Article;
 
 class ArticleController extends Controller
 {

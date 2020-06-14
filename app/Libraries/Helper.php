@@ -5,7 +5,7 @@ namespace App\Libraries;
 use Illuminate\Support\Facades\Session;
 
 // MODELS
-use App\Models\SysLog;
+use App\Models\system\SysLog;
 
 class Helper extends TheHelper
 {
@@ -107,5 +107,29 @@ class Helper extends TheHelper
     public static function get_periods($translation)
     {
         return array(lang('second', $translation), lang('minute', $translation), lang('hour', $translation), lang('day', $translation), lang('week', $translation), lang('month', $translation), lang('year', $translation), lang('decade', $translation));
+    }
+
+    public static function upload_image($dir_path, $image_file, $reformat_image_name = true, $format_image_name = null)
+    {
+        // PROCESSING IMAGE
+        $destination_path = public_path($dir_path);
+        $image = $image_file;
+        $extension  = strtolower($image->getClientOriginalExtension());
+        if ($reformat_image_name) {
+            // REFORMAT IMAGE NAME USING $format_image_name
+            if ($format_image_name) {
+                $image_name = $format_image_name . '.' . $extension;
+            } else {
+                // REFORMAT IMAGE NAME USING TIMESTAMP
+                $image_name = time() . '.' . $extension;
+            }
+        }
+        // UPLOADING...
+        if (!$image->move($destination_path, $image_name)) {
+            // FAILED
+            return false;
+        }
+        // SUCCESS
+        return $image_name;
     }
 }

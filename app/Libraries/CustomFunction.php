@@ -530,15 +530,26 @@ if (!function_exists('set_input_form2')) {
                 $input_element = '<input type="text" value="' . number_format($value) . '" ' . $properties . ' class="form-control col-md-7 col-xs-12" onkeyup="numbers_only(this);this.value=number_format(this.value);" />';
                 break;
 
-            case 'image':
+            case 'image w/i path':
                 if (empty($value) || !isset($path)) {
                     // default image
-                    $input_element = '<img src="' . asset('/images/no-image.png') . '" class="vimg" />';
+                    $input_element = '<img src="' . asset('images/no-image.png') . '" style="max-width:200px;" />';
                 } else {
                     // set image using "$path" & "$value"
-                    $input_element = '<img src="' . asset($path . $value) . '" class="vimg" />';
+                    $input_element = '<img src="' . asset($path . $value) . '" style="max-width:200px;" />';
                 }
-                $input_element .= '<input type="file" ' . $properties . ' class="form-control col-md-7 col-xs-12" accept=".jpg, .jpeg, .png" onchange="readURL(this, \'before\');" style="margin-top:5px" />';
+                $input_element .= '<input type="file" ' . $properties . ' class="form-control col-md-7 col-xs-12" accept=".jpeg, .png, .jpg" onchange="readURL(this, \'before\');" style="margin-top:5px" />';
+                break;
+
+            case 'image':
+                if (empty($value)) {
+                    // default image
+                    $input_element = '<img src="' . asset('images/no-image.png') . '" style="max-width:200px;" />';
+                } else {
+                    // set image using "$value" only
+                    $input_element = '<img src="' . asset($value) . '" style="max-width:200px;" />';
+                }
+                $input_element .= '<input type="file" ' . $properties . ' class="form-control col-md-7 col-xs-12" accept=".jpeg, .png, .jpg" onchange="readURL(this, \'before\');" style="margin-top:5px" />';
                 break;
 
             case 'tags':

@@ -62,8 +62,6 @@
                                 $config->placeholder = 'https://goo.gl/maps/xxx';
                                 echo set_input_form2('text', 'gmaps', 'Gmaps <i class="fa fa-info-circle" data-toggle="tooltip" title="'.lang('How-To: Open Google Maps > Search location > Share > Copy link > Paste here', $translation).'"></i>', $data, $errors, false, $config);
                                 
-                                echo set_input_form2('number', 'ordinal', ucwords(lang('ordinal', $translation)), $data, $errors, true);
-
                                 $config = new \stdClass();
                                 $config->default = 'checked';
                                 echo set_input_form2('switch', 'status', ucwords(lang('status', $translation)), $data, $errors, false, $config);

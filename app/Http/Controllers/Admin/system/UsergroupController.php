@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\DB;
 use App\Libraries\Helper;
 
 // MODELS
-use App\Models\SysLog;
-use App\Models\SysBranch;
-use App\Models\SysRule;
-use App\Models\SysGroup;
-use App\Models\SysGroupRule;
-use App\Models\SysGroupBranch;
+use App\Models\system\SysLog;
+use App\Models\system\SysBranch;
+use App\Models\system\SysRule;
+use App\Models\system\SysGroup;
+use App\Models\system\SysGroupRule;
+use App\Models\system\SysGroupBranch;
 
 class UsergroupController extends Controller
 {

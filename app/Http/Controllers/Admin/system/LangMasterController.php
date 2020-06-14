@@ -10,7 +10,7 @@ use Yajra\Datatables\Datatables;
 use App\Libraries\Helper;
 
 // MODELS
-use App\Models\SysLanguageMaster;
+use App\Models\system\SysLanguageMaster;
 
 class LangMasterController extends Controller
 {

@@ -12,6 +12,10 @@
         <ul class="nav side-menu">
             <li><a href="{{ route('admin.home') }}"><i class="fa fa-dashboard"></i> {{ ucwords(lang('dashboard', $translation)) }}</a></li>
             <li><a href="{{ route('admin.profile') }}"><i class="fa fa-user"></i> {{ ucwords(lang('my profile', $translation)) }}</a></li>
+
+            @if (Helper::authorizing('Product', 'View List')['status'] == 'true')
+                <li><a href="{{ route('admin.product.list') }}"><i class="fa fa-cubes"></i> {{ ucwords(lang('product', $translation)) }}</a></li>
+            @endif
         </ul>
     </div>
 
@@ -42,6 +46,10 @@
                         @if (Helper::authorizing('Division', 'Restore')['status'] == 'true')
                             <?php $priv_restore++; ?>
                             <li><a href="{{ route('admin.division.deleted') }}">{{ ucwords(lang('division', $translation)) }}</a></li>
+                        @endif
+                        @if (Helper::authorizing('Product', 'Restore')['status'] == 'true')
+                            <?php $priv_restore++; ?>
+                            <li><a href="{{ route('admin.product.deleted') }}">{{ ucwords(lang('product', $translation)) }}</a></li>
                         @endif
                     </ul>
                 </li>

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Libraries\Helper;
 
 // Models
-use App\Models\Customer;
+use App\Models\system\Customer;
 
 // Mail
 use App\Mail\CustomerRegistration;

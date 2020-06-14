@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Session;
 use App\Libraries\Helper;
 
 // MODELS
-use App\Models\SysLog;
-use App\Models\SysUser;
-use App\Models\SysGroupRule;
-use App\Models\SysGroupBranch;
+use App\Models\system\SysLog;
+use App\Models\system\SysUser;
+use App\Models\system\SysGroupRule;
+use App\Models\system\SysGroupBranch;
 
 class AuthController extends Controller
 {

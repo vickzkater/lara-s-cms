@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\DB;
 use App\Libraries\Helper;
 
 // MODELS
-use App\Models\SysLog;
-use App\Models\SysUser;
-use App\Models\SysGroup;
-use App\Models\SysUserGroup;
-use App\Models\SysLanguage;
+use App\Models\system\SysLog;
+use App\Models\system\SysUser;
+use App\Models\system\SysGroup;
+use App\Models\system\SysUserGroup;
+use App\Models\system\SysLanguage;
 
 class UserController extends Controller
 {
