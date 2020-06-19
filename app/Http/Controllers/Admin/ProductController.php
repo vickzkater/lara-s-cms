@@ -141,9 +141,13 @@ class ProductController extends Controller
         $image_file = $request->file('image');
         $format_image_name = time() . '-product';
         $image = Helper::upload_image($dir_path, $image_file, true, $format_image_name);
-        if (!$image) {
-            return back()->withInput()->with('error', lang('Oops, failed to upload image. Please try again or try upload another one.', $this->translation));
+        if ($image['status'] != 'true') {
+            return back()
+                ->withInput()
+                ->with('error', lang($image['message'], $this->translation));
         }
+        // GET THE UPLOADED IMAGE RESULT
+        $image = $image['data'];
 
         // SAVE THE DATA
         $data = new Product();
@@ -269,9 +273,13 @@ class ProductController extends Controller
             $image_file = $request->file('image');
             $format_image_name = time() . '-product';
             $image = Helper::upload_image($dir_path, $image_file, true, $format_image_name);
-            if (!$image) {
-                return back()->withInput()->with('error', lang('Oops, failed to upload image. Please try again or try upload another one.', $this->translation));
+            if ($image['status'] != 'true') {
+                return back()
+                    ->withInput()
+                    ->with('error', lang($image['message'], $this->translation));
             }
+            // GET THE UPLOADED IMAGE RESULT
+            $image = $image['data'];
         }
 
         // GET THE DATA BASED ON ID

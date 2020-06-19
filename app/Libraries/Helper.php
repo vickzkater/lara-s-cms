@@ -3,6 +3,7 @@
 namespace App\Libraries;
 
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 // MODELS
 use App\Models\system\SysLog;
@@ -109,12 +110,22 @@ class Helper extends TheHelper
         return array(lang('second', $translation), lang('minute', $translation), lang('hour', $translation), lang('day', $translation), lang('week', $translation), lang('month', $translation), lang('year', $translation), lang('decade', $translation));
     }
 
-    public static function upload_image($dir_path, $image_file, $reformat_image_name = true, $format_image_name = null)
+    public static function upload_image($dir_path, $image_file, $reformat_image_name = true, $format_image_name = null, $allowed_extensions = ['jpeg', 'jpg', 'png'])
     {
         // PROCESSING IMAGE
         $destination_path = public_path($dir_path);
         $image = $image_file;
         $extension  = strtolower($image->getClientOriginalExtension());
+
+        // VALIDATING FOR ALLOWED EXTENSIONS
+        if (!in_array($extension, $allowed_extensions)) {
+            // FAILED
+            return [
+                'status' => 'false',
+                'message' => 'Failed to upload the image, please upload image with allowed extensions (' . implode(",", $allowed_extensions) . ')'
+            ];
+        }
+
         if ($reformat_image_name) {
             // REFORMAT IMAGE NAME USING $format_image_name
             if ($format_image_name) {
@@ -123,13 +134,52 @@ class Helper extends TheHelper
                 // REFORMAT IMAGE NAME USING TIMESTAMP
                 $image_name = time() . '.' . $extension;
             }
+        } else {
+            // USING ORIGINAL FILENAME
+            $image_name = $image->getClientOriginalName();
         }
+
         // UPLOADING...
         if (!$image->move($destination_path, $image_name)) {
             // FAILED
-            return false;
+            return [
+                'status' => 'false',
+                'message' => 'Oops, failed to upload image. Please try again or try upload another one.'
+            ];
         }
+
         // SUCCESS
-        return $image_name;
+        return [
+            'status' => 'true',
+            'message' => 'Successfully uploaded the image',
+            'data' => $image_name
+        ];
+    }
+
+    /**
+     * Validate & generate unique slug
+     * 
+     * @param String $table_name required | table name
+     * @param String $slug required | input text
+     * @param String $table_name optional | field name in table
+     * 
+     * @return String unique slug
+     */
+    public static function check_slug($table_name, $slug, $field_name = 'slug')
+    {
+        $unique = false;
+        $no = 2;
+        $slug_raw = $slug;
+        while (!$unique) {
+            $slug_exist = DB::table($table_name)->where($field_name, $slug)->count();
+            if ($slug_exist == 0) {
+                $unique = true;
+            } else {
+                // SET NEW SLUG
+                $slug = $slug_raw . '-' . $no;
+                $no++;
+            }
+        }
+        return $slug;
     }
 }
