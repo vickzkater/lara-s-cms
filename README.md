@@ -26,6 +26,13 @@ Username: superadmin
 Password: admin123
 ```
 
+## Version
+
+ Laravel  | Lara-S-CMS
+:---------|:----------
+ 5.8.x    | 1.0.x
+ 6.x.x    | 1.1.1
+
 ## Requirements
 
 - PHP >= 7.2
