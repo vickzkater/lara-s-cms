@@ -1,4 +1,4 @@
-<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_logo.png" width="200" alt="LARA-S-CMS"></p>
+<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_logo.png" width="200" alt="LARA-S-CMS"></p>
 
 # LARA-S-CMS
 
@@ -13,7 +13,7 @@ A PHP Laravel Skeleton for Content Management System (CMS) or Admin Dashboard (w
 
 For sample as website, we are using [Business Casual](https://startbootstrap.com/themes/business-casual/) a free Bootstrap 4 website template
 
-Developed by [KINIDI Tech](https://kiniditech.com/) ([@vickzkater](https://github.com/vickzkater/)) on September 2019
+Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI Tech](https://kiniditech.com/)) on September 2019
 
 
 ## DEMO URL
@@ -26,17 +26,11 @@ Username: superadmin
 Password: admin123
 ```
 
-## ADMIN URL
+## Requirements
 
-Please check `ADMIN_DIR` in `.env` file
-
-## Environment
-
-- [x] PHP >= 7.2
-- [x] MySQL 5.0.12-dev - 20150407
-- [x] Laravel 5.8.36
-- [x] Gentelella 1.4.0 (Admin Template)
-- [x] Start Bootstrap - Business Casual 5.0.9 (Website Template)
+- PHP >= 7.2
+- MySQL 5.0.12-dev - 20150407
+- [Laravel 5.8.36](https://github.com/laravel/laravel)
 
 ## Installing Lara-S-CMS
 
@@ -136,7 +130,7 @@ After migration finish run the command `php artisan serve` or browse the link to
 http://path-to-project-folder/public/manager
 ```
 
-<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_loginpage_v1.1.0.jpg" alt="LARA-S-CMS Login Page"></p>
+<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_loginpage_v1.1.0.jpg" alt="LARA-S-CMS Login Page"></p>
 
 ### Login details (default)
 
@@ -163,7 +157,7 @@ Password: admin123
 - [x] Custom Maintenance Mode
 - [x] Product Management
 
-<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_modules_v1.1.0.jpg" alt="LARA-S-CMS Modules"></p>
+<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.1.0.jpg" alt="LARA-S-CMS Modules"></p>
 
 ## Configurations
 
@@ -204,11 +198,14 @@ php artisan down --allow=127.0.0.1 --allow=192.168.0.0/16
 
 Source: [Laravel Documentations](https://laravel.com/docs/6.x/configuration#maintenance-mode)
 
-<p align="center"><img src="https://kiniditech.com/hosting/lara-s-cms_maintenance.jpg" alt="LARA-S-CMS"></p>
+<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_maintenance.jpg" alt="LARA-S-CMS"></p>
 
 ### Maintenance Mode Response Template
 
 The default template for maintenance mode responses is located in `resources/views/errors/503.blade.php` and `public/maintenance/`
+
+## Packages Used (Outside of Laravel)
+- [yajra/laravel-datatables-oracle](https://github.com/yajra/laravel-datatables) - used to display a list of data in a table
 
 ## Documentation
 
@@ -232,10 +229,11 @@ Lara-S-CMS is open-sourced software built by KINIDI Tech and contributors and li
 
 ## Credits
 
+- Vicky Budiman (https://github.com/vickzkater)
 - Laravel (https://github.com/laravel/laravel)
 - ColorlibHQ (https://github.com/ColorlibHQ/gentelella)
 - Start Bootstrap (https://startbootstrap.com/)
 
 <p align="center">Brought to you by</p>
-<p align="center"><img src="https://kiniditech.com/hosting/kiniditech_logo.png" width="200" alt="KINDI Tech"></p>
+<p align="center"><img src="https://hosting.kiniditech.com/kiniditech_logo.png" width="200" alt="KINDI Tech"></p>
 <p align="center">KINIDI Tech</p>
