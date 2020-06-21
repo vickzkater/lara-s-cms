@@ -30,14 +30,14 @@ Password: admin123
 
  Laravel  | Lara-S-CMS
 :---------|:----------
- 5.8.x    | 1.0.x
- 6.x.x    | 1.1.1
+ 5.8.x    | 1.0 ; 1.1.0
+ 6.x      | 1.0.1 ; 1.1.1
+ 7.x      | 1.2.x
 
 ## Requirements
 
-- PHP >= 7.2
-- MySQL 5.0.12-dev - 20150407
-- [Laravel 5.8.36](https://github.com/laravel/laravel)
+- PHP >= 7.2.5
+- [Laravel 7.x Requirements](https://laravel.com/docs/7.x/installation#server-requirements)
 
 ## Installing Lara-S-CMS
 
