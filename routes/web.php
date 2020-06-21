@@ -62,6 +62,7 @@ Route::group([
                     Route::post('/delete', 'DivisionController@delete')->name('admin.division.delete');
                     Route::get('/deleted', 'DivisionController@list_deleted')->name('admin.division.deleted');
                     Route::post('/restore', 'DivisionController@restore')->name('admin.division.restore');
+                    Route::post('/sorting', 'DivisionController@sorting')->name('admin.division.sorting');
                 });
 
                 // BRANCH

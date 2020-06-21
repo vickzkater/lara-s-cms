@@ -15,16 +15,25 @@ For sample as website, we are using [Business Casual](https://startbootstrap.com
 
 Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI Tech](https://kiniditech.com/)) on September 2019
 
+## Features
 
-## DEMO URL
+- [x] Support Multi Languages
+- [x] Admin Login
+- [x] My Profile
+- [x] Division/Subsidiary Management
+- [x] Branch per Division Management
+- [x] Rule Management
+- [x] Usergroup Management
+- [x] User (Admin) Management
+- [x] Access/Privilege Management
+- [x] System Logs
+- [x] Restore Deleted Data
+- [x] Custom 404 Error Page
+- [x] Custom Maintenance Mode
+- [x] Product Management (as module sample including upload image feature)
+- [x] Sortable Data List (in Division/Branch/Language)
 
-**COMING SOON**
-
-### Login details
-```
-Username: superadmin
-Password: admin123
-```
+<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.1.0.jpg" alt="LARA-S-CMS Modules"></p>
 
 ## Version
 
@@ -147,25 +156,6 @@ Username: superadmin
 Password: admin123
 ```
 
-## Features
-
-- [x] Support Multi Languages
-- [x] Admin Login
-- [x] My Profile
-- [x] Division Management
-- [x] Branch per Division Management
-- [x] Rule Management
-- [x] Usergroup Management
-- [x] User Management
-- [x] Access/Privilege Management
-- [x] System Logs
-- [x] Restore Deleted Data
-- [x] Custom 404 Error Page
-- [x] Custom Maintenance Mode
-- [x] Product Management
-
-<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.1.0.jpg" alt="LARA-S-CMS Modules"></p>
-
 ## Configurations
 
 ### Basic Configurations
@@ -213,6 +203,16 @@ The default template for maintenance mode responses is located in `resources/vie
 
 ## Packages Used (Outside of Laravel)
 - [yajra/laravel-datatables-oracle](https://github.com/yajra/laravel-datatables) - used to display a list of data in a table
+
+## DEMO URL
+
+**COMING SOON**
+
+### Login details
+```
+Username: superadmin
+Password: admin123
+```
 
 ## Documentation
 
