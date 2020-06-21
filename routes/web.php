@@ -77,6 +77,7 @@ Route::group([
                     Route::get('/deleted', 'BranchController@list_deleted')->name('admin.branch.deleted');
                     Route::get('/get-data-deleted', 'BranchController@get_data_deleted')->name('admin.branch.get_data_deleted');
                     Route::post('/restore', 'BranchController@restore')->name('admin.branch.restore');
+                    Route::post('/sorting', 'BranchController@sorting')->name('admin.branch.sorting');
                 });
 
                 // RULE
