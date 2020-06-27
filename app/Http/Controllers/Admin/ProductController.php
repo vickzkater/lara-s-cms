@@ -51,7 +51,7 @@ class ProductController extends Controller
         $this->item = ucwords(lang($this->item, $this->translation));
 
         // GET THE DATA
-        $query = Product::whereNotNull('id');
+        $query = Product::whereNull('replaced_at');
 
         return $datatables->eloquent($query)
             ->addColumn('item_status', function ($data) {
@@ -283,7 +283,10 @@ class ProductController extends Controller
                     ->with('error', lang($image['message'], $this->translation));
             }
             // GET THE UPLOADED IMAGE RESULT
-            $image = $image['data'];
+            $image = $dir_path . $image['data'];
+        } elseif (isset($request->image_delete) && $request->image_delete == 'yes') {
+            // DELETE EXISTING IMAGE WITHOUT UPLOAD THE NEW ONE
+            $image = asset('images/no-image.png');
         }
 
         // GET THE DATA BASED ON ID
@@ -300,9 +303,9 @@ class ProductController extends Controller
         // UPDATE THE DATA
         $data->title = $title;
         $data->subtitle = $subtitle;
-        // IF UPLOAD NEW IMAGE
-        if ($request->image) {
-            $data->image = $dir_path . $image;
+        // IF UPLOAD NEW IMAGE OR DELETE EXISTING IMAGE WITHOUT UPLOAD THE NEW ONE
+        if (isset($image)) {
+            $data->image = $image;
         }
         $data->description = $description;
         $data->status = $status;

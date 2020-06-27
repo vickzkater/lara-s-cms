@@ -49,9 +49,11 @@
 
                                 if(isset($data)){
                                     // IF EDIT, THEN NOT REQUIRED
-                                    echo set_input_form2('image', 'image', ucwords(lang('image', $translation)), $data, $errors, false);
+                                    $config = new \stdClass();
+                                    $config->delete = true;
+                                    echo set_input_form2('image', 'image', ucwords(lang('image', $translation)), $data, $errors, false, $config);
                                 }else{
-                                    echo set_input_form2('image', 'image', ucwords(lang('image', $translation)), $data, $errors, true);
+                                    echo set_input_form2('image', 'image', ucwords(lang('image', $translation)), $data, $errors, true, $config);
                                 }
 
                                 echo set_input_form2('textarea', 'description', ucwords(lang('description', $translation)), $data, $errors, true);

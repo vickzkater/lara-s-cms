@@ -27,7 +27,7 @@ class SiteController extends Controller
     {
         $page = 'products';
 
-        $data = Product::all();
+        $data = Product::whereNull('replaced_at')->get();
 
         return view('web.products', compact('page', 'data'));
     }

@@ -26,6 +26,22 @@ function readURL(input, position_image = "after") {
     }
 }
 
+function reset_img_preview(input, no_image, position_image = "after") {
+    if (confirm('Are you sure to delete this uploaded image?')) {
+        if (position_image == "before") {
+            $(input)
+                .prev("img")
+                .attr("src", no_image);
+        } else {
+            $(input)
+                .next("img")
+                .attr("src", no_image);
+        }
+        $(input+'-delbtn').hide();
+        $(input+'-delete').val('yes');
+    }
+}
+
 function replace_all(search, replacement, target) {
     if (target !== null) {
         return target.split(search).join(replacement);
