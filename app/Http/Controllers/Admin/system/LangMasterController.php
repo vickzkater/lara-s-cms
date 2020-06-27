@@ -48,6 +48,9 @@ class LangMasterController extends Controller
             ->editColumn('updated_at', function ($data) {
                 return Helper::time_ago(strtotime($data->updated_at), lang('ago', $this->translation), Helper::get_periods($this->translation));
             })
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at;
+            })
             ->rawColumns(['status', 'action'])
             ->toJson();
     }
