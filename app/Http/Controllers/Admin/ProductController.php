@@ -105,7 +105,8 @@ class ProductController extends Controller
             'title' => 'required',
             'subtitle' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'description' => 'required'
+            'description' => 'required',
+            'purchase_date' => 'required|date_format:d/m/Y'
         ];
         $message = [
             'required' => ':attribute ' . lang('field is required', $this->translation),
@@ -120,6 +121,8 @@ class ProductController extends Controller
         ];
         $this->validate($request, $validation, $message, $names);
 
+        $data = new Product();
+
         // HELPER VALIDATION FOR PREVENT SQL INJECTION & XSS ATTACK
         $title = Helper::validate_input_text($request->title);
         if (!$title) {
@@ -127,19 +130,26 @@ class ProductController extends Controller
                 ->withInput()
                 ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('title', $this->translation))]));
         }
+        $data->title = $title;
+
         $subtitle = Helper::validate_input_text($request->subtitle);
         if (!$subtitle) {
             return back()
                 ->withInput()
                 ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('subtitle', $this->translation))]));
         }
+        $data->subtitle = $subtitle;
+
         $description = Helper::validate_input_text($request->description);
         if (!$description) {
             return back()
                 ->withInput()
                 ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('description', $this->translation))]));
         }
-        $status = (int) $request->status;
+        $data->description = $description;
+
+        $data->status = (int) $request->status;
+
         // PROCESSING IMAGE
         $dir_path = 'uploads/product/';
         $image_file = $request->file('image');
@@ -151,16 +161,21 @@ class ProductController extends Controller
                 ->with('error', lang($image['message'], $this->translation));
         }
         // GET THE UPLOADED IMAGE RESULT
-        $image = $image['data'];
+        $data->image = $dir_path . $image['data'];
+
+        // MANIPULATE DATE
+        $data->purchase_date = Helper::convert_datepicker($request->purchase_date);
+        $expired_date = null;
+        if ($request->expired_date) {
+            $data->$expired_date = Helper::convert_datepicker($request->expired_date);
+        }
+
+        if ((int) $request->qty > 0) {
+            // REMOVE COMMA FROM THE DATA
+            $data->qty = (int) str_replace(',', '', $request->qty);
+        }
 
         // SAVE THE DATA
-        $data = new Product();
-        $data->title = $title;
-        $data->subtitle = $subtitle;
-        $data->image = $dir_path . $image;
-        $data->description = $description;
-        $data->status = $status;
-
         if ($data->save()) {
             // SUCCESS
             return redirect()
@@ -226,11 +241,23 @@ class ProductController extends Controller
                 ->with('error', lang('#item ID is invalid, please recheck your link again', $this->translation, ['#item' => $this->item]));
         }
 
+        // GET THE DATA BASED ON ID
+        $data = Product::find($id);
+
+        // CHECK IS DATA FOUND
+        if (!$data) {
+            // DATA NOT FOUND
+            return back()
+                ->withInput()
+                ->with('error', lang('#item not found, please reload your page before resubmit', $this->translation, ['#item' => $this->item]));
+        }
+
         // LARAVEL VALIDATION
         $validation = [
             'title' => 'required',
             'subtitle' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'purchase_date' => 'required|date_format:d/m/Y'
         ];
         // IF UPLOAD NEW IMAGE
         if ($request->image) {
@@ -256,19 +283,25 @@ class ProductController extends Controller
                 ->withInput()
                 ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('title', $this->translation))]));
         }
+        $data->title = $title;
+
         $subtitle = Helper::validate_input_text($request->subtitle);
         if (!$subtitle) {
             return back()
                 ->withInput()
                 ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('subtitle', $this->translation))]));
         }
+        $data->subtitle = $subtitle;
+
         $description = Helper::validate_input_text($request->description);
         if (!$description) {
             return back()
                 ->withInput()
                 ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('description', $this->translation))]));
         }
-        $status = (int) $request->status;
+        $data->description = $description;
+
+        $data->status = (int) $request->status;
 
         // IF UPLOAD NEW IMAGE
         if ($request->image) {
@@ -283,33 +316,26 @@ class ProductController extends Controller
                     ->with('error', lang($image['message'], $this->translation));
             }
             // GET THE UPLOADED IMAGE RESULT
-            $image = $dir_path . $image['data'];
+            $data->image = $dir_path . $image['data'];
         } elseif (isset($request->image_delete) && $request->image_delete == 'yes') {
             // DELETE EXISTING IMAGE WITHOUT UPLOAD THE NEW ONE
-            $image = asset('images/no-image.png');
+            // $image = 'images/no-image.png';
+            $data->image = null;
         }
 
-        // GET THE DATA BASED ON ID
-        $data = Product::find($id);
+        // MANIPULATE DATE
+        $data->purchase_date = Helper::convert_datepicker($request->purchase_date);
+        $expired_date = null;
+        if ($request->expired_date) {
+            $data->$expired_date = Helper::convert_datepicker($request->expired_date);
+        }
 
-        // CHECK IS DATA FOUND
-        if (!$data) {
-            // DATA NOT FOUND
-            return back()
-                ->withInput()
-                ->with('error', lang('#item not found, please reload your page before resubmit', $this->translation, ['#item' => $this->item]));
+        if ((int) $request->qty > 0) {
+            // REMOVE COMMA FROM THE DATA
+            $data->qty = (int) str_replace(',', '', $request->qty);
         }
 
         // UPDATE THE DATA
-        $data->title = $title;
-        $data->subtitle = $subtitle;
-        // IF UPLOAD NEW IMAGE OR DELETE EXISTING IMAGE WITHOUT UPLOAD THE NEW ONE
-        if (isset($image)) {
-            $data->image = $image;
-        }
-        $data->description = $description;
-        $data->status = $status;
-
         if ($data->save()) {
             // SUCCESS
             return redirect()

@@ -5,8 +5,8 @@
         <th>Title</th>
         <th>Subtitle</th>
         <th>Description</th>
-        <th>Created At</th>
-        <th>Updated At</th>
+        <th>Created</th>
+        <th>Last Updated</th>
     </tr>
     </thead>
     <tbody>

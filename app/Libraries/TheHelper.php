@@ -109,21 +109,21 @@ class TheHelper
 
     /**
      * Allow all characters within "FILTER_SANITIZE_MAGIC_QUOTES"
-     * If ($backslash == true) and it contains symbols: single quote (') and double quote (") 
+     * If ($no_backslash == false) and it contains symbols: single quote (') and double quote (") 
      * Then it will add symbol backslash (\) before those symbols
      * 
      * @param String $string required
-     * @param Boolean $backslash optional
+     * @param Boolean $no_backslash optional
      * 
      * @return String
      */
-    public static function validate_input_text($string, $htmlspecialchars = false, $backslash = false)
+    public static function validate_input_text($string, $htmlspecialchars = false, $no_backslash = true)
     {
         if ($string == '' || !$string) {
             return null;
         }
         $val = filter_var($string, FILTER_SANITIZE_MAGIC_QUOTES);
-        if ($backslash) {
+        if ($no_backslash) {
             $val = stripslashes($val);
         }
         if ($htmlspecialchars) {

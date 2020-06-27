@@ -155,8 +155,8 @@
             {data: 'subtitle', name: 'products.subtitle'},
             {data: 'image_item', name: 'image_item'},
             {data: 'item_status', name: 'item_status'},
-            {data: 'created_at', name: 'sys_branches.created_at'},
-            {data: 'updated_at', name: 'sys_branches.updated_at'},
+            {data: 'created_at', name: 'products.created_at'},
+            {data: 'updated_at', name: 'products.updated_at'},
             {data: 'action', name: 'action'},
         ]
       });
@@ -177,8 +177,8 @@
             {data: 'subtitle', name: 'products.subtitle'},
             {data: 'image_item', name: 'image_item'},
             {data: 'item_status', name: 'item_status'},
-            {data: 'created_at', name: 'sys_branches.created_at'},
-            {data: 'deleted_at', name: 'sys_branches.deleted_at'},
+            {data: 'created_at', name: 'products.created_at'},
+            {data: 'deleted_at', name: 'products.deleted_at'},
             {data: 'action', name: 'action'},
         ]
       });

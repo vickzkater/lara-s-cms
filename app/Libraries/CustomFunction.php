@@ -536,28 +536,18 @@ if (!function_exists('set_input_form2')) {
                 $input_element = '<input type="text" value="' . number_format($value) . '" ' . $properties . ' class="form-control col-md-7 col-xs-12" onkeyup="numbers_only(this);this.value=number_format(this.value);" />';
                 break;
 
-            case 'image w/i path':
-                if (empty($value) || !isset($path)) {
-                    // default image
-                    $input_element = '<img src="' . $no_image . '" style="max-width:200px;" />';
-                } else {
-                    // set image using "$path" & "$value"
-                    $input_element = '<img src="' . asset($path . $value) . '" style="max-width:200px;" />';
-                }
-                $input_element .= '<input type="file" ' . $properties . ' class="form-control col-md-7 col-xs-12" accept=".jpeg, .png, .jpg" onchange="readURL(this, \'before\');" style="margin-top:5px" />';
-                if (!empty($value) && $delete) {
-                    $input_element .= '<br><span class="btn btn-warning btn-xs" id="' . $id_name . '-delbtn" style="margin: 5px 0 !important;" onclick="reset_img_preview(\'#' . $id_name . '\', \'' . $no_image . '\', \'before\')">Delete uploaded image?</span>';
-                    $input_element .= ' <input type="hidden" name="' . $input_name . '_delete" id="' . $input_name . '-delete">';
-                }
-                break;
-
             case 'image':
                 if (empty($value)) {
                     // default image
                     $input_element = '<img src="' . $no_image . '" style="max-width:200px;" />';
                 } else {
                     // set image using "$value" only
-                    $input_element = '<img src="' . asset($value) . '" style="max-width:200px;" />';
+                    $img_src = asset($value);
+                    if (isset($path)) {
+                        // set image using "$path" & "$value"
+                        $img_src = asset($path . $value);
+                    }
+                    $input_element = '<img src="' . $img_src . '" style="max-width:200px;" />';
                 }
                 $input_element .= '<input type="file" ' . $properties . ' class="form-control col-md-7 col-xs-12" accept=".jpeg, .png, .jpg" onchange="readURL(this, \'before\');" style="margin-top:5px" />';
                 if (!empty($value) && $delete) {

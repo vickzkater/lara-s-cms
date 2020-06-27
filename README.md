@@ -33,7 +33,10 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Product Management (as module sample including upload image feature)
 - [x] Sortable Data List (in Division/Branch/Language)
 - [ ] Application Configurations
-- [x] Import & Export Excel File (in Product) 
+- [x] Import & Export Excel File (in Product)
+- [x] Delete Uploaded Image (in Product)
+- [x] Rich Text Editor/WYSIWYG using TinyMCE (in Product)
+- [x] Datepicker (in Product)
 
 <p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.1.0.jpg" alt="LARA-S-CMS Modules"></p>
 
