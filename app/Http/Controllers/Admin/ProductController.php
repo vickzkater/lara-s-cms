@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Datatables;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ProductImport;
+use App\Exports\ProductExportView;
+use App\Exports\ProductTemplateExportView;
 
 // LIBRARIES
 use App\Libraries\Helper;
@@ -450,5 +454,80 @@ class ProductController extends Controller
         // FAILED
         return back()
             ->with('error', lang('Oops, failed to restore #item. Please try again.', $this->translation, ['#item' => $this->item]));
+    }
+
+    public function import_excel(Request $request)
+    {
+        // AUTHORIZING...
+        $authorize = Helper::authorizing($this->module, 'Import Data');
+        if ($authorize['status'] != 'true') {
+            return back()->with('error', $authorize['message']);
+        }
+
+        // SET THIS OBJECT/ITEM NAME BASED ON TRANSLATION
+        $this->item = ucwords(lang($this->item, $this->translation));
+
+        // LARAVEL VALIDATION
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        // GET THE UPLOADED FILE
+        $file = $request->file('file');
+
+        // RENAME THE FILE
+        $nama_file = date('YmdHis') . '_' . $file->getClientOriginalName();
+
+        // CONFIG
+        $dir_path = 'uploads/excel/product';
+        $destination_path = public_path($dir_path);
+
+        // UPLOAD TO THE DESTINATION PATH ($dir_path) IN PUBLIC FOLDER
+        if ($file->move($destination_path, $nama_file)) {
+            // SET FLAG FOR OLD DATA
+            Product::whereNull('replaced_at')
+                ->update(['replaced_at' => date('Y-m-d H:i:s')]);
+
+            // IMPORT DATA
+            Excel::import(new ProductImport, public_path($dir_path . '/' . $nama_file));
+
+            // SUCCESS
+            return redirect()
+                ->route('admin.product.list')
+                ->with('success', lang('Successfully imported data #item', $this->translation, ['#item' => $this->item]));
+        }
+
+        // FAILED
+        return back()
+            ->withInput()
+            ->with('error', lang('Oops, failed to imported data #item. Please try again.', $this->translation, ['#item' => $this->item]));
+    }
+
+    public function export_excel()
+    {
+        // AUTHORIZING...
+        $authorize = Helper::authorizing($this->module, 'Export Excel');
+        if ($authorize['status'] != 'true') {
+            return back()->with('error', $authorize['message']);
+        }
+
+        // SET FILE NAME
+        $filename = date('YmdHis') . '_larascms_products';
+
+        return Excel::download(new ProductExportView, $filename . '.xlsx');
+    }
+
+    public function import_excel_template()
+    {
+        // AUTHORIZING...
+        $authorize = Helper::authorizing($this->module, 'Import Excel');
+        if ($authorize['status'] != 'true') {
+            return back()->with('error', $authorize['message']);
+        }
+
+        // SET FILE NAME
+        $filename = 'larascms_products_import_template';
+
+        return Excel::download(new ProductTemplateExportView, $filename . '.xlsx');
     }
 }
