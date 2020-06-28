@@ -21,7 +21,7 @@
     <link href='https://fonts.googleapis.com/css?family=Cabin:400,700' rel='stylesheet' type='text/css'>
 
     <!-- Font Awesome -->
-    <link href="{{ asset('/admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 
     <!-- custom css -->
     <link href="{{ asset('/maintenance/css/custom.css') }}" rel="stylesheet">

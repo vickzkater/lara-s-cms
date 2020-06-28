@@ -16,18 +16,18 @@
     </title>
 
     <!-- Bootstrap -->
-    <link href="{{ asset('/admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="{{ asset('/admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- NProgress -->
-    <link href="{{ asset('/admin/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
     <!-- jQuery custom content scroller -->
-    <link href="{{ asset('/admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet">
     <!-- bootstrap-progressbar -->
-    <link href="{{ asset('/admin/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
     
     <!-- Custom Theme Style -->
-    <link href="{{ asset('/admin/build/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/build/css/custom.css') }}" rel="stylesheet">
 
     <style>
       .scroll-top {
@@ -132,24 +132,24 @@
     </button>
 
     <!-- jQuery -->
-    <script src="{{ asset('/admin/vendors/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap -->
-    <script src="{{ asset('/admin/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- FastClick -->
-    <script src="{{ asset('/admin/vendors/fastclick/lib/fastclick.js') }}"></script>
+    <script src="{{ asset('admin/vendors/fastclick/lib/fastclick.js') }}"></script>
     <!-- NProgress -->
-    <script src="{{ asset('/admin/vendors/nprogress/nprogress.js') }}"></script>
+    <script src="{{ asset('admin/vendors/nprogress/nprogress.js') }}"></script>
     <!-- jQuery custom content scroller -->
-    <script src="{{ asset('/admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <!-- bootstrap-progressbar -->
-    <script src="{{ asset('/admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
 
     @yield('script-sidebar')
 
     <!-- Custom Theme Scripts -->
-    <script src="{{ asset('/admin/build/js/custom.js?v=4') }}"></script>
+    <script src="{{ asset('admin/build/js/custom.js?v=4') }}"></script>
     <!-- Custom Script -->
-    <script src="{{ asset('/admin/js/vcustom.js?v=2') }}"></script>
+    <script src="{{ asset('admin/js/vcustom.js?v=2') }}"></script>
 
     <script>
       $(document).ready(function () {

@@ -1,4 +1,4 @@
-<script src="{{ asset('/admin/vendors/tinymce/js/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ asset('admin/vendors/tinymce/js/tinymce/tinymce.min.js') }}"></script>
 
 <script>
     function init_tinymce(elm) {

@@ -11,16 +11,16 @@
     <title>{{ env('APP_NAME') }} | Admin Panel</title>
 
     <!-- Bootstrap -->
-    <link href="{{ asset('/admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="{{ asset('/admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- NProgress -->
-    <link href="{{ asset('/admin/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="{{ asset('/admin/vendors/animate.css/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/animate.css/animate.min.css') }}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="{{ asset('/admin/build/css/custom.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/build/css/custom.min.css') }}" rel="stylesheet">
 
     <style>
       .vlogin {
@@ -29,7 +29,7 @@
       }
     </style>
   
-    @if (env('RECAPTCHA_SITE_KEY_ADMIN', 'xxx') != 'xxx')
+    @if (env('RECAPTCHA_SECRET_KEY_ADMIN'))
       <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @endif
   </head>
@@ -56,7 +56,7 @@
                 <input type="password" name="login_pass" class="form-control" placeholder="{{ ucwords(lang('password', $translation)) }}" required autocomplete="off" />
               </div>
 
-              @if (env('RECAPTCHA_SITE_KEY_ADMIN', 'xxx') != 'xxx')
+              @if (env('RECAPTCHA_SECRET_KEY_ADMIN'))
                 <div style="margin-bottom: 10px;">
                   <center>
                     <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY_ADMIN') }}"></div>
@@ -65,7 +65,7 @@
               @endif
 
               <div>
-                <button type="submit" class="btn btn-primary btn-block submit">{{ ucfirst(lang('log in', $translation)) }}</button>
+                <button type="submit" class="btn btn-primary btn-block submit" id="btn-login">{{ ucfirst(lang('log in', $translation)) }}</button>
               </div>
 
               <div class="clearfix"></div>
@@ -91,6 +91,8 @@
     <script>
       $(document).ready(function () {
         $("#submitform").on('submit',function(e) {
+          validate_form();
+
           // check reCAPTCHA
           var data_form = $(this).serialize();
           var split_data = data_form.split('&');
@@ -111,6 +113,15 @@
           return true;
         });
       });
+
+      function validate_form() {
+        $('#btn-login').addClass('disabled');
+        $('#btn-login').removeClass('btn-primary');
+        $('#btn-login').addClass('btn-warning');
+        $('#btn-login').html('<i class="fa fa-spin fa-spinner"></i>&nbsp; {{ ucwords(lang('loading', $translation)) }}...');
+
+        setTimeout(function(){ window.location.reload(); }, 3000);
+      }
     </script>
   </body>
 </html>

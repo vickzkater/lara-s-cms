@@ -74,10 +74,10 @@
 
 @section('css')
     <!-- Switchery -->
-    <link href="{{ asset('/admin/vendors/switchery/dist/switchery.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/switchery/dist/switchery.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('script')
     <!-- Switchery -->
-    <script src="{{ asset('/admin/vendors/switchery/dist/switchery.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/switchery/dist/switchery.min.js') }}"></script>
 @endsection
