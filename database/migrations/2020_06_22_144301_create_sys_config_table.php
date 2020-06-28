@@ -34,6 +34,9 @@ class CreateSysConfigTable extends Migration
             $table->string('meta_author')->default('KINIDI Tech');
             $table->timestamps();
         });
+
+        $seeder = new SysConfigSeederInitial();
+        $seeder->run();
     }
 
     /**
