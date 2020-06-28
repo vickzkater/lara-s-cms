@@ -34,6 +34,11 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Support DataTables AJAX
 - [x] Sortable Data List (in Division)
 - [x] Sortable Data List with Filter (in Branch - Filter by Division)
+- [x] Application Configurations
+- [x] Import & Export Excel File (in Product)
+- [x] Delete Uploaded Image (in Product)
+- [x] Rich Text Editor/WYSIWYG using TinyMCE (in Product)
+- [x] Datepicker (in Product)
 
 <p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.1.0.jpg" alt="LARA-S-CMS Modules"></p>
 

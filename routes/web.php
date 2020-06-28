@@ -170,6 +170,13 @@ Route::group([
             Route::get('/deleted', 'ProductController@list_deleted')->name('admin.product.deleted');
             Route::get('/get-data-deleted', 'ProductController@get_data_deleted')->name('admin.product.get_data_deleted');
             Route::post('/restore', 'ProductController@restore')->name('admin.product.restore');
+
+            // Excel
+            Route::group(['prefix' => 'excel'], function () {
+                Route::get('/import/get-template', 'ProductController@import_excel_template')->name('admin.product.import_excel_template');
+                Route::post('/import', 'ProductController@import_excel')->name('admin.product.import_excel');
+                Route::get('/export', 'ProductController@export_excel')->name('admin.product.export_excel');
+            });
         });
     });
 });

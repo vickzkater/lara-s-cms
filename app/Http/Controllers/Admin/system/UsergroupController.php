@@ -110,6 +110,9 @@ class UsergroupController extends Controller
             ->editColumn('updated_at', function ($data) {
                 return Helper::time_ago(strtotime($data->updated_at), lang('ago', $this->translation), Helper::get_periods($this->translation));
             })
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at;
+            })
             ->rawColumns(['item_status', 'action'])
             ->toJson();
     }
@@ -559,6 +562,9 @@ class UsergroupController extends Controller
             })
             ->editColumn('deleted_at', function ($data) {
                 return Helper::time_ago(strtotime($data->deleted_at), lang('ago', $this->translation), Helper::get_periods($this->translation));
+            })
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at;
             })
             ->rawColumns(['item_status', 'action'])
             ->toJson();

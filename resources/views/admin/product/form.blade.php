@@ -41,6 +41,7 @@
                                 // set_input_form2($type, $input_name, $label_name, $data, $errors, $required = false, $config = null)
                                 $config = new \stdClass();
                                 $config->attributes = 'autocomplete="off"';
+                                $config->placeholder = lang("Sample: Men's Shoes (Product Category) + KINIDI (Brand) + Black Canvas (Info)", $translation);
                                 echo set_input_form2('text', 'title', ucwords(lang('title', $translation)), $data, $errors, true, $config);
 
                                 $config = new \stdClass();
@@ -49,12 +50,25 @@
 
                                 if(isset($data)){
                                     // IF EDIT, THEN NOT REQUIRED
-                                    echo set_input_form2('image', 'image', ucwords(lang('image', $translation)), $data, $errors, false);
+                                    $config = new \stdClass();
+                                    $config->delete = true;
+                                    echo set_input_form2('image', 'image', ucwords(lang('image', $translation)), $data, $errors, false, $config);
                                 }else{
-                                    echo set_input_form2('image', 'image', ucwords(lang('image', $translation)), $data, $errors, true);
+                                    echo set_input_form2('image', 'image', ucwords(lang('image', $translation)), $data, $errors, true, $config);
                                 }
 
                                 echo set_input_form2('textarea', 'description', ucwords(lang('description', $translation)), $data, $errors, true);
+
+                                $config = new \stdClass();
+                                $config->placeholder = 'dd/mm/yyyy';
+                                echo set_input_form2('datepicker', 'purchase_date', ucwords(lang('purchase date', $translation)), $data, $errors, true, $config);
+
+                                $config = new \stdClass();
+                                $config->attributes = 'readonly';
+                                $config->placeholder = 'dd/mm/yyyy';
+                                echo set_input_form2('datepicker', 'expired_date', ucwords(lang('expired date', $translation)), $data, $errors, false, $config);
+
+                                echo set_input_form2('number_format', 'qty', lang('QTY', $translation), $data, $errors, true);
 
                                 $config = new \stdClass();
                                 $config->default = 'checked';
@@ -65,7 +79,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; 
+                                    <button type="submit" class="btn btn-success" onclick="validate_form()"><i class="fa fa-save"></i>&nbsp; 
                                         @if (isset($data))
                                             {{ ucwords(lang('save', $translation)) }}
                                         @else
@@ -87,18 +101,33 @@
 @section('css')
     <!-- Switchery -->
     @include('_form_element.switchery.css')
-    <!-- Select2 -->
-    @include('_form_element.select2.css')
+    <!-- bootstrap-datetimepicker -->
+    @include('_form_element.datetimepicker.css')
 @endsection
 
 @section('script')
     <!-- Switchery -->
     @include('_form_element.switchery.script')
-    <!-- Select2 -->
-    @include('_form_element.select2.script')
+    <!-- bootstrap-datetimepicker -->
+    @include('_form_element.datetimepicker.script')
+    <!-- TinyMCE -->
+    @include('_form_element.tinymce.script')
 
     <script>
-        // Initialize Select2
-        $('.select2').select2();
+        // Initialize TinyMCE
+        init_tinymce('#description');
+
+        function validate_form() {
+            if ($('#description').val() == '') {
+                alert("{{ lang('#item field is required', $translation, ['#item'=>ucwords(lang('description', $translation))]) }}");
+                scroll_to("#description", 5);
+                return false;
+            }
+            return true;
+        }
+
+        function scroll_to(to, offset) {
+            jQuery('html,body').animate({scrollTop: jQuery(to).offset().top - offset}, 400, 'swing');
+        }
     </script>
 @endsection

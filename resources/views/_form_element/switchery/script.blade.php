@@ -1,1 +1,1 @@
-<script src="{{ asset('/admin/vendors/switchery/dist/switchery.min.js') }}"></script>
+<script src="{{ asset('admin/vendors/switchery/dist/switchery.min.js') }}"></script>
