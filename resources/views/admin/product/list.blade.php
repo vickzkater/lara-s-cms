@@ -1,4 +1,4 @@
-{{-- ADD HTML SMALL MODAL --}}
+{{-- ADD HTML SMALL MODAL - BEGIN --}}
 @extends('_template_adm.modal_small')
 {{-- SMALL MODAL CONFIG --}}
 @section('small_modal_title', ucwords(lang('import', $translation)).' Excel')
@@ -13,6 +13,7 @@
 @section('small_modal_form', true)
 @section('small_modal_method', 'POST')
 @section('small_modal_url', route('admin.product.import_excel'))
+{{-- ADD HTML SMALL MODAL - END --}}
 
 @extends('_template_adm.master')
 
