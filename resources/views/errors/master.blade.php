@@ -6,13 +6,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <link rel="icon" href="{{ asset(env('APP_FAVICON', 'favicon.ico')) }}" type="image/{{ env('APP_FAVICON_TYPE', 'ico') }}" />
+	  <link rel="icon" href="{{ asset($global_config->favicon) }}" type="image/{{ $global_config->favicon_type }}" />
 
     <title>
       @if(View::hasSection('title')) 
         @yield('title') -
       @endif
-      {{ env('APP_NAME', 'My Website') }} Admin
+      {{ $global_config->app_name }}
     </title>
 
     <!-- Bootstrap -->

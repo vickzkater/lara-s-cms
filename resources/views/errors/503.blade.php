@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <meta name="keywords" content="{{ env('META_KEYWORDS', 'Your Website') }}">
-    <meta name="description" content="{{ env('META_DESCRIPTION', 'Your Website') }}">
+    <meta name="keywords" content="{{ $global_config->meta_keywords }}">
+    <meta name="description" content="{{ $global_config->meta_description }}">
 
     <title>We will be back with new and exciting features!</title>
 
-    <link rel="icon" href="{{ asset(env('APP_FAVICON')) }}" type="image/ico" />
+    <link rel="icon" href="{{ asset($global_config->favicon) }}" type="image/{{ $global_config->favicon_type }}" />
     <meta name="theme-color" content="#ffffff">
 
     <!-- Bootstrap -->
@@ -39,8 +39,8 @@
       <div class="row">
         <div class="col-md-12">
           <div class="header-logo-wrapper">
-            <img src="{{ asset(env('APP_LOGO_IMAGE')) }}" alt="{{ env('APP_NAME', 'Your Website') }}" title="{{ env('APP_NAME', 'Your Website') }}" class="img-responsive center-block" style="max-width:300px !important;" />
-            <h1 class="text-center">{{ env('APP_NAME', 'Your Website') }}</h1>
+            <img src="{{ asset($global_config->app_logo_image)) }}" alt="{{ $global_config->app_name }}" title="{{ $global_config->app_name }}" class="img-responsive center-block" style="max-width:300px !important;" />
+            <h1 class="text-center">{{ $global_config->app_name }}</h1>
           </div>
         </div>
       </div>
@@ -100,7 +100,12 @@
 
       <div class="row">
         <div class="col-md-12">
-          <div class="text-center copyright">Copyright &copy; {{ date('Y') }} {{ env('APP_NAME', 'Your Website') }} - Powered By {{ env('POWERED', 'Kinidi Tech') }}</div> 
+          <div class="text-center copyright">
+            Copyright &copy; {{ date('Y') }} {{ $global_config->app_name }}
+            @if (!empty($global_config->powered))
+              - {{ lang('Powered by', $translation) }} <a href="{{ $global_config->powered_url }}">{{ $global_config->powered }}</a>
+            @endif
+          </div> 
         </div>
       </div>
     

@@ -178,7 +178,7 @@ class DivisionController extends Controller
         ];
         $this->validate($request, $validation, $message, $names);
 
-        // validating prevent SQL injection
+        // HELPER VALIDATION FOR PREVENT SQL INJECTION & XSS ATTACK
         $name = Helper::validate_input_text($request->name);
         if (!$name) {
             return back()

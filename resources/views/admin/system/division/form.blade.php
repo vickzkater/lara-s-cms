@@ -1,7 +1,7 @@
 @extends('_template_adm.master')
 
 @php
-    $pagetitle = ucwords(lang('dvision', $translation)); 
+    $pagetitle = ucwords(lang('division', $translation)); 
     if(isset($data)){
         $pagetitle .= ' ('.ucwords(lang('edit', $translation)).')';
         $link = route('admin.division.do_edit', $data->id);
@@ -74,10 +74,10 @@
 
 @section('css')
     <!-- Switchery -->
-    <link href="{{ asset('/admin/vendors/switchery/dist/switchery.min.css') }}" rel="stylesheet">
+    @include('_form_element.switchery.css')
 @endsection
 
 @section('script')
     <!-- Switchery -->
-    <script src="{{ asset('/admin/vendors/switchery/dist/switchery.min.js') }}"></script>
+    @include('_form_element.switchery.script')
 @endsection

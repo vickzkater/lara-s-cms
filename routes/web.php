@@ -52,6 +52,12 @@ Route::group([
 
             // SYSTEM
             Route::group(['prefix' => 'system'], function () {
+                // CONFIG
+                Route::group(['prefix' => 'config'], function () {
+                    Route::get('/', 'ConfigController@view')->name('admin.config');
+                    Route::post('/update', 'ConfigController@update')->name('admin.config.update');
+                });
+
                 // DIVISION
                 Route::group(['prefix' => 'division'], function () {
                     Route::get('/', 'DivisionController@list')->name('admin.division.list');
