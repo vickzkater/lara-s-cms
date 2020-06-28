@@ -31,8 +31,10 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Custom 404 Error Page
 - [x] Custom Maintenance Mode
 - [x] Product Management (as module sample including upload image feature)
-- [x] Sortable Data List (in Division/Branch/Language)
-- [ ] Application Configurations
+- [x] Support DataTables AJAX
+- [x] Sortable Data List (in Division)
+- [x] Sortable Data List with Filter (in Branch - Filter by Division)
+- [x] Application Configurations
 - [x] Import & Export Excel File (in Product)
 - [x] Delete Uploaded Image (in Product)
 - [x] Rich Text Editor/WYSIWYG using TinyMCE (in Product)
@@ -78,28 +80,10 @@ The next thing you should do after installing Lara-S-CMS is set your application
 
 Next, setup environment configuration in `.env` file
 
-- Set `APP_NAME` for application name
-- Set `APP_BACKEND` for choose application back-end mode (MODEL or API)
-- Set `DISPLAY_SESSION` for display session data (debugging) in footer admin web page (development purpose only)
-- Set `APP_URL_SITE` for set website URL (public website), if any
-- Set `APP_URL_MAIN` for set main website URL, if this project is a microsite
-- Set `APP_URL_API` for set API URL, if this project using back-end mode: API
 - Set `APP_TIMEZONE` for set timezone application, sample: UTC or Asia/Jakarta
-- Set `APP_VERSION` for set application version
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
 - Set `ADMIN_DIR` for set application or admin system directory name (or leave it blank if using the admin dashboard only)
 - Set `DEFAULT_LANGUAGE` for set default language in application
-- Set `APP_FAVICON_TYPE` for set favicon type (ico/png/etc)
-- Set `APP_FAVICON` for set application favicon based on file image (input with image's path), sample: the favicon file is in public/images directory path, then set 'images/favicon.ico'
-- Set `APP_LOGO` for set application logo based on Font Awesome (input without 'fa-' just the icon name, example: star/laptop/bank)
-- Set `APP_LOGO_IMAGE` for set application logo based on file image (input with image's path), sample: the logo image is in public/images directory path, then set 'images/logo.png'
-- Set `HELP` for set description of application
-- Set `POWERED` for display developer name
-- Set `POWERED_URL` for display developer URL
-- Set `META_KEYWORDS` for set meta keywords
-- Set `META_TITLE` for set meta title
-- Set `META_DESCRIPTION` for set meta description
-- Set `META_AUTHOR` for set meta author
 
 - Set `MAIL_FROM_NAME` for set sender email's name
 - Set `MAIL_FROM_ADDRESS` for set sender email's address

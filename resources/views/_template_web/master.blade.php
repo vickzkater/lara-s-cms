@@ -5,15 +5,15 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="{{ asset(env('META_DESCRIPTION')) }}">
-    <meta name="author" content="{{ asset(env('META_AUTHOR')) }}">
-    <link rel="icon" href="{{ asset(env('APP_FAVICON', 'favicon.ico')) }}" type="image/{{ env('APP_FAVICON_TYPE', 'ico') }}" />
+    <meta name="description" content="{{ $global_config->meta_description }}">
+    <meta name="author" content="{{ $global_config->meta_author }}">
+    <link rel="icon" href="{{ asset($global_config->favicon) }}" type="image/{{ $global_config->favicon_type }}" />
 
     <title>
         @if(View::hasSection('title')) 
             @yield('title') -
         @endif
-        {{ env('APP_NAME', 'My Website') }}
+        {{ $global_config->app_name }}
     </title>
 
     <!-- Bootstrap core CSS -->
@@ -35,13 +35,13 @@
 
     <h1 class="site-heading text-center text-white d-none d-lg-block">
         <span class="site-heading-upper text-primary mb-3">A PHP Laravel Skeleton with Bootstrap 4 Theme</span>
-        <span class="site-heading-lower">{{ env('APP_NAME', 'My Website') }}</span>
+        <span class="site-heading-lower">{{ $global_config->app_name }}</span>
     </h1>
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
         <div class="container">
-            <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">{{ env('APP_NAME', 'My Website') }}</a>
+            <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">{{ $global_config->app_name }}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -70,7 +70,7 @@
 
     <footer class="footer text-faded text-center py-5">
         <div class="container">
-            <p class="m-0 small">Copyright &copy; 2020 {{ env('APP_NAME', 'My Website') }}</p>
+            <p class="m-0 small">Copyright &copy; 2020 {{ $global_config->app_name }}</p>
         </div>
     </footer>
 

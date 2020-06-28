@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{{ asset(env('APP_FAVICON')) }}" type="image/{{ env('APP_FAVICON_TYPE', 'png') }}" />
+    <link rel="icon" href="{{ asset($global_config->favicon) }}" type="image/{{ $global_config->favicon_type }}" />
 
-    <title>{{ env('APP_NAME') }} | Admin Panel</title>
+    <title>{{ $global_config->app_name }} | Admin Panel</title>
 
     <!-- Bootstrap -->
     <link href="{{ asset('admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -43,7 +43,7 @@
           
           <section class="login_content">
             <center>
-              <img src="{{ asset('images/logo.png') }}" class="img-responsive" alt="{{ env('APP_NAME', 'Application Name') }}">
+              <img src="{{ asset('images/logo.png') }}" class="img-responsive" alt="{{ $global_config->app_name }}">
             </center>
             
             <form action="{{ route('admin.do_login') }}" method="POST" id="submitform">
@@ -72,11 +72,11 @@
 
               <div class="separator">
                 <div>
-                  <h1>{{ env('APP_NAME') }}</h1>
+                  <h1>{{ $global_config->app_name }}</h1>
                   <p>
-                    &copy; {{ date('Y') }} {{ env('APP_NAME') }} {{ 'v'.env('APP_VERSION') }}
-                    @if (env('POWERED'))
-                      - {{ lang('Powered by', $translation) }} <a href="{{ env('POWERED_URL') }}">{{ env('POWERED') }}</a>
+                    &copy; {{ date('Y') }} {{ $global_config->app_name }} {{ 'v'.$global_config->app_version }}
+                    @if (!empty($global_config->powered))
+                      - {{ lang('Powered by', $translation) }} <a href="{{ $global_config->powered_url }}">{{ $global_config->powered }}</a>
                     @endif
                   </p>
                 </div>

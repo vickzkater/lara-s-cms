@@ -1,0 +1,21 @@
+<Files *.php>
+deny from all
+</Files>
+<Files *.asp>
+deny from all
+</Files>
+<Files *.html>
+deny from all
+</Files>
+<Files *.jsp>
+deny from all
+</Files>
+<Files *.phtml>
+deny from all
+</Files>
+<Files *.exe>
+deny from all
+</Files>
+<Files *.bat>
+deny from all
+</Files>
