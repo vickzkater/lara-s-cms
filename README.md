@@ -15,29 +15,45 @@ For sample as website, we are using [Business Casual](https://startbootstrap.com
 
 Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI Tech](https://kiniditech.com/)) on September 2019
 
+## Features
 
-## DEMO URL
+- [x] Support Multi Languages
+- [x] Admin Login
+- [x] My Profile
+- [x] Division/Subsidiary Management
+- [x] Branch per Division Management
+- [x] Rule Management
+- [x] Usergroup Management
+- [x] User (Admin) Management
+- [x] Access/Privilege Management
+- [x] System Logs
+- [x] Restore Deleted Data
+- [x] Custom 404 Error Page
+- [x] Custom Maintenance Mode
+- [x] Product Management (as module sample including upload image feature)
+- [x] Support DataTables AJAX
+- [x] Sortable Data List (in Division)
+- [x] Sortable Data List with Filter (in Branch - Filter by Division)
+- [x] Application Configurations
+- [x] Import & Export Excel File (in Product)
+- [x] Delete Uploaded Image (in Product)
+- [x] Rich Text Editor/WYSIWYG using TinyMCE (in Product)
+- [x] Datepicker (in Product)
 
-**COMING SOON**
-
-### Login details
-```
-Username: superadmin
-Password: admin123
-```
+<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.1.0.jpg" alt="LARA-S-CMS Modules"></p>
 
 ## Version
 
  Laravel  | Lara-S-CMS
 :---------|:----------
- 5.8.x    | 1.0.x
- 6.x.x    | 1.1.1
+ 5.8.x    | 1.0 ; 1.1.0
+ 6.x      | 1.0.1 ; 1.1.1
+ 7.x      | 1.2.x
 
 ## Requirements
 
-- PHP >= 7.2
-- MySQL 5.0.12-dev - 20150407
-- [Laravel 5.8.36](https://github.com/laravel/laravel)
+- PHP >= 7.2.5
+- [Laravel 7.x Requirements](https://laravel.com/docs/7.x/installation#server-requirements)
 
 ## Installing Lara-S-CMS
 
@@ -64,28 +80,10 @@ The next thing you should do after installing Lara-S-CMS is set your application
 
 Next, setup environment configuration in `.env` file
 
-- Set `APP_NAME` for application name
-- Set `APP_BACKEND` for choose application back-end mode (MODEL or API)
-- Set `DISPLAY_SESSION` for display session data (debugging) in footer admin web page (development purpose only)
-- Set `APP_URL_SITE` for set website URL (public website), if any
-- Set `APP_URL_MAIN` for set main website URL, if this project is a microsite
-- Set `APP_URL_API` for set API URL, if this project using back-end mode: API
 - Set `APP_TIMEZONE` for set timezone application, sample: UTC or Asia/Jakarta
-- Set `APP_VERSION` for set application version
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
 - Set `ADMIN_DIR` for set application or admin system directory name (or leave it blank if using the admin dashboard only)
 - Set `DEFAULT_LANGUAGE` for set default language in application
-- Set `APP_FAVICON_TYPE` for set favicon type (ico/png/etc)
-- Set `APP_FAVICON` for set application favicon based on file image (input with image's path), sample: the favicon file is in public/images directory path, then set 'images/favicon.ico'
-- Set `APP_LOGO` for set application logo based on Font Awesome (input without 'fa-' just the icon name, example: star/laptop/bank)
-- Set `APP_LOGO_IMAGE` for set application logo based on file image (input with image's path), sample: the logo image is in public/images directory path, then set 'images/logo.png'
-- Set `HELP` for set description of application
-- Set `POWERED` for display developer name
-- Set `POWERED_URL` for display developer URL
-- Set `META_KEYWORDS` for set meta keywords
-- Set `META_TITLE` for set meta title
-- Set `META_DESCRIPTION` for set meta description
-- Set `META_AUTHOR` for set meta author
 
 - Set `MAIL_FROM_NAME` for set sender email's name
 - Set `MAIL_FROM_ADDRESS` for set sender email's address
@@ -147,25 +145,6 @@ Username: superadmin
 Password: admin123
 ```
 
-## Features
-
-- [x] Support Multi Languages
-- [x] Admin Login
-- [x] My Profile
-- [x] Division Management
-- [x] Branch per Division Management
-- [x] Rule Management
-- [x] Usergroup Management
-- [x] User Management
-- [x] Access/Privilege Management
-- [x] System Logs
-- [x] Restore Deleted Data
-- [x] Custom 404 Error Page
-- [x] Custom Maintenance Mode
-- [x] Product Management
-
-<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.1.0.jpg" alt="LARA-S-CMS Modules"></p>
-
 ## Configurations
 
 ### Basic Configurations
@@ -213,6 +192,17 @@ The default template for maintenance mode responses is located in `resources/vie
 
 ## Packages Used (Outside of Laravel)
 - [yajra/laravel-datatables-oracle](https://github.com/yajra/laravel-datatables) - used to display a list of data in a table
+- [maatwebsite/excel](https://github.com/Maatwebsite/Laravel-Excel) - used to export & import Excel data
+
+## DEMO URL
+
+**COMING SOON**
+
+### Login details
+```
+Username: superadmin
+Password: admin123
+```
 
 ## Documentation
 

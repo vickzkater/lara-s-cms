@@ -21,6 +21,8 @@ class Controller extends BaseController
     public $languages;
     // variable for save application logo
     public $app_logo;
+    // variable for save global config
+    public $global_config;
 
     public function __construct()
     {
@@ -73,12 +75,20 @@ class Controller extends BaseController
             // set this variable with languages data
             $this->languages = $languages;
 
+            // get global config data
+            $global_config = DB::table('sys_config')->first();
+
+            // share variable to all Views
+            View::share('global_config', $global_config);
+
+            // set this variable with translation data
+            $this->global_config = $global_config;
+
             // set app logo
-            $app_logo = env('APP_LOGO_IMAGE');
-            if (empty($app_logo)) {
-                $app_logo = '<i class="fa fa-' . env('APP_LOGO', 'laptop') . '"></i>';
+            if (empty($global_config->app_logo_image)) {
+                $app_logo = '<i class="fa fa-' . $global_config->app_logo . '"></i>';
             } else {
-                $app_logo = '<img src=" ' . asset($app_logo) . '" style="max-width:40px" />';
+                $app_logo = '<img src=" ' . asset($global_config->app_logo_image) . '" style="max-width:40px" />';
             }
 
             // share variable to all Views

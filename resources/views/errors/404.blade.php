@@ -11,12 +11,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>404 ({{ lang("PAGE NOT FOUND") }}) | {{ env('APP_NAME', 'Your Website') }}</title>
-    <meta name="keywords" content="{{ env('META_KEYWORDS', 'Your Website') }}" />
-    <meta name="description" content="{{ env('META_DESCRIPTION', 'Your Website') }}" />
-    <meta name="Author" content="{{ env('META_AUTHOR', 'Your Website') }}" />
+    <title>404 ({{ lang("PAGE NOT FOUND") }}) | {{ $global_config->app_name }}</title>
+    <meta name="keywords" content="{{ $global_config->meta_keywords }}" />
+    <meta name="description" content="{{ $global_config->meta_description }}" />
+    <meta name="Author" content="{{ $global_config->meta_author }}" />
 
-    <link rel="icon" type="image/{{ env('APP_FAVICON_TYPE', 'png') }}" href="{{ asset(env('APP_FAVICON')) }}" />
+    <link rel="icon" href="{{ asset($global_config->app_favicon) }}" type="image/{{ $global_config->app_favicon_type }}" />
 
     <!-- Latest compiled and minified CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1">

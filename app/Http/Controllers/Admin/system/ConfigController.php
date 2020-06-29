@@ -1,0 +1,232 @@
+<?php
+
+namespace App\Http\Controllers\Admin\system;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+
+// LIBRARIES
+use App\Libraries\Helper;
+
+// MODELS
+use App\Models\system\SysConfig;
+
+class ConfigController extends Controller
+{
+    // SET THIS MODULE
+    private $module = 'Config';
+    // SET THIS OBJECT/ITEM NAME
+    private $item = 'config';
+
+    public function view()
+    {
+        $data = SysConfig::first();
+
+        return view('admin.system.config.form', compact('data'));
+    }
+
+    public function update(Request $request)
+    {
+        // AUTHORIZING...
+        $authorize = Helper::authorizing($this->module, 'Update');
+        if ($authorize['status'] != 'true') {
+            return back()->with('error', $authorize['message']);
+        }
+
+        // SET THIS OBJECT/ITEM NAME BASED ON TRANSLATION
+        $this->item = ucwords(lang($this->item, $this->translation));
+
+        // GET THE DATA BASED ON ID
+        $data = SysConfig::find(1);
+
+        // CHECK IS DATA FOUND
+        if (!$data) {
+            // DATA NOT FOUND
+            return back()
+                ->withInput()
+                ->with('error', lang('#item not found, please check the database', $this->translation, ['#item' => $this->item]));
+        }
+
+        // LARAVEL VALIDATION
+        $validation = [
+            'app_name' => 'required',
+            'app_backend' => 'required',
+            'app_url_site' => 'required',
+            'app_version' => 'required',
+            'app_favicon_type' => 'required',
+            'app_logo' => 'required',
+            'help' => 'required',
+            'meta_keywords' => 'required',
+            'meta_title' => 'required',
+            'meta_description' => 'required',
+            'meta_author' => 'required'
+        ];
+        $message = [
+            'required' => ':attribute ' . lang('field is required', $this->translation)
+        ];
+        $names = [
+            'app_name' => ucwords(lang('application name', $this->translation)),
+            'app_backend' => ucwords(lang('application backend', $this->translation)),
+            'app_url_site' => ucwords(lang('application URL', $this->translation)),
+            'app_version' => ucwords(lang('application version', $this->translation)),
+            'app_favicon_type' => ucwords(lang('favicon type', $this->translation)),
+            'app_logo' => ucwords(lang('application logo', $this->translation)),
+            'help' => ucwords(lang('help', $this->translation)),
+            'meta_keywords' => ucwords(lang('meta keywords', $this->translation)),
+            'meta_title' => ucwords(lang('meta title', $this->translation)),
+            'meta_description' => ucwords(lang('meta description', $this->translation)),
+            'meta_author' => ucwords(lang('meta author', $this->translation))
+        ];
+        $this->validate($request, $validation, $message, $names);
+
+        // HELPER VALIDATION FOR PREVENT SQL INJECTION & XSS ATTACK
+        $app_name = Helper::validate_input_text($request->app_name);
+        if (!$app_name) {
+            return back()
+                ->withInput()
+                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('application name', $this->translation))]));
+        }
+        $data->app_name = $app_name;
+
+        $app_backend = Helper::validate_input_text($request->app_backend);
+        if (!$app_backend) {
+            return back()
+                ->withInput()
+                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('application backend', $this->translation))]));
+        }
+        if (!in_array($app_backend, ['MODEL', 'API'])) {
+            return back()
+                ->withInput()
+                ->with('error', lang('#item only support MODEL or API', $this->translation, ['#item' => ucwords(lang('application backend', $this->translation))]));
+        }
+        $data->app_backend = $app_backend;
+
+        $app_url_site = Helper::validate_input_url($request->app_url_site);
+        if (!$app_url_site) {
+            return back()
+                ->withInput()
+                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('application URL', $this->translation))]));
+        }
+        $data->app_url_site = $app_url_site;
+
+        $data->app_url_main = Helper::validate_input_url($request->app_url_main);
+
+        $data->app_url_api = Helper::validate_input_url($request->app_url_api);
+
+        $app_version = Helper::validate_input_text($request->app_version);
+        if (!$app_version) {
+            return back()
+                ->withInput()
+                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('application version', $this->translation))]));
+        }
+        $data->app_version = $app_version;
+
+        $app_favicon_type = Helper::validate_input_text($request->app_favicon_type);
+        if (!$app_favicon_type) {
+            return back()
+                ->withInput()
+                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('favicon type', $this->translation))]));
+        }
+        $app_favicon_type = strtolower($app_favicon_type);
+        if (!in_array($app_favicon_type, ['ico', 'png', 'jpg', 'jpeg'])) {
+            return back()
+                ->withInput()
+                ->with('error', lang('#item only support ico/png/jpg/jpeg', $this->translation, ['#item' => ucwords(lang('favicon type', $this->translation))]));
+        }
+        $data->app_favicon_type = $app_favicon_type;
+
+        // IF UPLOAD NEW IMAGE
+        if ($request->app_favicon) {
+            // PROCESSING IMAGE
+            $dir_path = 'uploads/config/';
+            $image_file = $request->file('app_favicon');
+            $format_image_name = 'favicon-' . time();
+            $image = Helper::upload_image($dir_path, $image_file, true, $format_image_name, ['ico', 'png', 'jpg', 'jpeg']);
+            if ($image['status'] != 'true') {
+                return back()
+                    ->withInput()
+                    ->with('error', lang($image['message'], $this->translation));
+            }
+            // GET THE UPLOADED IMAGE RESULT
+            $data->app_favicon = $dir_path . $image['data'];
+        }
+
+        $app_logo = Helper::validate_input_text($request->app_logo);
+        if (!$app_logo) {
+            return back()
+                ->withInput()
+                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('application logo', $this->translation))]));
+        }
+        $data->app_logo = $app_logo;
+
+        // IF UPLOAD NEW IMAGE
+        if ($request->app_logo_image) {
+            // PROCESSING IMAGE
+            $dir_path = 'uploads/config/';
+            $image_file = $request->file('app_logo_image');
+            $format_image_name = Helper::generate_slug($app_name) . '-' . time();
+            $image = Helper::upload_image($dir_path, $image_file, true, $format_image_name);
+            if ($image['status'] != 'true') {
+                return back()
+                    ->withInput()
+                    ->with('error', lang($image['message'], $this->translation));
+            }
+            // GET THE UPLOADED IMAGE RESULT
+            $data->app_logo_image = $dir_path . $image['data'];
+        }
+
+        $help = Helper::validate_input_text($request->help);
+        if (!$help) {
+            return back()
+                ->withInput()
+                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('help', $this->translation))]));
+        }
+        $data->help = $help;
+
+        $meta_keywords = Helper::validate_input_text($request->meta_keywords);
+        if (!$meta_keywords) {
+            return back()
+                ->withInput()
+                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('meta keywords', $this->translation))]));
+        }
+        $data->meta_keywords = $meta_keywords;
+
+        $meta_title = Helper::validate_input_text($request->meta_title);
+        if (!$meta_title) {
+            return back()
+                ->withInput()
+                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('meta title', $this->translation))]));
+        }
+        $data->meta_title = $meta_title;
+
+        $meta_description = Helper::validate_input_text($request->meta_description);
+        if (!$meta_description) {
+            return back()
+                ->withInput()
+                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('meta description', $this->translation))]));
+        }
+        $data->meta_description = $meta_description;
+
+        $meta_author = Helper::validate_input_text($request->meta_author);
+        if (!$meta_author) {
+            return back()
+                ->withInput()
+                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('meta author', $this->translation))]));
+        }
+        $data->meta_author = $meta_author;
+
+        if ($data->save()) {
+            // SUCCESS
+            return redirect()
+                ->route('admin.config')
+                ->with('success', lang('Successfully updated #item', $this->translation, ['#item' => $this->item]));
+        }
+
+        // FAILED
+        return back()
+            ->withInput()
+            ->with('error', lang('Oops, failed to update #item. Please try again.', $this->translation, ['#item' => $this->item]));
+    }
+}

@@ -52,6 +52,12 @@ Route::group([
 
             // SYSTEM
             Route::group(['prefix' => 'system'], function () {
+                // CONFIG
+                Route::group(['prefix' => 'config'], function () {
+                    Route::get('/', 'ConfigController@view')->name('admin.config');
+                    Route::post('/update', 'ConfigController@update')->name('admin.config.update');
+                });
+
                 // DIVISION
                 Route::group(['prefix' => 'division'], function () {
                     Route::get('/', 'DivisionController@list')->name('admin.division.list');
@@ -62,6 +68,7 @@ Route::group([
                     Route::post('/delete', 'DivisionController@delete')->name('admin.division.delete');
                     Route::get('/deleted', 'DivisionController@list_deleted')->name('admin.division.deleted');
                     Route::post('/restore', 'DivisionController@restore')->name('admin.division.restore');
+                    Route::post('/sorting', 'DivisionController@sorting')->name('admin.division.sorting');
                 });
 
                 // BRANCH
@@ -76,6 +83,7 @@ Route::group([
                     Route::get('/deleted', 'BranchController@list_deleted')->name('admin.branch.deleted');
                     Route::get('/get-data-deleted', 'BranchController@get_data_deleted')->name('admin.branch.get_data_deleted');
                     Route::post('/restore', 'BranchController@restore')->name('admin.branch.restore');
+                    Route::post('/sorting', 'BranchController@sorting')->name('admin.branch.sorting');
                 });
 
                 // RULE
@@ -162,6 +170,13 @@ Route::group([
             Route::get('/deleted', 'ProductController@list_deleted')->name('admin.product.deleted');
             Route::get('/get-data-deleted', 'ProductController@get_data_deleted')->name('admin.product.get_data_deleted');
             Route::post('/restore', 'ProductController@restore')->name('admin.product.restore');
+
+            // Excel
+            Route::group(['prefix' => 'excel'], function () {
+                Route::get('/import/get-template', 'ProductController@import_excel_template')->name('admin.product.import_excel_template');
+                Route::post('/import', 'ProductController@import_excel')->name('admin.product.import_excel');
+                Route::get('/export', 'ProductController@export_excel')->name('admin.product.export_excel');
+            });
         });
     });
 });

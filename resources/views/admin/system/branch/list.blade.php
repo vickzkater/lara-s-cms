@@ -38,6 +38,27 @@
     <div class="clearfix"></div>
 
     <div class="row">
+      {{-- filter by: division --}}
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="control-group">
+          <div class="controls">
+            <div class="input-prepend input-group">
+              <span class="add-on input-group-addon"><i class="fa fa-bank"></i></span>
+              <select style="width: 200px" id="filterlist-division" class="form-control select2">
+                @if (isset($divisions))
+                  @foreach ($divisions as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                  @endforeach
+                  <option value="all">- {{ ucwords(lang('choose all', $translation)) }} -</option>
+                @else
+                  <option value="no_data" disabled>*NO DATA</option>
+                @endif
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
@@ -57,7 +78,7 @@
                     <th>{{ ucwords(lang('action', $translation)) }}</th>
                   </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody class="sorted_table" id="sortable-data"></tbody>
               </table>
 
               <table id="datatables-deleted" class="table table-striped table-bordered" style="display:none">
@@ -71,7 +92,7 @@
                     <th>{{ ucwords(lang('action', $translation)) }}</th>
                   </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody id="sortable-data-deleted"></tbody>
               </table>
             </div>
           </div>
@@ -81,60 +102,143 @@
   </div>
 @endsection
 
-@section('script')
-  <!-- Datatables -->
-  @include('_form_element.datatables.script')
+@section('css')
+  <!-- Sortable-Table -->
+  @include('_form_element.sortable_table.css')
 
+  <!-- Select2 -->
+  @include('_form_element.select2.css')
+@endsection
+
+@section('script')
   <script>
+    var AjaxSortingURL = '{{ route("admin.branch.sorting") }}';
+
     $(document).ready(function() {
       {{ $function_get_data }}
+
+      $('#filterlist-division').on('change', function() {
+        {{ $function_get_data }}
+        $(this).blur();
+      })
     });
 
     function refresh_data() {
       $('#datatables').show();
-      $('#datatables').dataTable().fnDestroy();
-      var table = $('#datatables').DataTable({
-        order: [[ 0, "asc" ]],
-        orderCellsTop: true,
-        fixedHeader: false,
-        serverSide: true,
-        processing: true,
-        ajax: "{{ $link_get_data }}",
-        columns: [
-          {data: 'division_name', name: 'sys_divisions.name'},
-          {data: 'name', name: 'sys_branches.name'},
-          {data: 'item_status', name: 'item_status'},
-          {data: 'created_at', name: 'sys_branches.created_at'},
-          {data: 'updated_at', name: 'sys_branches.updated_at'},
-          {data: 'action', name: 'action'},
-        ]
+
+      var division = $('#filterlist-division').val();
+      if (typeof division == 'undefined') {
+        var division = 'all';
+      }
+
+      $.ajax({
+        type: 'GET',
+        url: '{{ $link_get_data }}',
+        data: {
+          division: division,
+        },
+        success: function(response){
+          // console.log(response);
+          if (typeof response.status != 'undefined') {
+            if (response.status == 'true') {
+              var html = '';
+              if (response.data == '') {
+                html += '<tr><td colspan="6"><h2 class="text-center">{{ strtoupper(lang("no data available", $translation)) }}</h2></td></tr>';
+              } else {
+                $.each(response.data, function (index, value) {
+                  html += '<tr role="row" id="row-'+value.id+'">';
+                    html += '<td class="dragndrop">'+value.division_name+'</td>';
+                    html += '<td>'+value.name+'</td>';
+
+                    var status_item = '<span class="label label-danger"><i>{{ ucwords(lang("disabled", $translation)) }}</i></span>';
+                    if (value.status == 1) {
+                      status_item = '<span class="label label-success">{{ ucwords(lang("enabled", $translation)) }}</span>';
+                    }
+                    html += '<td>'+status_item+'</td>';
+                    html += '<td>'+value.created_at_edited+'</td>';
+                    html += '<td>'+value.updated_at_edited+'</td>';
+
+                    action_edit = '<a href="{{ url("/manager/system/branch/edit") }}/'+value.id+'" class="btn btn-xs btn-primary" title="{{ ucwords(lang("edit", $translation)) }}"><i class="fa fa-pencil"></i>&nbsp; {{ ucwords(lang("edit", $translation)) }}</a>';
+                    action_delete = '<form action="{{ route("admin.branch.delete") }}" method="POST" onsubmit="return confirm(\'{{ lang("Are you sure to delete this #item?", $translation, ["#item"=>$this_object]) }}\');" style="display: inline">{{ csrf_field() }}<input type="hidden" name="id" value="'+value.id+'"><button type="submit" class="btn btn-xs btn-danger" title="{{ ucwords(lang("delete", $translation)) }}"><i class="fa fa-trash"></i>&nbsp; {{ ucwords(lang("delete", $translation)) }}</button></form>';
+                    html += '<td>'+action_edit+action_delete+'</td>';
+                  html += '</tr>';
+                });
+              }
+              $('#sortable-data').html(html);
+            } else {
+              alert(response.message);
+            }
+          } else {
+            alert ('Server not respond, please refresh your page');
+          }
+        },
+        error: function (data, textStatus, errorThrown) {
+          console.log(data);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
       });
     }
 
     function refresh_data_deleted() {
       $('#datatables-deleted').show();
-      $('#datatables-deleted').dataTable().fnDestroy();
-      var table = $('#datatables-deleted').DataTable({
-        order: [[ 0, "asc" ]],
-        orderCellsTop: true,
-        fixedHeader: false,
-        serverSide: true,
-        processing: true,
-        ajax: "{{ $link_get_data }}",
-        columns: [
-          {data: 'division_name', name: 'sys_divisions.name'},
-          {data: 'name', name: 'branch.name'},
-          {data: 'item_status', name: 'item_status'},
-          {data: 'created_at', name: 'sys_branches.created_at'},
-          {data: 'deleted_at', name: 'sys_branches.deleted_at'},
-          {data: 'action', name: 'action'},
-        ]
+
+      var division = $('#filterlist-division').val();
+      if (typeof division == 'undefined') {
+        var division = 'all';
+      }
+
+      $.ajax({
+        type: 'GET',
+        url: '{{ $link_get_data }}',
+        data: {
+          division: division,
+        },
+        success: function(response){
+          // console.log(response);
+          if (typeof response.status != 'undefined') {
+            if (response.status == 'true') {
+              var html = '';
+              if (response.data == '') {
+                html += '<tr><td colspan="6"><h2 class="text-center">{{ strtoupper(lang("no data available", $translation)) }}</h2></td></tr>';
+              } else {
+                $.each(response.data, function (index, value) {
+                  html += '<tr>';
+                    html += '<td>'+value.division_name+'</td>';
+                    html += '<td>'+value.name+'</td>';
+
+                    var status_item = '<span class="label label-danger"><i>{{ ucwords(lang("disabled", $translation)) }}</i></span>';
+                    if (value.status == 1) {
+                      status_item = '<span class="label label-success">{{ ucwords(lang("enabled", $translation)) }}</span>';
+                    }
+                    html += '<td>'+status_item+'</td>';
+                    html += '<td>'+value.created_at_edited+'</td>';
+                    html += '<td>'+value.deleted_at_edited+'</td>';
+
+                    action_restore = '<form action="{{ route("admin.branch.restore") }}" method="POST" onsubmit="return confirm(\'{{ lang("Are you sure to restore this #item?", $translation, ["#item"=>$this_object]) }}\');" style="display: inline">{{ csrf_field() }}<input type="hidden" name="id" value="'+value.id+'"><button type="submit" class="btn btn-xs btn-primary" title="{{ ucwords(lang("restore", $translation)) }}"><i class="fa fa-check"></i>&nbsp; {{ ucwords(lang("restore", $translation)) }}</button></form>';
+                    html += '<td>'+action_restore+'</td>';
+                  html += '</tr>';
+                });
+              }
+              $('#sortable-data-deleted').html(html);
+            } else {
+              alert(response.message);
+            }
+          } else {
+            alert ('Server not respond, please refresh your page');
+          }
+        },
+        error: function (data, textStatus, errorThrown) {
+          console.log(data);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
       });
     }
   </script>
-@endsection
 
-@section('css')
-  <!-- Datatables -->
-  @include('_form_element.datatables.css')
+  <!-- Sortable-Table -->
+  @include('_form_element.sortable_table.script')
+  <!-- Select2 -->
+  @include('_form_element.select2.script')
 @endsection

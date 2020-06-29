@@ -102,6 +102,11 @@
                 <?php $priv_admin++; ?>
                 <li><a href="{{ route('admin.division.list') }}"><i class="fa fa-bank"></i> {{ ucwords(lang('division', $translation)) }}</a></li>
             @endif
+
+            @if (Helper::authorizing('Config', 'Update')['status'] == 'true')
+                <?php $priv_admin++; ?>
+                <li><a href="{{ route('admin.config') }}"><i class="fa fa-gears"></i> {{ ucwords(lang('config', $translation)) }}</a></li>
+            @endif
         </ul>
     </div>
 </div>

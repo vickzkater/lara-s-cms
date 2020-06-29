@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Validator;
 
 // LIBRARIES
 use App\Libraries\Helper;
@@ -33,69 +34,10 @@ class BranchController extends Controller
         // FOR DISPLAY ACTIVE DATA
         $data = true;
 
-        return view('admin.system.branch.list', compact('data'));
-    }
-
-    public function get_data(Datatables $datatables, Request $request)
-    {
-        // AUTHORIZING...
-        $authorize = Helper::authorizing($this->module, 'View List');
-        if ($authorize['status'] != 'true') {
-            return back()->with('error', $authorize['message']);
-        }
-
-        // SET THIS OBJECT/ITEM NAME BASED ON TRANSLATION
-        $this->item = ucwords(lang($this->item, $this->translation));
-
-        // AUTHORIZING DIVISION...
-        $allowed_divisions = [];
-        $sessions = Session::all();
-        foreach ($sessions['division'] as $item) {
-            $authorize_division = Helper::authorizing_division($item);
-            if ($authorize_division['status'] == 'true') {
-                if ($authorize_division['message'] == 'all') {
-                    break;
-                } else {
-                    $allowed_divisions[] = $authorize_division['message'];
-                }
-            } else {
-                return back()->with('error', $authorize['message']);
-            }
-        }
-
         // GET THE DATA
-        $query = SysBranch::select('sys_branches.*', 'sys_divisions.name as division_name')
-            ->leftJoin('sys_divisions', 'sys_branches.division_id', '=', 'sys_divisions.id');
+        $divisions = SysDivision::orderBy('ordinal')->get();
 
-        // GET ONLY ALLOWED DIVISION
-        if (count($allowed_divisions) > 0) {
-            $query->where(function ($query_where) use ($allowed_divisions) {
-                foreach ($allowed_divisions as $item) {
-                    $query_where->orWhere('sys_divisions.name', '=', $item);
-                }
-            });
-        }
-
-        return $datatables->eloquent($query)
-            ->addColumn('item_status', function ($data) {
-                if ($data->status != 1) {
-                    return '<span class="label label-danger"><i>' . ucwords(lang('disabled', $this->translation)) . '</i></span>';
-                }
-                return '<span class="label label-success">' . ucwords(lang('enabled', $this->translation)) . '</span>';
-            })
-            ->addColumn('action', function ($data) {
-                $html = '<a href="' . route('admin.branch.edit', $data->id) . '" class="btn btn-xs btn-primary" title="' . ucwords(lang('edit', $this->translation)) . '"><i class="fa fa-pencil"></i>&nbsp; ' . ucwords(lang('edit', $this->translation)) . '</a>';
-
-                $html .= '<form action="' . route('admin.branch.delete') . '" method="POST" onsubmit="return confirm(\'' . lang('Are you sure to delete this #item?', $this->translation, ['#item' => $this->item]) . '\');" style="display: inline"> ' . csrf_field() . ' <input type="hidden" name="id" value="' . $data->id . '">
-                <button type="submit" class="btn btn-xs btn-danger" title="' . ucwords(lang('delete', $this->translation)) . '"><i class="fa fa-trash"></i>&nbsp; ' . ucwords(lang('delete', $this->translation)) . '</button></form>';
-
-                return $html;
-            })
-            ->editColumn('updated_at', function ($data) {
-                return Helper::time_ago(strtotime($data->updated_at), lang('ago', $this->translation), Helper::get_periods($this->translation));
-            })
-            ->rawColumns(['item_status', 'action'])
-            ->toJson();
+        return view('admin.system.branch.list', compact('data', 'divisions'));
     }
 
     public function create()
@@ -189,6 +131,13 @@ class BranchController extends Controller
         $gmaps = Helper::validate_input_url($request->gmaps);
         $status = (int) $request->status;
 
+        // SET ORDER / ORDINAL
+        $last = SysBranch::select('ordinal')->orderBy('ordinal', 'desc')->where('division_id', $division_id)->first();
+        $ordinal = 1;
+        if ($last) {
+            $ordinal = $last->ordinal + 1;
+        }
+
         // SAVE THE DATA
         $data = new SysBranch();
         $data->division_id = $division_id;
@@ -196,6 +145,7 @@ class BranchController extends Controller
         $data->location = $location;
         $data->phone = $phone;
         $data->gmaps = $gmaps;
+        $data->ordinal = $ordinal;
         $data->status = $status;
 
         if ($data->save()) {
@@ -438,19 +388,222 @@ class BranchController extends Controller
             return back()->with('error', $authorize['message']);
         }
 
-        return view('admin.system.branch.list');
+        // GET THE DATA
+        $divisions = SysDivision::orderBy('ordinal')->get();
+
+        return view('admin.system.branch.list', compact('divisions'));
     }
 
-    public function get_data_deleted(Datatables $datatables, Request $request)
+    public function restore(Request $request)
     {
         // AUTHORIZING...
-        $authorize = Helper::authorizing($this->module, 'View List');
+        $authorize = Helper::authorizing($this->module, 'Restore');
         if ($authorize['status'] != 'true') {
             return back()->with('error', $authorize['message']);
         }
 
         // SET THIS OBJECT/ITEM NAME BASED ON TRANSLATION
         $this->item = ucwords(lang($this->item, $this->translation));
+
+        $id = $request->id;
+
+        // CHECK OBJECT ID
+        if ((int) $id < 1) {
+            // INVALID OBJECT ID
+            return redirect()
+                ->route('admin.branch.deleted')
+                ->with('error', lang('#item ID is invalid, please recheck your link again', $this->translation, ['#item' => $this->item]));
+        }
+
+        // GET THE DATA BASED ON ID
+        $data = SysBranch::onlyTrashed()->find($id);
+
+        // CHECK IS DATA FOUND
+        if (!$data) {
+            // DATA NOT FOUND
+            return redirect()
+                ->route('admin.branch.deleted')
+                ->with('error', lang('#item not found, please recheck your link again', $this->translation, ['#item' => $this->item]));
+        }
+
+        // RESTORE THE DATA
+        if ($data->restore()) {
+            // LOGGING
+            $log = new SysLog();
+            $log->subject = Session::get('admin')->id;
+            $log->action = 16;
+            $log->object = $data->id;
+            $log->save();
+
+            // SUCCESS
+            return redirect()
+                ->route('admin.branch.deleted')
+                ->with('success', lang('Successfully restored #item : #name', $this->translation, ['#item' => $this->item, '#name' => $data->name]));
+        }
+
+        // FAILED
+        return back()
+            ->with('error', lang('Oops, failed to restore #item. Please try again.', $this->translation, ['#item' => $this->item]));
+    }
+
+    public function sorting(Request $request)
+    {
+        // AJAX OR API VALIDATOR
+        $validation_rules = [
+            'rows' => 'required'
+        ];
+
+        $validator = Validator::make($request->all(), $validation_rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Validation Error',
+                'data' => $validator->errors()->messages()
+            ]);
+        }
+
+        // JSON Array - sample: row[]=2&row[]=1&row[]=3
+        $rows = $request->input('rows');
+
+        // convert to array
+        $data = explode('&', $rows);
+
+        $ordinal = 1;
+        foreach ($data as $item) {
+            // split the data
+            $tmp = explode('[]=', $item);
+
+            $object = SysBranch::find($tmp[1]);
+            $object->ordinal = $ordinal;
+            $object->save();
+
+            $ordinal++;
+        }
+
+        // SUCCESS
+        $response = [
+            'status' => 'true',
+            'message' => 'Successfully rearranged data',
+            'data' => $data
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function get_data(Request $request)
+    {
+        // AUTHORIZING...
+        $authorize = Helper::authorizing($this->module, 'View List');
+        if ($authorize['status'] != 'true') {
+            return response()->json([
+                'status' => 'false',
+                'message' => $authorize['message']
+            ]);
+        }
+
+        // SET THIS OBJECT/ITEM NAME BASED ON TRANSLATION
+        $this->item = ucwords(lang($this->item, $this->translation));
+
+        // AJAX OR API VALIDATOR
+        $validation_rules = [
+            'division' => 'required'
+        ];
+        $validator = Validator::make($request->all(), $validation_rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Validation Error',
+                'data' => $validator->errors()->messages()
+            ]);
+        }
+
+        // GET PARAMATERS
+        $division = (int) $request->input('division');
+
+        // AUTHORIZING DIVISION...
+        $allowed_divisions = [];
+        $sessions = Session::all();
+        foreach ($sessions['division'] as $item) {
+            $authorize_division = Helper::authorizing_division($item);
+            if ($authorize_division['status'] == 'true') {
+                if ($authorize_division['message'] == 'all') {
+                    break;
+                } else {
+                    $allowed_divisions[] = $authorize_division['message'];
+                }
+            } else {
+                return back()->with('error', $authorize['message']);
+            }
+        }
+
+        // GET THE DATA
+        $query = SysBranch::select('sys_branches.*', 'sys_divisions.name as division_name')
+            ->leftJoin('sys_divisions', 'sys_branches.division_id', '=', 'sys_divisions.id');
+
+        // GET ONLY ALLOWED DIVISION
+        if (count($allowed_divisions) > 0) {
+            $query->where(function ($query_where) use ($allowed_divisions) {
+                foreach ($allowed_divisions as $item) {
+                    $query_where->orWhere('sys_divisions.name', '=', $item);
+                }
+            });
+        }
+
+        // FILTER THE DATA
+        if ($division != 'all') {
+            $query->where('sys_divisions.id', $division);
+        }
+
+        // PROVIDE THE DATA
+        $data = $query->orderBy('sys_branches.ordinal')->get();
+
+        // MANIPULATE THE DATA
+        if (!empty($data)) {
+            foreach ($data as $item) {
+                $item->created_at_edited = date('Y-m-d H:i:s');
+                $item->updated_at_edited = Helper::time_ago(strtotime($item->updated_at), lang('ago', $this->translation), Helper::get_periods($this->translation));
+                $item->deleted_at_edited = Helper::time_ago(strtotime($item->deleted_at), lang('ago', $this->translation), Helper::get_periods($this->translation));
+            }
+        }
+
+        // SUCCESS
+        $response = [
+            'status' => 'true',
+            'message' => 'Successfully get data list',
+            'data' => $data
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function get_data_deleted(Request $request)
+    {
+        // AUTHORIZING...
+        $authorize = Helper::authorizing($this->module, 'View List');
+        if ($authorize['status'] != 'true') {
+            return response()->json([
+                'status' => 'false',
+                'message' => $authorize['message']
+            ]);
+        }
+
+        // SET THIS OBJECT/ITEM NAME BASED ON TRANSLATION
+        $this->item = ucwords(lang($this->item, $this->translation));
+
+        // AJAX OR API VALIDATOR
+        $validation_rules = [
+            'division' => 'required'
+        ];
+        $validator = Validator::make($request->all(), $validation_rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Validation Error',
+                'data' => $validator->errors()->messages()
+            ]);
+        }
+
+        // GET PARAMATERS
+        $division = (int) $request->input('division');
 
         // AUTHORIZING DIVISION...
         $allowed_divisions = [];
@@ -482,73 +635,29 @@ class BranchController extends Controller
             });
         }
 
-        return $datatables->eloquent($query)
-            ->addColumn('item_status', function ($data) {
-                if ($data->status != 1) {
-                    return '<span class="label label-danger"><i>' . ucwords(lang('disabled', $this->translation)) . '</i></span>';
-                }
-                return '<span class="label label-success">' . ucwords(lang('enabled', $this->translation)) . '</span>';
-            })
-            ->addColumn('action', function ($data) {
-                return '<form action="' . route('admin.branch.restore') . '" method="POST" onsubmit="return confirm(\'' . lang('Are you sure to restore this #item?', $this->translation, ['#item' => $this->item]) . '\');" style="display: inline"> ' . csrf_field() . ' <input type="hidden" name="id" value="' . $data->id . '">
-                <button type="submit" class="btn btn-xs btn-primary" title="' . ucwords(lang('restore', $this->translation)) . '"><i class="fa fa-check"></i>&nbsp; ' . ucwords(lang('restore', $this->translation)) . '</button></form>';
-            })
-            ->editColumn('deleted_at', function ($data) {
-                return Helper::time_ago(strtotime($data->deleted_at), lang('ago', $this->translation), Helper::get_periods($this->translation));
-            })
-            ->rawColumns(['item_status', 'action'])
-            ->toJson();
-    }
-
-    public function restore(Request $request)
-    {
-        // AUTHORIZING...
-        $authorize = Helper::authorizing($this->module, 'Restore');
-        if ($authorize['status'] != 'true') {
-            return back()->with('error', $authorize['message']);
+        // FILTER THE DATA
+        if ($division != 'all') {
+            $query->where('sys_divisions.id', $division);
         }
 
-        // SET THIS OBJECT/ITEM NAME BASED ON TRANSLATION
-        $this->item = ucwords(lang($this->item, $this->translation));
+        // PROVIDE THE DATA
+        $data = $query->orderBy('sys_branches.ordinal')->get();
 
-        $id = $request->id;
-
-        // CHECK OBJECT ID
-        if ((int) $id < 1) {
-            // INVALID OBJECT ID
-            return redirect()
-                ->route('admin.branch.deleted')
-                ->with('error', lang('#item ID is invalid, please recheck your link again', $this->translation, ['#item' => $this->item]));
+        // MANIPULATE THE DATA
+        if (!empty($data)) {
+            foreach ($data as $item) {
+                $item->created_at_edited = date('Y-m-d H:i:s');
+                $item->updated_at_edited = Helper::time_ago(strtotime($item->updated_at), lang('ago', $this->translation), Helper::get_periods($this->translation));
+                $item->deleted_at_edited = Helper::time_ago(strtotime($item->deleted_at), lang('ago', $this->translation), Helper::get_periods($this->translation));
+            }
         }
 
-        // GET THE DATA BASED ON ID
-        $data = SysBranch::onlyTrashed()->find($id);
-
-        // CHECK IS DATA FOUND
-        if (!$data) {
-            // DATA NOT FOUND
-            return redirect()
-                ->route('admin.division.deleted')
-                ->with('error', lang('#item not found, please recheck your link again', $this->translation, ['#item' => $this->item]));
-        }
-
-        // RESTORE THE DATA
-        if ($data->restore()) {
-            // LOGGING
-            $log = new SysLog();
-            $log->subject = Session::get('admin')->id;
-            $log->action = 16;
-            $log->object = $data->id;
-            $log->save();
-
-            // SUCCESS
-            return redirect()
-                ->route('admin.division.deleted')
-                ->with('success', lang('Successfully restored #item : #name', $this->translation, ['#item' => $this->item, '#name' => $data->name]));
-        }
-
-        // FAILED
-        return back()
-            ->with('error', lang('Oops, failed to restore #item. Please try again.', $this->translation, ['#item' => $this->item]));
+        // SUCCESS
+        $response = [
+            'status' => 'true',
+            'message' => 'Successfully get data list',
+            'data' => $data
+        ];
+        return response()->json($response, 200);
     }
 }

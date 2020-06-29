@@ -6,23 +6,23 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <link rel="icon" href="{{ asset(env('APP_FAVICON', 'favicon.ico')) }}" type="image/{{ env('APP_FAVICON_TYPE', 'ico') }}" />
+	  <link rel="icon" href="{{ asset($global_config->app_favicon) }}" type="image/{{ $global_config->app_favicon_type }}" />
 
     <title>
       @if(View::hasSection('title')) 
         @yield('title') -
       @endif
-      {{ env('APP_NAME', 'My Website') }} Admin
+      {{ $global_config->app_name }}
     </title>
 
     <!-- Bootstrap -->
-    <link href="{{ asset('/admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="{{ asset('/admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- NProgress -->
-    <link href="{{ asset('/admin/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <link href="{{ asset('/admin/build/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/build/css/custom.css') }}" rel="stylesheet">
     @yield('css')
   </head>
 
@@ -34,14 +34,14 @@
     </div>
 
     <!-- jQuery -->
-    <script src="{{ asset('/admin/vendors/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap -->
-    <script src="{{ asset('/admin/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- FastClick -->
-    <script src="{{ asset('/admin/vendors/fastclick/lib/fastclick.js') }}"></script>
+    <script src="{{ asset('admin/vendors/fastclick/lib/fastclick.js') }}"></script>
     <!-- NProgress -->
-    <script src="{{ asset('/admin/vendors/nprogress/nprogress.js') }}"></script>
+    <script src="{{ asset('admin/vendors/nprogress/nprogress.js') }}"></script>
     <!-- Custom Theme Scripts -->
-    <script src="{{ asset('/admin/build/js/custom.min.js') }}"></script>
+    <script src="{{ asset('admin/build/js/custom.min.js') }}"></script>
   </body>
 </html>

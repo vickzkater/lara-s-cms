@@ -6,21 +6,21 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{{ asset(env('APP_FAVICON')) }}" type="image/{{ env('APP_FAVICON_TYPE', 'png') }}" />
+    <link rel="icon" href="{{ asset($global_config->app_favicon) }}" type="image/{{ $global_config->app_favicon_type }}" />
 
-    <title>{{ env('APP_NAME') }} | Admin Panel</title>
+    <title>{{ $global_config->app_name }} | Admin Panel</title>
 
     <!-- Bootstrap -->
-    <link href="{{ asset('/admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="{{ asset('/admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- NProgress -->
-    <link href="{{ asset('/admin/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="{{ asset('/admin/vendors/animate.css/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/animate.css/animate.min.css') }}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="{{ asset('/admin/build/css/custom.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/build/css/custom.min.css') }}" rel="stylesheet">
 
     <style>
       .vlogin {
@@ -29,7 +29,7 @@
       }
     </style>
   
-    @if (env('RECAPTCHA_SITE_KEY_ADMIN', 'xxx') != 'xxx')
+    @if (env('RECAPTCHA_SECRET_KEY_ADMIN'))
       <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @endif
   </head>
@@ -43,7 +43,7 @@
           
           <section class="login_content">
             <center>
-              <img src="{{ asset('images/logo.png') }}" class="img-responsive" alt="{{ env('APP_NAME', 'Application Name') }}">
+              <img src="{{ asset($global_config->app_logo_image) }}" class="img-responsive" alt="{{ $global_config->app_name }}" style="max-width: 100px; max-height: 100px;">
             </center>
             
             <form action="{{ route('admin.do_login') }}" method="POST" id="submitform">
@@ -56,7 +56,7 @@
                 <input type="password" name="login_pass" class="form-control" placeholder="{{ ucwords(lang('password', $translation)) }}" required autocomplete="off" />
               </div>
 
-              @if (env('RECAPTCHA_SITE_KEY_ADMIN', 'xxx') != 'xxx')
+              @if (env('RECAPTCHA_SECRET_KEY_ADMIN'))
                 <div style="margin-bottom: 10px;">
                   <center>
                     <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY_ADMIN') }}"></div>
@@ -65,18 +65,18 @@
               @endif
 
               <div>
-                <button type="submit" class="btn btn-primary btn-block submit">{{ ucfirst(lang('log in', $translation)) }}</button>
+                <button type="submit" class="btn btn-primary btn-block submit" id="btn-login">{{ ucfirst(lang('log in', $translation)) }}</button>
               </div>
 
               <div class="clearfix"></div>
 
               <div class="separator">
                 <div>
-                  <h1><?php echo $app_logo; ?> &nbsp;{{ env('APP_NAME') }}</h1>
+                  <h1>{{ $global_config->app_name }}</h1>
                   <p>
-                    &copy; {{ date('Y') }} {{ env('APP_NAME') }} {{ 'v'.env('APP_VERSION') }}
-                    @if (env('POWERED'))
-                      - {{ lang('Powered by', $translation) }} <a href="{{ env('POWERED_URL') }}">{{ env('POWERED') }}</a>
+                    &copy; {{ date('Y') }} {{ $global_config->app_name }} {{ 'v'.$global_config->app_version }}
+                    @if (!empty($global_config->powered))
+                      - {{ lang('Powered by', $translation) }} <a href="{{ $global_config->powered_url }}">{{ $global_config->powered }}</a>
                     @endif
                   </p>
                 </div>
@@ -91,6 +91,8 @@
     <script>
       $(document).ready(function () {
         $("#submitform").on('submit',function(e) {
+          validate_form();
+
           // check reCAPTCHA
           var data_form = $(this).serialize();
           var split_data = data_form.split('&');
@@ -111,6 +113,15 @@
           return true;
         });
       });
+
+      function validate_form() {
+        $('#btn-login').addClass('disabled');
+        $('#btn-login').removeClass('btn-primary');
+        $('#btn-login').addClass('btn-warning');
+        $('#btn-login').html('<i class="fa fa-spin fa-spinner"></i>&nbsp; {{ ucwords(lang('loading', $translation)) }}...');
+
+        setTimeout(function(){ window.location.reload(); }, 3000);
+      }
     </script>
   </body>
 </html>

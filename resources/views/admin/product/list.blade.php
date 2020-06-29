@@ -1,7 +1,27 @@
+{{-- ADD HTML SMALL MODAL - BEGIN --}}
+@extends('_template_adm.modal_small')
+{{-- SMALL MODAL CONFIG --}}
+@section('small_modal_title', ucwords(lang('import', $translation)).' Excel')
+@section('small_modal_content')
+  <label>{{ lang('Browse the file', $translation) }}</label>
+  <div class="form-group">
+    <input type="file" name="file" required="required" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+  </div>
+@endsection
+@section('small_modal_btn_label', ucwords(lang('import', $translation)))
+@section('small_modal_btn_onclick', "$('.btn-submit').addClass('disabled');$('.btn-submit').html('<i class=\"fa fa-spin fa-spinner\"></i>&nbsp; ".lang('Loading, please wait..', $translation)."');")
+@section('small_modal_form', true)
+@section('small_modal_method', 'POST')
+@section('small_modal_url', route('admin.product.import_excel'))
+{{-- ADD HTML SMALL MODAL - END --}}
+
 @extends('_template_adm.master')
 
 @php
+  use App\Libraries\Helper;
+
   $this_object = ucwords(lang('product', $translation));
+  $this_module = 'Product';
 
   if(isset($data)){
     $pagetitle = $this_object;
@@ -29,10 +49,39 @@
       @if (isset($data))
         <div class="title_right">
           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
-            <a href="{{ route('admin.product.create') }}" class="btn btn-round btn-success" style="float: right;">{{ ucwords(lang('add new', $translation)) }}</a>
+            <a href="{{ route('admin.product.create') }}" class="btn btn-round btn-success" style="float: right;">
+              <i class="fa fa-plus-circle"></i>&nbsp; {{ ucwords(lang('add new', $translation)) }}
+            </a>
           </div>
         </div>  
       @endif
+
+      <div class="title_left">
+        @if (Helper::authorizing($this_module, 'Export Excel')['status'] == 'true')
+          <a href="{{ route('admin.product.export_excel') }}" class="btn btn-round btn-warning" style="margin: 10px 0;" target="_blank">
+            <i class="fa fa-cloud-download"></i>&nbsp; {{ ucwords(lang('export', $translation)) }} Excel
+          </a>
+        @else
+          &nbsp;
+        @endif
+
+        @if (Helper::authorizing($this_module, 'Import Excel')['status'] == 'true')
+          <a href="{{ route('admin.product.import_excel_template') }}" class="btn btn-round btn-info" style="margin: 10px 0;" target="_blank">
+            <i class="fa fa-download"></i>&nbsp; {{ lang('Download template for Import', $translation) }} Excel
+          </a>
+        @endif
+      </div>
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
+          @if (Helper::authorizing($this_module, 'Import Excel')['status'] == 'true')
+            <button type="button" class="btn btn-primary btn-round" data-toggle="modal" data-target=".bs-modal-sm" style="float: right;">
+              <i class="fa fa-cloud-upload"></i>&nbsp; {{ ucwords(lang('import', $translation)) }} Excel
+            </button>
+          @else
+            &nbsp;
+          @endif
+        </div>
+      </div>  
     </div>
 
     <div class="clearfix"></div>
@@ -107,8 +156,8 @@
             {data: 'subtitle', name: 'products.subtitle'},
             {data: 'image_item', name: 'image_item'},
             {data: 'item_status', name: 'item_status'},
-            {data: 'created_at', name: 'sys_branches.created_at'},
-            {data: 'updated_at', name: 'sys_branches.updated_at'},
+            {data: 'created_at', name: 'products.created_at'},
+            {data: 'updated_at', name: 'products.updated_at'},
             {data: 'action', name: 'action'},
         ]
       });
@@ -129,8 +178,8 @@
             {data: 'subtitle', name: 'products.subtitle'},
             {data: 'image_item', name: 'image_item'},
             {data: 'item_status', name: 'item_status'},
-            {data: 'created_at', name: 'sys_branches.created_at'},
-            {data: 'deleted_at', name: 'sys_branches.deleted_at'},
+            {data: 'created_at', name: 'products.created_at'},
+            {data: 'deleted_at', name: 'products.deleted_at'},
             {data: 'action', name: 'action'},
         ]
       });

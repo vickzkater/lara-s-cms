@@ -21,17 +21,17 @@
     @include('_template_adm.message')
 
     <div class="page-title">
-        <div class="title_left">
-            <h3>{{ $pagetitle }}</h3>
-        </div>
+      <div class="title_left">
+        <h3>{{ $pagetitle }}</h3>
+      </div>
 
-        @if (isset($data))
-          <div class="title_right">
-            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
-                <a href="{{ route('admin.division.create') }}" class="btn btn-round btn-success" style="float: right;">{{ ucwords(lang('add new', $translation)) }}</a>
-            </div>
-          </div>  
-        @endif
+      @if (isset($data))
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
+            <a href="{{ route('admin.division.create') }}" class="btn btn-round btn-success" style="float: right;">{{ ucwords(lang('add new', $translation)) }}</a>
+          </div>
+        </div>  
+      @endif
     </div>
 
     <div class="clearfix"></div>
@@ -48,7 +48,6 @@
               <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
-                    <th>#</th>
                     <th>{{ ucwords(lang('name', $translation)) }}</th>
                     <th>{{ ucwords(lang('status', $translation)) }}</th>
                     <th>{{ ucwords(lang('created', $translation)) }}</th>
@@ -60,19 +59,11 @@
                     <th>{{ ucwords(lang('action', $translation)) }}</th>
                   </tr>
                 </thead>
-                <tbody>
-                  @if (isset($data) && count($data) > 0)
-                    @php
-                      $i = 1;
-                      $perpage = 10;
-                      if(isset($_GET['page'])){
-                        $i = ($_GET['page'] - 1) * $perpage + $i;
-                      }
-                    @endphp
+                @if (isset($data) && count($data) > 0)
+                  <tbody class="sorted_table">
                     @foreach ($data as $item)
-                      <tr>
-                        <th scope="row">{{ $i }}</th>
-                        <td>{{ $item->name }}</td>
+                      <tr role="row" id="row-{{ $item->id }}">
+                        <td class="dragndrop">{{ $item->name }}</td>
                         <td>
                           @if ($item->status != 1)
                             <span class="label label-danger"><i>{{ ucwords(lang('disabled', $translation)) }}</i></span>
@@ -95,21 +86,12 @@
                           </form>
                         </td>
                       </tr>
-                      @php
-                          $i++;
-                      @endphp
                     @endforeach
-                  @elseif(isset($deleted) && count($deleted) > 0)
-                    @php
-                      $i = 1;
-                      $perpage = 10;
-                      if(isset($_GET['page'])){
-                        $i = ($_GET['page'] - 1) * $perpage + $i;
-                      }
-                    @endphp
+                  </tbody>
+                @elseif(isset($deleted) && count($deleted) > 0)
+                  <tbody>
                     @foreach ($deleted as $item)
                       <tr>
-                        <th scope="row">{{ $i }}</th>
                         <td>{{ $item->name }}</td>
                         <td>
                           @if ($item->status != 1)
@@ -130,30 +112,33 @@
                           </form>
                         </td>
                       </tr>
-                      @php
-                          $i++;
-                      @endphp
                     @endforeach
-                  @else
+                  </tbody>
+                @else
+                  <tbody>
                     <tr>
-                      <td colspan="6"><h2 class="text-center">{{ strtoupper(lang('no data available', $translation)) }}</h2></td>
+                      <td colspan="5"><h2 class="text-center">{{ strtoupper(lang('no data available', $translation)) }}</h2></td>
                     </tr>
-                  @endif
-                </tbody>
+                  </tbody>
+                @endif
               </table>
-            </div>
-
-            <div class="pull-right">
-              @if(isset($data))
-                {{ $data->appends(request()->input())->links() }}
-              @endif
-              @if(isset($deleted))
-                {{ $deleted->appends(request()->input())->links() }}
-              @endif
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+@endsection
+
+@section('css')
+  <!-- Sortable-Table -->
+  @include('_form_element.sortable_table.css')
+@endsection
+
+@section('script')
+  <script>
+    var AjaxSortingURL = '{{ route("admin.division.sorting") }}';
+  </script>
+  <!-- Sortable-Table -->
+  @include('_form_element.sortable_table.script')
 @endsection

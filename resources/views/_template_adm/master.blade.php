@@ -6,28 +6,28 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <link rel="icon" href="{{ asset(env('APP_FAVICON', 'favicon.ico')) }}" type="image/{{ env('APP_FAVICON_TYPE', 'ico') }}" />
+	  <link rel="icon" href="{{ asset($global_config->app_favicon) }}" type="image/{{ $global_config->app_favicon_type }}" />
 
     <title>
       @if(View::hasSection('title')) 
         @yield('title') -
       @endif
-      {{ env('APP_NAME', 'My Website') }} Admin
+      {{ $global_config->app_name }} Admin
     </title>
 
     <!-- Bootstrap -->
-    <link href="{{ asset('/admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="{{ asset('/admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- NProgress -->
-    <link href="{{ asset('/admin/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
     <!-- jQuery custom content scroller -->
-    <link href="{{ asset('/admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet">
     <!-- bootstrap-progressbar -->
-    <link href="{{ asset('/admin/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
     
     <!-- Custom Theme Style -->
-    <link href="{{ asset('/admin/build/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/build/css/custom.css') }}" rel="stylesheet">
 
     <style>
       .scroll-top {
@@ -60,7 +60,7 @@
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="{{ route('admin.home') }}" class="site_title"><?php echo $app_logo; ?> <span>{{ env('APP_NAME') }}</span></a>
+              <a href="{{ route('admin.home') }}" class="site_title"><?php echo $app_logo; ?> <span>{{ $global_config->app_name }}</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -86,10 +86,10 @@
               <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('my profile', $translation)) }}" href="{{ route('admin.profile') }}">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('view website', $translation)) }}" href="{{ env('APP_URL_SITE') }}" target="_blank">
+              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('view website', $translation)) }}" href="{{ $global_config->app_url_site }}" target="_blank">
                   <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('help', $translation)) }}" onclick="alert('{{ env('HELP') }}')">
+              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('help', $translation)) }}" onclick="alert('{{ $global_config->help }}')">
                 <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
               </a>
               <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('log out', $translation)) }}" href="{{ route('admin.logout') }}">
@@ -112,9 +112,9 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            &copy; {{ date('Y') }} {{ env('APP_NAME') }} {{ 'v'.env('APP_VERSION') }}
-            @if (env('POWERED'))
-              - {{ lang('Powered by', $translation) }} <a href="{{ env('POWERED_URL') }}">{{ env('POWERED') }}</a>
+            &copy; {{ date('Y') }} {{ $global_config->app_name }} {{ 'v'.$global_config->app_version }}
+            @if (!empty($global_config->powered))
+              - {{ lang('Powered by', $translation) }} <a href="{{ $global_config->powered_url }}">{{ $global_config->powered }}</a>
             @endif
           </div>
           <div class="clearfix"></div>
@@ -132,24 +132,24 @@
     </button>
 
     <!-- jQuery -->
-    <script src="{{ asset('/admin/vendors/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap -->
-    <script src="{{ asset('/admin/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- FastClick -->
-    <script src="{{ asset('/admin/vendors/fastclick/lib/fastclick.js') }}"></script>
+    <script src="{{ asset('admin/vendors/fastclick/lib/fastclick.js') }}"></script>
     <!-- NProgress -->
-    <script src="{{ asset('/admin/vendors/nprogress/nprogress.js') }}"></script>
+    <script src="{{ asset('admin/vendors/nprogress/nprogress.js') }}"></script>
     <!-- jQuery custom content scroller -->
-    <script src="{{ asset('/admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <!-- bootstrap-progressbar -->
-    <script src="{{ asset('/admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
 
     @yield('script-sidebar')
 
     <!-- Custom Theme Scripts -->
-    <script src="{{ asset('/admin/build/js/custom.js?v=4') }}"></script>
+    <script src="{{ asset('admin/build/js/custom.js?v=4') }}"></script>
     <!-- Custom Script -->
-    <script src="{{ asset('/admin/js/vcustom.js?v=2') }}"></script>
+    <script src="{{ asset('admin/js/vcustom.js?v=2') }}"></script>
 
     <script>
       $(document).ready(function () {
