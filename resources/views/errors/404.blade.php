@@ -16,7 +16,7 @@
     <meta name="description" content="{{ $global_config->meta_description }}" />
     <meta name="Author" content="{{ $global_config->meta_author }}" />
 
-    <link rel="icon" href="{{ asset($global_config->favicon) }}" type="image/{{ $global_config->favicon_type }}" />
+    <link rel="icon" href="{{ asset($global_config->app_favicon) }}" type="image/{{ $global_config->app_favicon_type }}" />
 
     <!-- Latest compiled and minified CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1">

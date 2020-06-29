@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{{ asset($global_config->favicon) }}" type="image/{{ $global_config->favicon_type }}" />
+    <link rel="icon" href="{{ asset($global_config->app_favicon) }}" type="image/{{ $global_config->app_favicon_type }}" />
 
     <title>{{ $global_config->app_name }} | Admin Panel</title>
 
@@ -43,7 +43,7 @@
           
           <section class="login_content">
             <center>
-              <img src="{{ asset('images/logo.png') }}" class="img-responsive" alt="{{ $global_config->app_name }}">
+              <img src="{{ asset($global_config->app_logo_image) }}" class="img-responsive" alt="{{ $global_config->app_name }}" style="max-width: 100px; max-height: 100px;">
             </center>
             
             <form action="{{ route('admin.do_login') }}" method="POST" id="submitform">

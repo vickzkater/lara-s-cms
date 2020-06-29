@@ -192,6 +192,7 @@ The default template for maintenance mode responses is located in `resources/vie
 
 ## Packages Used (Outside of Laravel)
 - [yajra/laravel-datatables-oracle](https://github.com/yajra/laravel-datatables) - used to display a list of data in a table
+- [maatwebsite/excel](https://github.com/Maatwebsite/Laravel-Excel) - used to export & import Excel data
 
 ## DEMO URL
 

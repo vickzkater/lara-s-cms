@@ -549,7 +549,7 @@ if (!function_exists('set_input_form2')) {
                     }
                     $input_element = '<img src="' . $img_src . '" style="max-width:200px;" />';
                 }
-                $input_element .= '<input type="file" ' . $properties . ' class="form-control col-md-7 col-xs-12" accept=".jpeg, .png, .jpg" onchange="readURL(this, \'before\');" style="margin-top:5px" />';
+                $input_element .= '<input type="file" ' . $properties . ' class="form-control col-md-7 col-xs-12" accept="image/*" onchange="readURL(this, \'before\');" style="margin-top:5px" />';
                 if (!empty($value) && $delete) {
                     $input_element .= '<br><span class="btn btn-warning btn-xs" id="' . $id_name . '-delbtn" style="margin: 5px 0 !important;" onclick="reset_img_preview(\'#' . $id_name . '\', \'' . $no_image . '\', \'before\')">Delete uploaded image?</span>';
                     $input_element .= ' <input type="hidden" name="' . $input_name . '_delete" id="' . $input_name . '-delete">';

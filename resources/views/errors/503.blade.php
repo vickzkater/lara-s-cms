@@ -11,7 +11,7 @@
 
     <title>We will be back with new and exciting features!</title>
 
-    <link rel="icon" href="{{ asset($global_config->favicon) }}" type="image/{{ $global_config->favicon_type }}" />
+    <link rel="icon" href="{{ asset($global_config->app_favicon) }}" type="image/{{ $global_config->app_favicon_type }}" />
     <meta name="theme-color" content="#ffffff">
 
     <!-- Bootstrap -->

@@ -139,6 +139,18 @@ class ConfigController extends Controller
 
         // IF UPLOAD NEW IMAGE
         if ($request->app_favicon) {
+            // PROCESSING IMAGE
+            $dir_path = 'uploads/config/';
+            $image_file = $request->file('app_favicon');
+            $format_image_name = 'favicon-' . time();
+            $image = Helper::upload_image($dir_path, $image_file, true, $format_image_name, ['ico', 'png', 'jpg', 'jpeg']);
+            if ($image['status'] != 'true') {
+                return back()
+                    ->withInput()
+                    ->with('error', lang($image['message'], $this->translation));
+            }
+            // GET THE UPLOADED IMAGE RESULT
+            $data->app_favicon = $dir_path . $image['data'];
         }
 
         $app_logo = Helper::validate_input_text($request->app_logo);
