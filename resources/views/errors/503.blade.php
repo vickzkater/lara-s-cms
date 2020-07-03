@@ -1,3 +1,23 @@
+@php
+  use Illuminate\Support\Facades\DB;
+  $global_config = DB::table('sys_config')->first();
+  // get default language
+  $default_lang = env('DEFAULT_LANGUAGE', 'EN');
+  // get language data
+  $getLanguageMasterMenu = DB::table('sys_language_master_details')
+      ->select('sys_language_master.phrase', 'sys_language_master_details.translate')
+      ->leftJoin('sys_languages', 'sys_language_master_details.language_id', '=', 'sys_languages.id')
+      ->leftJoin('sys_language_master', 'sys_language_master_details.language_master_id', '=', 'sys_language_master.id')
+      ->where('sys_languages.alias', $default_lang)
+      ->get();
+
+  // convert to single array
+  $translation = [];
+  foreach ($getLanguageMasterMenu as $list) {
+      $translation[$list->phrase] = $list->translate;
+  }
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -39,7 +59,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="header-logo-wrapper">
-            <img src="{{ asset($global_config->app_logo_image)) }}" alt="{{ $global_config->app_name }}" title="{{ $global_config->app_name }}" class="img-responsive center-block" style="max-width:300px !important;" />
+            <img src="{{ asset($global_config->app_logo_image) }}" alt="{{ $global_config->app_name }}" title="{{ $global_config->app_name }}" class="img-responsive center-block" style="max-width:300px !important;" />
             <h1 class="text-center">{{ $global_config->app_name }}</h1>
           </div>
         </div>

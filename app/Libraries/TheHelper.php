@@ -1,15 +1,17 @@
 <?php
 
+namespace App\Libraries;
+
 /**
- * THE HELPER (Help functions)
+ * The Helper PHP - a lot of PHP helper functions that are ready to help in your project
  * Version: 1.0.1 (2020-06-07)
  *
  * Copyright (c) KINIDI Tech and other contributors
  * Released under the MIT license.
  * For more information, see https://kiniditech.com/ or https://github.com/vickzkater
+ * 
+ * https://github.com/vickzkater/the-helper-php
  */
-
-namespace App\Libraries;
 
 class TheHelper
 {
@@ -148,8 +150,8 @@ class TheHelper
     {
         $phone = Helper::validate_input($phone);
 
-        // sanitize phone number: length(10-14 chars)
-        if (strlen($phone) < 10 || strlen($phone) > 14) {
+        // sanitize phone number: length(10-18 chars)
+        if (strlen($phone) < 10 || strlen($phone) > 18) {
             // FAILED
             return [
                 'status' => 'false',
@@ -505,6 +507,15 @@ class TheHelper
         return $text;
     }
 
+    /**
+     * Used to format date with "*** time ago" - sample: "3 hours ago" & support multilanguage
+     * 
+     * @param String $time required
+     * @param String $tense_ago optional
+     * @param Array $periods optional
+     * 
+     * @return String
+     */
     public static function time_ago($time, $tense_ago = 'ago', $periods = array("second", "minute", "hour", "day", "week", "month", "year", "decade"))
     {
         $lengths = array("60", "60", "24", "7", "4.35", "12", "10");
@@ -526,6 +537,14 @@ class TheHelper
         return "$difference $periods[$j] $tense_ago";
     }
 
+    /**
+     * Used to get the difference in days from the 2 input dates
+     * 
+     * @param String $date_start required | date with format Y-m-d
+     * @param String $date_end optional
+     * 
+     * @return Integer
+     */
     public static function get_diff_dates($date_start, $date_end = null)
     {
         if (empty($date_end)) {
@@ -538,12 +557,26 @@ class TheHelper
         return (int) $diff->format("%a") + 1;
     }
 
+    /**
+     * Used to check validity the URL
+     * 
+     * @param String $url required
+     * 
+     * @return Boolean
+     */
     public static function check_url($url)
     {
         $headers = get_headers($url);
         return stripos($headers[0], "200 OK") ? true : false;
     }
 
+    /**
+     * Used to check whether opened via webview (Android & iOS) or not
+     * 
+     * @param String $android_package_name optional
+     * 
+     * @return Boolean
+     */
     public static function is_webview($android_package_name = "com.company.app")
     {
         $is_webview = false;
