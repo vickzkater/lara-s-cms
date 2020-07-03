@@ -43,7 +43,7 @@
           
           <section class="login_content">
             <center>
-              <img src="{{ asset($global_config->app_logo_image) }}" class="img-responsive" alt="{{ $global_config->app_name }}" style="max-width: 100px; max-height: 100px;">
+              <img src="{{ asset($global_config->app_logo_image) }}" class="img-responsive" alt="{{ $global_config->app_name }}" style="max-width: 150px; max-height: 150px;">
             </center>
             
             <form action="{{ route('admin.do_login') }}" method="POST" id="submitform">

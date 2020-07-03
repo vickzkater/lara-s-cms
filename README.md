@@ -9,11 +9,23 @@
 <a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="license_img" src="https://poser.pugx.org/vickzkater/lara-s-cms/license" alt="License"></a>
 </p>
 
+## What is "Lara-S-CMS" ?
+
+Laravel (S) Content Management System
+- Skeleton
+- Simple
+- Sample
+- Standard
+- Smart
+- Sophisticated
+- SUPER
+- Sucks?
+
 A PHP Laravel Skeleton for Content Management System (CMS) or Admin Dashboard (within/without website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella) as Admin Template.
 
 For sample as website, we are using [Business Casual](https://startbootstrap.com/themes/business-casual/) a free Bootstrap 4 website template
 
-Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI Tech](https://kiniditech.com/)) on September 2019
+Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI Tech](https://kiniditech.com/)) since September 2019
 
 ## Features
 
@@ -25,7 +37,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Rule Management
 - [x] Usergroup Management
 - [x] User (Admin) Management
-- [x] Access/Privilege Management
+- [x] Access/Privilege/User Roles Management
 - [x] System Logs
 - [x] Restore Deleted Data
 - [x] Custom 404 Error Page
@@ -39,8 +51,11 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Delete Uploaded Image (in Product)
 - [x] Rich Text Editor/WYSIWYG using TinyMCE (in Product)
 - [x] Datepicker (in Product)
+- [x] [Using The Helper PHP - a lot of PHP helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-php)
+- [x] [Support GoSMSGateway API - send SMS (in DevController)](https://github.com/vickzkater/gosms-laravel)
+- [x] Support Mailchimp API (in DevController)
 
-<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.1.0.jpg" alt="LARA-S-CMS Modules"></p>
+<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.2.2.jpg" alt="LARA-S-CMS Modules"></p>
 
 ## Version
 
@@ -79,6 +94,8 @@ php artisan key:generate
 The next thing you should do after installing Lara-S-CMS is set your application key to a random string. If you installed Lara-S-CMS via Composer or the Lara-S-CMS installer, this key has already been set for you by the `key:generate` command. Typically, this string should be 32 characters long. The key can be set in the `.env` environment file. If you have not renamed the .env.example file to .env, you should do that now. **If the application key is not set, your user sessions and other encrypted data will not be secure!**
 
 Next, setup environment configuration in `.env` file
+
+- Set `DISPLAY_SESSION` for enable/disable display session in Admin - Footer (Development Purpose)
 
 - Set `APP_TIMEZONE` for set timezone application, sample: UTC or Asia/Jakarta
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
@@ -120,6 +137,13 @@ Next, setup environment configuration in `.env` file
 - Set `FCM_SERVER_KEY` for set Firebase Push Notification
 - Set `FCM_SENDER_ID` for set Firebase Push Notification
 
+- Set `GOSMS_AUTH_USER` for set GoSMSGateway credentials
+- Set `GOSMS_AUTH_PASS` for set GoSMSGateway credentials
+
+- Set `MC_KEY` for set Mailchimp API key
+- Set `MC_LIST_ID` for set Mailchimp List ID
+- Set `MC_TAG_DEFAULT` for set Mailchimp Tag ID as default
+
 ### Database Setup
 
 **You must run the database migration for running this application.**
@@ -135,7 +159,7 @@ After migration finish run the command `php artisan serve` or browse the link to
 http://path-to-project-folder/public/manager
 ```
 
-<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_loginpage_v1.1.0.jpg" alt="LARA-S-CMS Login Page"></p>
+<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_loginpage_v1.2.2.jpg" alt="LARA-S-CMS Login Page"></p>
 
 ### Login details (default)
 
@@ -163,7 +187,6 @@ chmod o+w -R public/uploads/
 - `CustomFunction.php` in `app\Libraries\` that automatically called in the load of web because it has been set in `composer.json`
 - `Helper.php` in `app\Libraries\` that can be called in Controller/View by line code `use App\Libraries\Helper;` for call some helper functions
 
-
 ## Maintenance Mode
 
 When your application is in maintenance mode, a custom view will be displayed for all requests into your application. This makes it easy to "disable" your application while it is updating or when you are performing maintenance. A maintenance mode check is included in the default middleware stack for your application. If the application is in maintenance mode, an HttpException will be thrown with a status code of 503.
@@ -182,9 +205,9 @@ Even while in maintenance mode, specific IP addresses or networks may be allowed
 php artisan down --allow=127.0.0.1 --allow=192.168.0.0/16
 ```
 
-Source: [Laravel Documentations](https://laravel.com/docs/6.x/configuration#maintenance-mode)
+Source: [Laravel Documentations](https://laravel.com/docs/7.x/configuration#maintenance-mode)
 
-<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_maintenance.jpg" alt="LARA-S-CMS"></p>
+<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_maintenance_v1.2.2.jpg" alt="LARA-S-CMS Maintenance Mode"></p>
 
 ### Maintenance Mode Response Template
 
@@ -193,16 +216,8 @@ The default template for maintenance mode responses is located in `resources/vie
 ## Packages Used (Outside of Laravel)
 - [yajra/laravel-datatables-oracle](https://github.com/yajra/laravel-datatables) - used to display a list of data in a table
 - [maatwebsite/excel](https://github.com/Maatwebsite/Laravel-Excel) - used to export & import Excel data
-
-## DEMO URL
-
-**COMING SOON**
-
-### Login details
-```
-Username: superadmin
-Password: admin123
-```
+- [guzzlehttp/guzzle](https://github.com/guzzle/guzzle) - used to send HTTP requests and trivial to integrate with web services
+- [nztim/mailchimp](https://github.com/nztim/mailchimp) - used to Mailchimp API
 
 ## Documentation
 

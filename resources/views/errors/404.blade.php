@@ -1,4 +1,7 @@
 @php
+    use Illuminate\Support\Facades\DB;
+    $global_config = DB::table('sys_config')->first();
+
     $homepage = route('web.home');
     if(Session::get('admin')){
         $homepage = route('admin.home');
