@@ -17,6 +17,9 @@ class CreateArticleTopicTable extends Migration
             $table->bigInteger('article_id')->index('FK_articles');
             $table->bigInteger('topic_id')->index('FK_topics');
         });
+
+        $seeder = new ArticleTopicSeederInitial();
+        $seeder->run();
     }
 
     /**

@@ -23,7 +23,7 @@ Laravel (S) Content Management System
 
 A PHP Laravel Skeleton for Content Management System (CMS) or Admin Dashboard (within/without website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella) as Admin Template.
 
-For sample as website, we are using [Business Casual](https://startbootstrap.com/themes/business-casual/) a free Bootstrap 4 website template
+For sample as website, we are using [Modern Business](https://startbootstrap.com/templates/modern-business/) a free Bootstrap 4 website template
 
 Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI Tech](https://kiniditech.com/)) since September 2019
 

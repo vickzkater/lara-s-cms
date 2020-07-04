@@ -21,6 +21,9 @@ class CreateTopicsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        $seeder = new TopicsSeederInitial();
+        $seeder->run();
     }
 
     /**

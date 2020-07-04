@@ -27,6 +27,9 @@ class CreateArticlesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        $seeder = new ArticlesSeederInitial();
+        $seeder->run();
     }
 
     /**

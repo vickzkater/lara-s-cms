@@ -2,6 +2,7 @@
 ### Changelog
 - Add PageBuilder
 - Using The Helper JS - a lot of JS helper functions that are ready to help in your project
+- Rebuild website template using Modern Business from Start Bootstrap
 
 ## Version 1.2.2
 ### Changelog
