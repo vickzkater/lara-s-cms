@@ -149,7 +149,7 @@
     <!-- Custom Theme Scripts -->
     <script src="{{ asset('admin/build/js/custom.js?v=4') }}"></script>
     <!-- Custom Script -->
-    <script src="{{ asset('admin/js/vcustom.js?v=2') }}"></script>
+    <script src="{{ asset('admin/js/thehelper.js?v=2') }}"></script>
 
     <script>
       $(document).ready(function () {

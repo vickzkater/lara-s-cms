@@ -23,9 +23,6 @@ class CreateProductsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        $seeder = new ProductsSeederInitial();
-        $seeder->run();
     }
 
     /**

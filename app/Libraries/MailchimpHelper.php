@@ -5,6 +5,12 @@ namespace App\Libraries;
 /**
  * Mailchimp API Helper - Laravel Library
  * Worked on Mailchimp API v3
+ *
+ * Copyright (c) KINIDI Tech and other contributors
+ * Released under the MIT license.
+ * For more information, see https://kiniditech.com/ or https://github.com/vickzkater
+ *
+ * https://github.com/vickzkater/mailchimp-helper-laravel
  */
 
 use Mailchimp;

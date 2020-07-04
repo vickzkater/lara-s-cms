@@ -16,14 +16,11 @@ Route::group(['namespace' => 'Web'], function () {
     // HOME
     Route::get('/', 'SiteController@home')->name('web.home');
 
-    // ABOUT
-    Route::get('/about', 'SiteController@about')->name('web.about');
-
-    // PRODUCTS
-    Route::get('/products', 'SiteController@products')->name('web.products');
-
-    // STORE
-    Route::get('/store', 'SiteController@store')->name('web.store');
+    // BLOG
+    Route::group(['prefix' => 'blog'], function () {
+        Route::get('/', 'SiteController@blog')->name('web.blog');
+        Route::get('/{slug}', 'SiteController@blog_details')->name('web.blog.details');
+    });
 });
 
 // ADMIN
@@ -177,6 +174,45 @@ Route::group([
                 Route::post('/import', 'ProductController@import_excel')->name('admin.product.import_excel');
                 Route::get('/export', 'ProductController@export_excel')->name('admin.product.export_excel');
             });
+        });
+
+        // TOPIC
+        Route::group(['prefix' => 'topic'], function () {
+            Route::get('/', 'TopicController@list')->name('admin.topic.list');
+            Route::get('/get-data', 'TopicController@get_data')->name('admin.topic.get_data');
+            Route::get('/create', 'TopicController@create')->name('admin.topic.create');
+            Route::post('/do-create', 'TopicController@do_create')->name('admin.topic.do_create');
+            Route::get('/edit/{id}', 'TopicController@edit')->name('admin.topic.edit');
+            Route::post('/do-edit/{id}', 'TopicController@do_edit')->name('admin.topic.do_edit');
+            Route::post('/delete', 'TopicController@delete')->name('admin.topic.delete');
+        });
+
+        // ARTICLE
+        Route::group(['prefix' => 'article'], function () {
+            Route::get('/', 'ArticleController@list')->name('admin.article.list');
+            Route::get('/get-data', 'ArticleController@get_data')->name('admin.article.get_data');
+            Route::get('/create', 'ArticleController@create')->name('admin.article.create');
+            Route::post('/do-create', 'ArticleController@do_create')->name('admin.article.do_create');
+            Route::get('/edit/{id}', 'ArticleController@edit')->name('admin.article.edit');
+            Route::post('/do-edit/{id}', 'ArticleController@do_edit')->name('admin.article.do_edit');
+            Route::post('/delete', 'ArticleController@delete')->name('admin.article.delete');
+            Route::get('/enable/{id}', 'ArticleController@enable')->name('admin.article.enable');
+            Route::get('/disable/{id}', 'ArticleController@disable')->name('admin.article.disable');
+        });
+
+        // BANNER
+        Route::group(['prefix' => 'banner'], function () {
+            Route::get('/', 'BannerController@list')->name('admin.banner.list');
+            Route::get('/get-data', 'BannerController@get_data')->name('admin.banner.get_data');
+            Route::get('/create', 'BannerController@create')->name('admin.banner.create');
+            Route::post('/do-create', 'BannerController@do_create')->name('admin.banner.do_create');
+            Route::get('/edit/{id}', 'BannerController@edit')->name('admin.banner.edit');
+            Route::post('/do-edit/{id}', 'BannerController@do_edit')->name('admin.banner.do_edit');
+            Route::post('/delete', 'BannerController@delete')->name('admin.banner.delete');
+            Route::get('/deleted', 'BannerController@list_deleted')->name('admin.banner.deleted');
+            Route::get('/get-data-deleted', 'BannerController@get_data_deleted')->name('admin.banner.get_data_deleted');
+            Route::post('/restore', 'BannerController@restore')->name('admin.banner.restore');
+            Route::post('/sorting', 'BannerController@sorting')->name('admin.banner.sorting');
         });
     });
 });

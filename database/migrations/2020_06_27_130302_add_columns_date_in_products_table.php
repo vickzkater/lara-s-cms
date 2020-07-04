@@ -18,6 +18,9 @@ class AddColumnsDateInProductsTable extends Migration
             $table->date('expired_date')->nullable()->after('purchase_date');
             $table->integer('qty')->unsigned()->nullable()->after('expired_date');
         });
+
+        $seeder = new ProductsSeederInitial();
+        $seeder->run();
     }
 
     /**

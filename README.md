@@ -23,7 +23,7 @@ Laravel (S) Content Management System
 
 A PHP Laravel Skeleton for Content Management System (CMS) or Admin Dashboard (within/without website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella) as Admin Template.
 
-For sample as website, we are using [Business Casual](https://startbootstrap.com/themes/business-casual/) a free Bootstrap 4 website template
+For sample as website, we are using [Modern Business](https://startbootstrap.com/templates/modern-business/) a free Bootstrap 4 website template
 
 Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI Tech](https://kiniditech.com/)) since September 2019
 
@@ -44,6 +44,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Custom Maintenance Mode
 - [x] Product Management (as module sample including upload image feature)
 - [x] Support DataTables AJAX
+- [x] Support reCAPTCHA v2 (in Admin Panel & User Panel)
 - [x] Sortable Data List (in Division)
 - [x] Sortable Data List with Filter (in Branch - Filter by Division)
 - [x] Application Configurations
@@ -51,11 +52,20 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Delete Uploaded Image (in Product)
 - [x] Rich Text Editor/WYSIWYG using TinyMCE (in Product)
 - [x] Datepicker (in Product)
-- [x] [Using The Helper PHP - a lot of PHP helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-php)
+- [x] [The Helper PHP - a lot of PHP helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-php)
 - [x] [Support GoSMSGateway API - send SMS (in DevController)](https://github.com/vickzkater/gosms-laravel)
-- [x] Support Mailchimp API (in DevController)
+- [x] [Support Mailchimp API (in DevController)](https://github.com/vickzkater/mailchimp-helper-laravel)
+- [x] [PageBuilder](https://github.com/vickzkater/kiniditech-pagebuilder) (in Article)
+- [x] [The Helper JS - a lot of JS helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-js)
+- [x] Banner Management- [x] Application Configurations
+
+## Admin Panel
 
 <p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.2.2.jpg" alt="LARA-S-CMS Modules"></p>
+
+## Website
+
+<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_website_v1.2.3.jpg" alt="LARA-S-CMS Website"></p>
 
 ## Version
 
@@ -214,10 +224,19 @@ Source: [Laravel Documentations](https://laravel.com/docs/7.x/configuration#main
 The default template for maintenance mode responses is located in `resources/views/errors/503.blade.php` and `public/maintenance/`
 
 ## Packages Used (Outside of Laravel)
+
 - [yajra/laravel-datatables-oracle](https://github.com/yajra/laravel-datatables) - used to display a list of data in a table
 - [maatwebsite/excel](https://github.com/Maatwebsite/Laravel-Excel) - used to export & import Excel data
 - [guzzlehttp/guzzle](https://github.com/guzzle/guzzle) - used to send HTTP requests and trivial to integrate with web services
 - [nztim/mailchimp](https://github.com/nztim/mailchimp) - used to Mailchimp API
+
+## Libraries Used
+
+- [The Helper PHP - a lot of PHP helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-php)
+- [The Helper JS - a lot of JS helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-js)
+- [GoSMSGateway API - Laravel Library (GoSms)](https://github.com/vickzkater/gosms-laravel)
+- [Mailchimp API Helper - Laravel Library (MailchimpHelper)](https://github.com/vickzkater/mailchimp-helper-laravel)
+- [PageBuilder (Build pages using content elements)](https://github.com/vickzkater/kiniditech-pagebuilder)
 
 ## Documentation
 
