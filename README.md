@@ -57,8 +57,15 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Support Mailchimp API (in DevController)
 - [x] [PageBuilder](https://github.com/vickzkater/kiniditech-pagebuilder) (in Article)
 - [x] [The Helper JS - a lot of JS helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-js)
+- [x] Banner Management- [x] Application Configurations
+
+## Admin Panel
 
 <p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.2.2.jpg" alt="LARA-S-CMS Modules"></p>
+
+## Website
+
+<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_website_v1.2.3.jpg" alt="LARA-S-CMS Website"></p>
 
 ## Version
 

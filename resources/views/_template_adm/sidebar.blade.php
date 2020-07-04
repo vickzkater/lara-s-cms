@@ -30,6 +30,10 @@
                     </ul>
                 </li>
             @endif
+
+            @if (Helper::authorizing('Banner', 'View List')['status'] == 'true')
+                <li><a href="{{ route('admin.banner.list') }}"><i class="fa fa-image"></i> {{ ucwords(lang('banner', $translation)) }}</a></li>
+            @endif
         </ul>
     </div>
 
@@ -64,6 +68,10 @@
                         @if (Helper::authorizing('Product', 'Restore')['status'] == 'true')
                             <?php $priv_restore++; ?>
                             <li><a href="{{ route('admin.product.deleted') }}">{{ ucwords(lang('product', $translation)) }}</a></li>
+                        @endif
+                        @if (Helper::authorizing('Banner', 'Restore')['status'] == 'true')
+                            <?php $priv_restore++; ?>
+                            <li><a href="{{ route('admin.banner.deleted') }}">{{ ucwords(lang('banner', $translation)) }}</a></li>
                         @endif
                     </ul>
                 </li>

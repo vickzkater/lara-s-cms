@@ -1,41 +1,45 @@
-<header>
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner" role="listbox">
-        <!-- Slide One - Set the background image for this slide in the line below -->
-        {{-- http://placehold.it/1900x1080 --}}
-        <div class="carousel-item active" style="background-image: url('http://placehold.it/1900x1080')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>First Slide</h3>
-            <p>This is a description for the first slide.</p>
-          </div>
+@if (isset($banners[0]))
+  <header>
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          @for ($i = 0; $i < count($banners); $i++)
+            @php
+              $active = '';
+              if ($i == 0) {
+                $active = 'active';
+              }
+            @endphp
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $i }}" class="{{ $active }}"></li>
+          @endfor
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          @for ($i = 0; $i < count($banners); $i++)
+            @php
+              $active = '';
+              if ($i == 0) {
+                $active = 'active';
+              }
+              $item = $banners[$i];
+            @endphp
+            {{-- http://placehold.it/1900x1080 --}}
+            <div class="carousel-item {{ $active }}" style="background-image: url('{{ asset($item->image) }}')">
+              @if (!empty($item->title))
+                <div class="carousel-caption d-none d-md-block">
+                  <h3>{{ $item->title }}</h3>
+                  <p>{{ $item->description }}</p>
+                </div>
+              @endif
+            </div>
+          @endfor
         </div>
-        <!-- Slide Two - Set the background image for this slide in the line below -->
-        <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>Second Slide</h3>
-            <p>This is a description for the second slide.</p>
-          </div>
-        </div>
-        <!-- Slide Three - Set the background image for this slide in the line below -->
-        <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>Third Slide</h3>
-            <p>This is a description for the third slide.</p>
-          </div>
-        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
       </div>
-      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
-</header>
+  </header>
+@endif

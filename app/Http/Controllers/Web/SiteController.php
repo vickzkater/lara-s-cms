@@ -13,6 +13,7 @@ use App\Libraries\Helper;
 use App\Models\Product;
 use App\Models\Article;
 use App\Models\Topic;
+use App\Models\Banner;
 
 class SiteController extends Controller
 {
@@ -20,11 +21,13 @@ class SiteController extends Controller
     {
         $page_menu = 'home';
 
+        $banners = Banner::where('status', 1)->orderBy('ordinal')->get();
+
         $products = Product::whereNull('replaced_at')
             ->orderBy('id', 'desc')
             ->get();
 
-        return view('web.home', compact('page_menu', 'products'));
+        return view('web.home', compact('page_menu', 'products', 'banners'));
     }
 
     public function blog(Request $request)
