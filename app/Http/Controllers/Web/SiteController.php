@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use SimpleSoftwareIO\QrCode\Generator;
 
 // LIBRARIES
 use App\Libraries\Helper;
@@ -105,7 +106,12 @@ class SiteController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('web.blog', compact('page_menu', 'data', 'topics'));
+        // GENERATE QR CODE
+        $qrcode_gen = new Generator;
+        $qrcode = $qrcode_gen->size(200)
+            ->generate('https://github.com/vickzkater/lara-s-cms');
+
+        return view('web.blog', compact('page_menu', 'data', 'topics', 'qrcode'));
     }
 
     public function blog_details($slug)
@@ -144,6 +150,15 @@ class SiteController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('web.blog_details', compact('page_menu', 'data', 'topics'));
+        // GENERATE QRCODE - https://www.simplesoftware.io/#/docs/simple-qrcode
+        $qrcode_gen = new Generator;
+        $qrcode = $qrcode_gen->size(200)
+            ->generate(route('web.blog', $data->slug));
+
+        $qrcode_gen = new Generator;
+        $qrcode_main = $qrcode_gen->size(200)
+            ->generate('https://github.com/vickzkater/lara-s-cms');
+
+        return view('web.blog_details', compact('page_menu', 'data', 'topics', 'qrcode', 'qrcode_main'));
     }
 }

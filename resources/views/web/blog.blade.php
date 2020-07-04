@@ -127,6 +127,13 @@
 
                 <!-- Side Widget -->
                 <div class="card my-4">
+                    <h5 class="card-header">SCAN ME</h5>
+                    <div class="card-body text-center">
+                        {!! $qrcode !!}
+                    </div>
+                </div>
+                
+                <div class="card my-4">
                     <h5 class="card-header">Lara-S-CMS Dev's Twitter</h5>
                     <div class="card-body">
                         <a class="twitter-timeline" data-height="700" data-theme="dark" href="https://twitter.com/vickzkater?ref_src=twsrc%5Etfw">Tweets by vickzkater</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

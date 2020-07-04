@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.0",
         "maatwebsite/excel": "^3.1",
         "nztim/mailchimp": "^3.11",
+        "simplesoftwareio/simple-qrcode": "~3",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {

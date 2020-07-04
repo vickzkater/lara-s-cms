@@ -57,7 +57,8 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] [Support Mailchimp API (in DevController)](https://github.com/vickzkater/mailchimp-helper-laravel)
 - [x] [PageBuilder](https://github.com/vickzkater/kiniditech-pagebuilder) (in Article)
 - [x] [The Helper JS - a lot of JS helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-js)
-- [x] Banner Management- [x] Application Configurations
+- [x] Banner Management
+- [x] QR Code Generator
 
 ## Admin Panel
 
@@ -229,6 +230,7 @@ The default template for maintenance mode responses is located in `resources/vie
 - [maatwebsite/excel](https://github.com/Maatwebsite/Laravel-Excel) - used to export & import Excel data
 - [guzzlehttp/guzzle](https://github.com/guzzle/guzzle) - used to send HTTP requests and trivial to integrate with web services
 - [nztim/mailchimp](https://github.com/nztim/mailchimp) - used to Mailchimp API
+- [simplesoftwareio/simple-qrcode](https://github.com/SimpleSoftwareIO/simple-qrcode) - used to generate QR code
 
 ## Libraries Used
 

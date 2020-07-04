@@ -1,3 +1,7 @@
+## Version 2.0.0
+### Changelog
+- Add QR Code Generator
+
 ## Version 1.2.3
 ### Changelog
 - Add PageBuilder
