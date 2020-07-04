@@ -16,14 +16,11 @@ Route::group(['namespace' => 'Web'], function () {
     // HOME
     Route::get('/', 'SiteController@home')->name('web.home');
 
-    // ABOUT
-    Route::get('/about', 'SiteController@about')->name('web.about');
-
-    // PRODUCTS
-    Route::get('/products', 'SiteController@products')->name('web.products');
-
-    // STORE
-    Route::get('/store', 'SiteController@store')->name('web.store');
+    // BLOG
+    Route::group(['prefix' => 'blog'], function () {
+        Route::get('/', 'SiteController@blog')->name('web.blog');
+        Route::get('/{slug}', 'SiteController@blog_details')->name('web.blog.details');
+    });
 });
 
 // ADMIN
