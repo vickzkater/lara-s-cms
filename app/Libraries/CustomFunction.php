@@ -569,7 +569,7 @@ if (!function_exists('set_input_form2')) {
                 break;
 
             case 'word':
-                $input_element = '<input type="text" value="' . $value . '" ' . $properties . ' class="form-control col-md-7 col-xs-12" onkeyup="word_only(this);" />';
+                $input_element = '<input type="text" value="' . $value . '" ' . $properties . ' class="form-control col-md-7 col-xs-12" onkeyup="username_only(this);" />';
                 break;
 
             default:

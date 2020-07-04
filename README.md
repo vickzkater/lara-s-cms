@@ -44,6 +44,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Custom Maintenance Mode
 - [x] Product Management (as module sample including upload image feature)
 - [x] Support DataTables AJAX
+- [x] Support reCAPTCHA v2 (in Admin Panel & User Panel)
 - [x] Sortable Data List (in Division)
 - [x] Sortable Data List with Filter (in Branch - Filter by Division)
 - [x] Application Configurations
@@ -51,9 +52,11 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Delete Uploaded Image (in Product)
 - [x] Rich Text Editor/WYSIWYG using TinyMCE (in Product)
 - [x] Datepicker (in Product)
-- [x] [Using The Helper PHP - a lot of PHP helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-php)
+- [x] [The Helper PHP - a lot of PHP helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-php)
 - [x] [Support GoSMSGateway API - send SMS (in DevController)](https://github.com/vickzkater/gosms-laravel)
 - [x] Support Mailchimp API (in DevController)
+- [x] [PageBuilder](https://github.com/vickzkater/kiniditech-pagebuilder) (in Article)
+- [x] [The Helper JS - a lot of JS helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-js)
 
 <p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.2.2.jpg" alt="LARA-S-CMS Modules"></p>
 

@@ -107,14 +107,13 @@ class ProductController extends Controller
         $validation = [
             'title' => 'required',
             'subtitle' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'required|image|max:2048',
             'description' => 'required',
             'purchase_date' => 'required|date_format:d/m/Y'
         ];
         $message = [
             'required' => ':attribute ' . lang('field is required', $this->translation),
-            'image' => ':attribute ' . lang('must be an image', $this->translation),
-            'mimes' => ':attribute ' . lang('must be a file of type: #item', $this->translation, ['#item' => 'jpeg,png,jpg'])
+            'image' => ':attribute ' . lang('must be an image', $this->translation)
         ];
         $names = [
             'title' => ucwords(lang('title', $this->translation)),
@@ -264,12 +263,12 @@ class ProductController extends Controller
         ];
         // IF UPLOAD NEW IMAGE
         if ($request->image) {
-            $validation['image'] = 'required|image|mimes:jpeg,png,jpg|max:2048';
+            $validation['image'] = 'required|image|max:2048';
         }
         $message = [
             'required' => ':attribute ' . lang('field is required', $this->translation),
             'image' => ':attribute ' . lang('must be an image', $this->translation),
-            'mimes' => ':attribute ' . lang('must be a file of type: #item', $this->translation, ['#item' => 'jpeg,png,jpg'])
+
         ];
         $names = [
             'title' => ucwords(lang('title', $this->translation)),

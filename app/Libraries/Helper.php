@@ -110,12 +110,12 @@ class Helper extends TheHelper
         return array(lang('second', $translation), lang('minute', $translation), lang('hour', $translation), lang('day', $translation), lang('week', $translation), lang('month', $translation), lang('year', $translation), lang('decade', $translation));
     }
 
-    public static function upload_image($dir_path, $image_file, $reformat_image_name = true, $format_image_name = null, $allowed_extensions = ['jpeg', 'jpg', 'png'])
+    public static function upload_image($dir_path, $image_file, $reformat_image_name = true, $format_image_name = null, $allowed_extensions = ['jpeg', 'jpg', 'png', 'gif'])
     {
         // PROCESSING IMAGE
         $destination_path = public_path($dir_path);
         $image = $image_file;
-        $extension  = strtolower($image->getClientOriginalExtension());
+        $extension = strtolower($image->getClientOriginalExtension());
 
         // VALIDATING FOR ALLOWED EXTENSIONS
         if (!in_array($extension, $allowed_extensions)) {

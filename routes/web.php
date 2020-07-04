@@ -178,6 +178,30 @@ Route::group([
                 Route::get('/export', 'ProductController@export_excel')->name('admin.product.export_excel');
             });
         });
+
+        // TOPIC
+        Route::group(['prefix' => 'topic'], function () {
+            Route::get('/', 'TopicController@list')->name('admin.topic.list');
+            Route::get('/get-data', 'TopicController@get_data')->name('admin.topic.get_data');
+            Route::get('/create', 'TopicController@create')->name('admin.topic.create');
+            Route::post('/do-create', 'TopicController@do_create')->name('admin.topic.do_create');
+            Route::get('/edit/{id}', 'TopicController@edit')->name('admin.topic.edit');
+            Route::post('/do-edit/{id}', 'TopicController@do_edit')->name('admin.topic.do_edit');
+            Route::post('/delete', 'TopicController@delete')->name('admin.topic.delete');
+        });
+
+        // ARTICLE
+        Route::group(['prefix' => 'article'], function () {
+            Route::get('/', 'ArticleController@list')->name('admin.article.list');
+            Route::get('/get-data', 'ArticleController@get_data')->name('admin.article.get_data');
+            Route::get('/create', 'ArticleController@create')->name('admin.article.create');
+            Route::post('/do-create', 'ArticleController@do_create')->name('admin.article.do_create');
+            Route::get('/edit/{id}', 'ArticleController@edit')->name('admin.article.edit');
+            Route::post('/do-edit/{id}', 'ArticleController@do_edit')->name('admin.article.do_edit');
+            Route::post('/delete', 'ArticleController@delete')->name('admin.article.delete');
+            Route::get('/enable/{id}', 'ArticleController@enable')->name('admin.article.enable');
+            Route::get('/disable/{id}', 'ArticleController@disable')->name('admin.article.disable');
+        });
     });
 });
 

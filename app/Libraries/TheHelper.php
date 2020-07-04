@@ -148,7 +148,7 @@ class TheHelper
      */
     public static function validate_phone($phone, $phone_code = null, $start_using = '')
     {
-        $phone = Helper::validate_input($phone);
+        $phone = TheHelper::validate_input($phone);
 
         // sanitize phone number: length(10-18 chars)
         if (strlen($phone) < 10 || strlen($phone) > 18) {
@@ -470,7 +470,7 @@ class TheHelper
      */
     public static function generate_token($string, $salt_chars = 15)
     {
-        return urlencode(Helper::random_string($salt_chars) . base64_encode($string));
+        return urlencode(TheHelper::random_string($salt_chars) . base64_encode($string));
     }
 
     /**
@@ -592,5 +592,38 @@ class TheHelper
         }
 
         return $is_webview;
+    }
+
+    /**
+     * Get current full URL 
+     */
+    public static function get_url()
+    {
+        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    }
+
+    /**
+     * Check whether the url file is valid 
+     * 
+     * @param String $url required
+     * 
+     * @return Boolean
+     */
+    public static function check_remote_file($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        // don't download content
+        curl_setopt($ch, CURLOPT_NOBODY, 1);
+        curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+        if ($result !== FALSE) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

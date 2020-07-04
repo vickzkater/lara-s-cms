@@ -15,13 +15,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ ucwords(lang('close', $translation)) }}</button>
-                    <button type="submit" class="btn btn-primary btn-submit" @if(View::hasSection('small_modal_btn_onclick')) onclick="@yield('small_modal_btn_onclick')"  @endif>
-                        @if(View::hasSection('small_modal_btn_label')) 
-                            @yield('small_modal_btn_label')
-                        @else
-                            {{ ucwords(lang('save changes', $translation)) }}
-                        @endif
-                    </button>
+                    @if(View::hasSection('small_modal_btn_label'))
+						<button type="submit" class="btn btn-primary btn-submit" @if(View::hasSection('small_modal_btn_onclick')) onclick="@yield('small_modal_btn_onclick')"  @endif>
+							@yield('small_modal_btn_label')
+						</button>
+					@endif
                 </div>
             </div>
         @if(View::hasSection('small_modal_form'))

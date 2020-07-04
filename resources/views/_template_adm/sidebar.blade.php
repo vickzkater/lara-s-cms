@@ -16,6 +16,20 @@
             @if (Helper::authorizing('Product', 'View List')['status'] == 'true')
                 <li><a href="{{ route('admin.product.list') }}"><i class="fa fa-cubes"></i> {{ ucwords(lang('product', $translation)) }}</a></li>
             @endif
+
+            @if (Helper::authorizing('Article', 'View List')['status'] == 'true')
+                <li>
+                    <a><i class="fa fa-newspaper-o"></i> {{ ucwords(lang('article', $translation)) }} <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        @if (Helper::authorizing('Topic', 'View List')['status'] == 'true')
+                            <li><a href="{{ route('admin.topic.list') }}">{{ ucwords(lang('topic', $translation)) }}</a></li>
+                        @endif
+                        @if (Helper::authorizing('Article', 'View List')['status'] == 'true')
+                            <li><a href="{{ route('admin.article.list') }}">{{ ucwords(lang('article', $translation)) }}</a></li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
         </ul>
     </div>
 
