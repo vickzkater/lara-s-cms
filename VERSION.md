@@ -2,6 +2,7 @@
 ### Changelog
 - Add QR Code Generator
 - Add support login with social media (Google/Facebook)
+- Add support back-end mode (MODEL or API)
 
 ## Version 1.2.3
 ### Changelog

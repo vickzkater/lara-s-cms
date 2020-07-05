@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use GuzzleHttp\Client;
 
 class Controller extends BaseController
 {
@@ -99,5 +100,88 @@ class Controller extends BaseController
 
             return $next($request);
         });
+    }
+
+    protected function guzzle_post($url, $token, $parameter)
+    {
+        if (empty($token)) {
+            return 'Unauthorized';
+        } else {
+            if (env('APP_DEBUG')) {
+                $client = new Client([
+                    'http_errors' => false,
+                    'verify' => false
+                ]);
+            } else {
+                $client = new Client([
+                    'http_errors' => false
+                ]);
+            }
+            $headers = array('Authorization' => 'bearer ' . $token);
+            $request = $client->request('POST', $url, ['headers' => $headers, 'form_params' => $parameter]);
+            $response = $request->getBody()->getContents();
+
+            return json_decode($response, true);
+        }
+    }
+
+    protected function guzzle_get($url, $token)
+    {
+        if (empty($token)) {
+            return 'Unauthorized';
+        } else {
+            if (env('APP_DEBUG')) {
+                $client = new Client([
+                    'http_errors' => false,
+                    'verify' => false
+                ]);
+            } else {
+                $client = new Client([
+                    'http_errors' => false
+                ]);
+            }
+            $headers = array('Authorization' => 'bearer ' . $token);
+            $request = $client->request('GET', $url, array('headers' => $headers));
+            $response = $request->getBody();
+
+            return json_decode($response, true);
+        }
+    }
+
+    protected function guzzle_get_public($url)
+    {
+        if (env('APP_DEBUG')) {
+            $client = new Client([
+                'http_errors' => false,
+                'verify' => false
+            ]);
+        } else {
+            $client = new Client([
+                'http_errors' => false
+            ]);
+        }
+
+        $request = $client->request('GET', $url);
+        $response = $request->getBody();
+
+        return json_decode($response, true);
+    }
+
+    protected function guzzle_post_public($url, $parameter)
+    {
+        if (env('APP_DEBUG')) {
+            $client = new Client([
+                'http_errors' => false,
+                'verify' => false
+            ]);
+        } else {
+            $client = new Client([
+                'http_errors' => false
+            ]);
+        }
+        $request = $client->request('POST', $url, ['form_params' => $parameter]);
+        $response = $request->getBody()->getContents();
+
+        return json_decode($response, true);
     }
 }

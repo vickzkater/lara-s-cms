@@ -16,7 +16,6 @@ class CreateSysConfigTable extends Migration
         Schema::create('sys_config', function (Blueprint $table) {
             $table->id();
             $table->string('app_name')->default('Lara-S-CMS');
-            $table->enum('app_backend', ['MODEL', 'API'])->default('MODEL');
             $table->string('app_url_site')->default('http://localhost/lara-s-cms/public/');
             $table->string('app_url_main')->nullable()->default('http://localhost/lara-s-cms/public/');
             $table->string('app_url_api')->nullable();

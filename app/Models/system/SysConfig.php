@@ -20,7 +20,6 @@ class SysConfig extends Model
      */
     protected $fillable = [
         'app_name',
-        'app_backend',
         'app_url_site',
         'app_url_main',
         'app_url_api',

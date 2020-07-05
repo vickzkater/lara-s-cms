@@ -60,6 +60,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Banner Management
 - [x] QR Code Generator
 - [x] Login with social media (Google/Facebook)
+- [x] Support back-end mode (MODEL or API)
 
 ## Admin Panel
 
@@ -107,11 +108,13 @@ The next thing you should do after installing Lara-S-CMS is set your application
 
 Next, setup environment configuration in `.env` file
 
+- Set `DISPLAY_SESSION` for enable/disable display session in Admin - Footer (Development Purpose)
+
+- Set `APP_BACKEND` for choose application back-end mode (MODEL or API) if use API, please make sure "Application URL API" in Config Menu is not empty
+- Set `ADMIN_CMS` for enable/disable Admin Panel
 - Set `ADMIN_DIR` for set application or admin system directory name (or leave it blank if using the admin dashboard only)
 
 - Set `APP_URL_SITE` for set application URL that used for login with social media
-
-- Set `DISPLAY_SESSION` for enable/disable display session in Admin - Footer (Development Purpose)
 
 - Set `APP_TIMEZONE` for set timezone application, sample: UTC or Asia/Jakarta
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
