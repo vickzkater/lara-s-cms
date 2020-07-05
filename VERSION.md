@@ -1,6 +1,7 @@
 ## Version 2.0.0
 ### Changelog
 - Add QR Code Generator
+- Add support login with social media (Google/Facebook)
 
 ## Version 1.2.3
 ### Changelog

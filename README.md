@@ -59,6 +59,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] [The Helper JS - a lot of JS helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-js)
 - [x] Banner Management
 - [x] QR Code Generator
+- [x] Login with social media (Google/Facebook)
 
 ## Admin Panel
 
@@ -106,11 +107,15 @@ The next thing you should do after installing Lara-S-CMS is set your application
 
 Next, setup environment configuration in `.env` file
 
+- Set `ADMIN_DIR` for set application or admin system directory name (or leave it blank if using the admin dashboard only)
+
+- Set `APP_URL_SITE` for set application URL that used for login with social media
+
 - Set `DISPLAY_SESSION` for enable/disable display session in Admin - Footer (Development Purpose)
 
 - Set `APP_TIMEZONE` for set timezone application, sample: UTC or Asia/Jakarta
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
-- Set `ADMIN_DIR` for set application or admin system directory name (or leave it blank if using the admin dashboard only)
+
 - Set `DEFAULT_LANGUAGE` for set default language in application
 
 - Set `MAIL_FROM_NAME` for set sender email's name
@@ -231,6 +236,7 @@ The default template for maintenance mode responses is located in `resources/vie
 - [guzzlehttp/guzzle](https://github.com/guzzle/guzzle) - used to send HTTP requests and trivial to integrate with web services
 - [nztim/mailchimp](https://github.com/nztim/mailchimp) - used to Mailchimp API
 - [simplesoftwareio/simple-qrcode](https://github.com/SimpleSoftwareIO/simple-qrcode) - used to generate QR code
+- [laravel/socialite](https://github.com/laravel/socialite) - used to login with social media
 
 ## Libraries Used
 
