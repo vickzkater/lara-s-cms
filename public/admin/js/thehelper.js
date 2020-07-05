@@ -247,3 +247,16 @@ function alphanumerics_only(elm) {
         elm.value = elm.value.replace(/[^a-z0-9A-Z ]/g, "");
     }
 }
+
+/**
+ * for remove uploaded file
+ *
+ * @param {element id} input
+ */
+function remove_uploaded_file(input) {
+    if (confirm("Are you sure to delete this uploaded file?")) {
+        $(input + "-file-preview").remove();
+        $(input + "-delbtn").hide();
+        $(input + "-delete").val("yes");
+    }
+}

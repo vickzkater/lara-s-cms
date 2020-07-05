@@ -352,6 +352,10 @@ if (!function_exists('set_input_form2')) {
             if (isset($config->delete)) {
                 $delete = $config->delete;
             }
+            // config for image & file
+            if (isset($config->info)) {
+                $info = $config->info;
+            }
         }
 
         // set error class
@@ -550,6 +554,9 @@ if (!function_exists('set_input_form2')) {
                     $input_element = '<img src="' . $img_src . '" style="max-width:200px;" />';
                 }
                 $input_element .= '<input type="file" ' . $properties . ' class="form-control col-md-7 col-xs-12" accept="image/*" onchange="readURL(this, \'before\');" style="margin-top:5px" />';
+                if (isset($info)) {
+                    $input_element .= '<br><span><i class="fa fa-info-circle"></i>&nbsp; ' . $info . '</span>';
+                }
                 if (!empty($value) && $delete) {
                     $input_element .= '<br><span class="btn btn-warning btn-xs" id="' . $id_name . '-delbtn" style="margin: 5px 0 !important;" onclick="reset_img_preview(\'#' . $id_name . '\', \'' . $no_image . '\', \'before\')">Delete uploaded image?</span>';
                     $input_element .= ' <input type="hidden" name="' . $input_name . '_delete" id="' . $input_name . '-delete">';
@@ -570,6 +577,21 @@ if (!function_exists('set_input_form2')) {
 
             case 'word':
                 $input_element = '<input type="text" value="' . $value . '" ' . $properties . ' class="form-control col-md-7 col-xs-12" onkeyup="username_only(this);" />';
+                break;
+
+            case 'file':
+                $input_element = '';
+                if (!empty($value)) {
+                    $input_element .= '<a href="' . asset($value) . '" target="_blank" id="' . $id_name . '-file-preview">' . $value . '</a>';
+                    if ($delete) {
+                        $input_element .= '&nbsp; <span class="btn btn-danger btn-xs" id="' . $id_name . '-delbtn" style="margin: 5px 0 !important;" onclick="remove_uploaded_file(\'#' . $id_name . '\')"><i class="fa fa-trash"></i></span><br>';
+                        $input_element .= ' <input type="hidden" name="' . $input_name . '_delete" id="' . $input_name . '-delete">';
+                    }
+                }
+                if (isset($info)) {
+                    $input_element .= '<span><i class="fa fa-info-circle"></i>&nbsp; ' . $info . '</span><br>';
+                }
+                $input_element .= '<input type="file" ' . $properties . ' class="form-control col-md-7 col-xs-12" />';
                 break;
 
             default:

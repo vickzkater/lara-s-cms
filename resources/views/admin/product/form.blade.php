@@ -48,9 +48,10 @@
                                 $config->attributes = 'autocomplete="off"';
                                 echo set_input_form2('text', 'subtitle', ucwords(lang('subtitle', $translation)), $data, $errors, true, $config);
 
+                                $config = new \stdClass();
+                                $config->info = 'Max 2MB per file';
                                 if(isset($data)){
                                     // IF EDIT, THEN NOT REQUIRED
-                                    $config = new \stdClass();
                                     $config->delete = true;
                                     echo set_input_form2('image', 'image', ucwords(lang('image', $translation)), $data, $errors, false, $config);
                                 }else{
@@ -69,6 +70,15 @@
                                 echo set_input_form2('datepicker', 'expired_date', ucwords(lang('expired date', $translation)), $data, $errors, false, $config);
 
                                 echo set_input_form2('number_format', 'qty', lang('QTY', $translation), $data, $errors, true);
+
+                                $config = new \stdClass();
+                                $config->info = 'Max 2MB per file';
+                                if(isset($data)){
+                                    $config->delete = true;
+                                    echo set_input_form2('file', 'attachments', ucwords(lang('attachments', $translation)), $data, $errors, false, $config);
+                                }else{
+                                    echo set_input_form2('file', 'attachments', ucwords(lang('attachments', $translation)), $data, $errors, false, $config);
+                                }
 
                                 $config = new \stdClass();
                                 $config->default = 'checked';

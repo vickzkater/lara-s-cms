@@ -111,6 +111,10 @@ class ProductController extends Controller
             'description' => 'required',
             'purchase_date' => 'required|date_format:d/m/Y'
         ];
+        // IF UPLOAD FILE
+        if ($request->attachments) {
+            $validation['attachments'] = 'required|max:2048';
+        }
         $message = [
             'required' => ':attribute ' . lang('field is required', $this->translation),
             'image' => ':attribute ' . lang('must be an image', $this->translation)
@@ -119,10 +123,12 @@ class ProductController extends Controller
             'title' => ucwords(lang('title', $this->translation)),
             'subtitle' => ucwords(lang('subtitle', $this->translation)),
             'image' => ucwords(lang('image', $this->translation)),
-            'description' => ucwords(lang('description', $this->translation))
+            'description' => ucwords(lang('description', $this->translation)),
+            'attachments' => ucwords(lang('attachments', $this->translation))
         ];
         $this->validate($request, $validation, $message, $names);
 
+        // INSERT NEW DATA
         $data = new Product();
 
         // HELPER VALIDATION FOR PREVENT SQL INJECTION & XSS ATTACK
@@ -164,6 +170,22 @@ class ProductController extends Controller
         }
         // GET THE UPLOADED IMAGE RESULT
         $data->image = $dir_path . $image['data'];
+
+        // IF UPLOAD FILE
+        if ($request->attachments) {
+            // PROCESSING FILE
+            $dir_path = 'uploads/product/';
+            $file = $request->file('attachments');
+            $format_file_name = time() . '-attachments';
+            $file_data = Helper::upload_file($dir_path, $file, true, $format_file_name);
+            if ($file_data['status'] != 'true') {
+                return back()
+                    ->withInput()
+                    ->with('error', lang($file_data['message'], $this->translation));
+            }
+            // GET THE UPLOADED FILE RESULT
+            $data->attachments = $dir_path . $file_data['data'];
+        }
 
         // MANIPULATE DATE
         $data->purchase_date = Helper::convert_datepicker($request->purchase_date);
@@ -265,16 +287,20 @@ class ProductController extends Controller
         if ($request->image) {
             $validation['image'] = 'required|image|max:2048';
         }
+        // IF UPLOAD NEW FILE
+        if ($request->attachments) {
+            $validation['attachments'] = 'required|max:2048';
+        }
         $message = [
             'required' => ':attribute ' . lang('field is required', $this->translation),
-            'image' => ':attribute ' . lang('must be an image', $this->translation),
-
+            'image' => ':attribute ' . lang('must be an image', $this->translation)
         ];
         $names = [
             'title' => ucwords(lang('title', $this->translation)),
             'subtitle' => ucwords(lang('subtitle', $this->translation)),
             'image' => ucwords(lang('image', $this->translation)),
-            'description' => ucwords(lang('description', $this->translation))
+            'description' => ucwords(lang('description', $this->translation)),
+            'attachments' => ucwords(lang('attachments', $this->translation))
         ];
         $this->validate($request, $validation, $message, $names);
 
@@ -323,6 +349,25 @@ class ProductController extends Controller
             // DELETE EXISTING IMAGE WITHOUT UPLOAD THE NEW ONE
             // $image = 'images/no-image.png';
             $data->image = null;
+        }
+
+        // IF UPLOAD NEW FILE
+        if ($request->attachments) {
+            // PROCESSING FILE
+            $dir_path = 'uploads/product/';
+            $file = $request->file('attachments');
+            $format_file_name = time() . '-attachments';
+            $file_data = Helper::upload_file($dir_path, $file, true, $format_file_name);
+            if ($file_data['status'] != 'true') {
+                return back()
+                    ->withInput()
+                    ->with('error', lang($file_data['message'], $this->translation));
+            }
+            // GET THE UPLOADED FILE RESULT
+            $data->attachments = $dir_path . $file_data['data'];
+        } elseif (isset($request->attachments_delete) && $request->attachments_delete == 'yes') {
+            // DELETE EXISTING FILE WITHOUT UPLOAD THE NEW ONE
+            $data->attachments = null;
         }
 
         // MANIPULATE DATE

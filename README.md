@@ -61,6 +61,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] QR Code Generator
 - [x] Login with social media (Google/Facebook)
 - [x] Support back-end mode (MODEL or API)
+- [x] Support upload file (PDF/TXT/DOCS/etc)
 
 ## Admin Panel
 
