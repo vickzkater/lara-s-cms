@@ -18,7 +18,6 @@ class CreateSysConfigTable extends Migration
             $table->string('app_name')->default('Lara-S-CMS');
             $table->string('app_url_site')->default('http://localhost/lara-s-cms/public/');
             $table->string('app_url_main')->nullable()->default('http://localhost/lara-s-cms/public/');
-            $table->string('app_url_api')->nullable();
             $table->string('app_version', 10)->default('1.0');
             $table->string('app_favicon_type', 10)->default('ico');
             $table->string('app_favicon')->default('favicon.ico');

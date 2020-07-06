@@ -14,7 +14,7 @@ class RemoteController extends Controller
         $page_menu = 'home';
 
         // Set API URL - retrieve the data
-        $url = $this->global_config->app_url_api . '/banner';
+        $url = env('APP_URL_API') . '/banner';
         // Set parameters
         $params = [];
         // Hit API - using method GET
@@ -30,7 +30,7 @@ class RemoteController extends Controller
         $banners = $data;
 
         // Set API URL - retrieve the data
-        $url = $this->global_config->app_url_api . '/product';
+        $url = env('APP_URL_API') . '/product';
         // Set parameters
         $params = [];
         // Hit API - using method GET
@@ -54,7 +54,7 @@ class RemoteController extends Controller
 
         // GET TOPIC
         // Set API URL - retrieve the data
-        $url = $this->global_config->app_url_api . '/topic';
+        $url = env('APP_URL_API') . '/topic';
         // Set parameters
         $params = [];
         // Hit API - using method GET
@@ -80,7 +80,7 @@ class RemoteController extends Controller
         }
 
         // Set API URL - retrieve the data
-        $url = $this->global_config->app_url_api . '/blog';
+        $url = env('APP_URL_API') . '/blog';
         // Set parameters
         $params = $request->all();
         $params['limit'] = $limit;
@@ -110,7 +110,7 @@ class RemoteController extends Controller
 
         // GET TOPIC
         // Set API URL - retrieve the data
-        $url = $this->global_config->app_url_api . '/topic';
+        $url = env('APP_URL_API') . '/topic';
         // Set parameters
         $params = [];
         // Hit API - using method GET
@@ -126,7 +126,7 @@ class RemoteController extends Controller
         $topics = $data;
 
         // Set API URL - retrieve the data
-        $url = $this->global_config->app_url_api . '/blog/details';
+        $url = env('APP_URL_API') . '/blog/details';
         // Set parameters
         $params = [
             'slug' => $slug

@@ -28,18 +28,23 @@ if (!function_exists('lang')) {
             }
 
             // get language data
-            $translation = DB::table('sys_language_master_details')->select('sys_language_master.phrase', 'sys_language_master_details.translate')
-                ->leftJoin('sys_languages', 'sys_languages.id', 'sys_language_master_details.language_id')
-                ->leftJoin('sys_language_master', 'sys_language_master.id', 'sys_language_master_details.language_master_id')
-                ->where('sys_languages.alias', $language)
-                ->where('sys_language_master.phrase', $phrase)
-                ->first();
+            if (env('APP_BACKEND', 'MODEL') != 'API') {
+                $translation = DB::table('sys_language_master_details')->select('sys_language_master.phrase', 'sys_language_master_details.translate')
+                    ->leftJoin('sys_languages', 'sys_languages.id', 'sys_language_master_details.language_id')
+                    ->leftJoin('sys_language_master', 'sys_language_master.id', 'sys_language_master_details.language_master_id')
+                    ->where('sys_languages.alias', $language)
+                    ->where('sys_language_master.phrase', $phrase)
+                    ->first();
 
-            if (!empty($translation)) {
-                // if found the translation, return the translation
-                $result = $translation->translate;
-            } else {
-                // if not found the translation, just return the param
+                if (!empty($translation)) {
+                    // if found the translation, return the translation
+                    $result = $translation->translate;
+                } else {
+                    // if not found the translation, just return the param
+                    $result = $phrase;
+                }
+            }else{
+                // coz using API as back-end mode, so we can't get translation data from database - just return the param
                 $result = $phrase;
             }
         } else if (isset($translation[$phrase])) {

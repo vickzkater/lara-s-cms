@@ -98,8 +98,6 @@ class ConfigController extends Controller
 
         $data->app_url_main = Helper::validate_input_url($request->app_url_main);
 
-        $data->app_url_api = Helper::validate_input_url($request->app_url_api);
-
         $app_version = Helper::validate_input_text($request->app_version);
         if (!$app_version) {
             return back()

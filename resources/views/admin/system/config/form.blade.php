@@ -39,7 +39,6 @@
                             
                             echo set_input_form2('text', 'app_url_site', ucwords(lang('application URL', $translation)), $data, $errors, true);
                             echo set_input_form2('text', 'app_url_main', ucwords(lang('application URL main', $translation)), $data, $errors, false);
-                            echo set_input_form2('text', 'app_url_api', ucwords(lang('application URL API', $translation)), $data, $errors, false);
                             
                             $config = new \stdClass();
                             $config->defined_data = ['ico' => 'ico', 'png' => 'png'];

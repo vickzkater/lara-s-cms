@@ -39,49 +39,60 @@ class Controller extends BaseController
             }
 
             // get language data
-            $getLanguageMasterMenu = DB::table('sys_language_master_details')
-                ->select('sys_language_master.phrase', 'sys_language_master_details.translate')
-                ->leftJoin('sys_languages', 'sys_language_master_details.language_id', '=', 'sys_languages.id')
-                ->leftJoin('sys_language_master', 'sys_language_master_details.language_master_id', '=', 'sys_language_master.id')
-                ->where('sys_languages.alias', $language)
-                ->get();
-
-            // convert to single array
             $translation = [];
-            foreach ($getLanguageMasterMenu as $list) {
-                $translation[$list->phrase] = $list->translate;
-            }
+            if (env('APP_BACKEND', 'MODEL') != 'API') {
+                $getLanguageMasterMenu = DB::table('sys_language_master_details')
+                    ->select('sys_language_master.phrase', 'sys_language_master_details.translate')
+                    ->leftJoin('sys_languages', 'sys_language_master_details.language_id', '=', 'sys_languages.id')
+                    ->leftJoin('sys_language_master', 'sys_language_master_details.language_master_id', '=', 'sys_language_master.id')
+                    ->where('sys_languages.alias', $language)
+                    ->get();
 
+                // convert to single array
+                foreach ($getLanguageMasterMenu as $list) {
+                    $translation[$list->phrase] = $list->translate;
+                }
+            }
             // share variable to all Views
             View::share('translation', $translation);
-
             // set this variable with translation data
             $this->translation = $translation;
 
             // set available languages
-            $getLanguages = DB::table('sys_languages')->where('status', 1)->get();
-
-            // convert to single array
             $languages = [];
-            foreach ($getLanguages as $list) {
-                $obj = new \stdClass();
-                $obj->alias = $list->alias;
-                $obj->name = $list->name;
-                $languages[$list->id] = $obj;
-            }
+            if (env('APP_BACKEND', 'MODEL') != 'API') {
+                $getLanguages = DB::table('sys_languages')->where('status', 1)->get();
 
+                // convert to single array
+                foreach ($getLanguages as $list) {
+                    $obj = new \stdClass();
+                    $obj->alias = $list->alias;
+                    $obj->name = $list->name;
+                    $languages[$list->id] = $obj;
+                }
+            }
             // share variable to all Views
             View::share('languages', $languages);
-
             // set this variable with languages data
             $this->languages = $languages;
 
             // get global config data
-            $global_config = DB::table('sys_config')->first();
-
+            $global_config = new \stdClass();
+            $global_config->app_name = env('APP_NAME');
+            $global_config->app_version = env('APP_VERSION');
+            $global_config->meta_description = env('META_DESCRIPTION');
+            $global_config->meta_author = env('META_AUTHOR');
+            $global_config->app_favicon_type = env('APP_FAVICON_TYPE');
+            $global_config->app_favicon = env('APP_FAVICON');
+            $global_config->app_logo = env('APP_LOGO');
+            $global_config->app_logo_image = env('APP_LOGO_IMAGE');
+            $global_config->powered = env('POWERED');
+            $global_config->powered_url = env('POWERED_URL');
+            if (env('APP_BACKEND', 'MODEL') != 'API') {
+                $global_config = DB::table('sys_config')->first();
+            }
             // share variable to all Views
             View::share('global_config', $global_config);
-
             // set this variable with translation data
             $this->global_config = $global_config;
 

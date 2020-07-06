@@ -22,7 +22,6 @@ class SysConfig extends Model
         'app_name',
         'app_url_site',
         'app_url_main',
-        'app_url_api',
         'app_version',
         'app_favicon_type',
         'app_favicon',
