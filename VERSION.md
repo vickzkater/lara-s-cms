@@ -1,3 +1,10 @@
+## Version 2.0.0
+### Changelog
+- Add QR Code Generator
+- Add support login with social media (Google/Facebook)
+- Add support back-end mode (MODEL or API)
+- Add support upload file (PDF/TXT/DOCS/etc)
+
 ## Version 1.2.3
 ### Changelog
 - Add PageBuilder

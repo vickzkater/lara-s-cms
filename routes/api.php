@@ -16,3 +16,19 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+Route::group(['namespace' => 'API'], function () {
+    Route::get('/', 'ApiController@index');
+
+    Route::get('/banner', 'ApiController@get_banner');
+
+    Route::get('/product', 'ApiController@get_product');
+
+    Route::get('/topic', 'ApiController@get_topic');
+
+    Route::group(['prefix' => 'blog'], function () {
+        Route::post('/', 'ApiController@get_blog');
+
+        Route::post('/details', 'ApiController@get_blog_details');
+    });
+});

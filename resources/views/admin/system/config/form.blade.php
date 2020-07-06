@@ -36,13 +36,9 @@
                             // set_input_form2($type, $input_name, $label_name, $data, $errors, $required = false, $config = null)
                             echo set_input_form2('text', 'app_name', ucwords(lang('application name', $translation)), $data, $errors, true);
                             echo set_input_form2('text', 'app_version', ucwords(lang('application version', $translation)), $data, $errors, true);
-                            $config = new \stdClass();
-                            $config->defined_data = ['MODEL' => 'MODEL', 'API' => 'API'];
-                            echo set_input_form2('select', 'app_backend', ucwords(lang('application backend', $translation)), $data, $errors, true, $config);
                             
                             echo set_input_form2('text', 'app_url_site', ucwords(lang('application URL', $translation)), $data, $errors, true);
                             echo set_input_form2('text', 'app_url_main', ucwords(lang('application URL main', $translation)), $data, $errors, false);
-                            echo set_input_form2('text', 'app_url_api', ucwords(lang('application URL API', $translation)), $data, $errors, false);
                             
                             $config = new \stdClass();
                             $config->defined_data = ['ico' => 'ico', 'png' => 'png'];

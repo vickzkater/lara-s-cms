@@ -82,11 +82,11 @@
         </div>
         <!-- /.row -->
 
-        <!-- Portfolio Section -->
-        <h2>Supported by</h2>
+        @if (isset($products[0]))
+            <!-- Portfolio Section -->
+            <h2>Supported by</h2>
 
-        <div class="row">
-            @if (isset($products[0]))
+            <div class="row">
                 @foreach ($products as $item)
                     <div class="col-lg-4 col-sm-6 portfolio-item">
                         <div class="card h-100">
@@ -103,11 +103,9 @@
                         </div>
                     </div>
                 @endforeach
-            @else
-                
-            @endif
-        </div>
-        <!-- /.row -->
+            </div>
+            <!-- /.row -->
+        @endif
 
         <!-- Features Section -->
         <div class="row">

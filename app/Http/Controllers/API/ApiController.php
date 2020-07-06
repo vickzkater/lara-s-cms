@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use SimpleSoftwareIO\QrCode\Generator;
 
 // LIBRARIES
 use App\Libraries\Helper;
@@ -16,30 +15,52 @@ use App\Models\Article;
 use App\Models\Topic;
 use App\Models\Banner;
 
-class SiteController extends Controller
+class ApiController extends Controller
 {
-    public function redirect()
+    public function index()
     {
-        return redirect()->route('web.home');
+        return '[API] Lara-S-CMS';
     }
-    
-    public function home()
+
+    public function get_banner()
     {
-        $page_menu = 'home';
+        $data = Banner::where('status', 1)->orderBy('ordinal')->get();
 
-        $banners = Banner::where('status', 1)->orderBy('ordinal')->get();
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Successfully get banner data',
+            'data' => $data
+        ]);
+    }
 
-        $products = Product::whereNull('replaced_at')
+    public function get_product()
+    {
+        $data = Product::whereNull('replaced_at')
             ->orderBy('id', 'desc')
             ->get();
 
-        return view('web.home', compact('page_menu', 'products', 'banners'));
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Successfully get product data',
+            'data' => $data
+        ]);
     }
 
-    public function blog(Request $request)
+    public function get_topic()
     {
-        $page_menu = 'blog';
+        $data = Topic::where('status', 1)
+            ->orderBy('name')
+            ->get();
 
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Successfully get topic data',
+            'data' => $data
+        ]);
+    }
+
+    public function get_blog(Request $request)
+    {
         // GET THE DATA
         $data = Article::select(
             'articles.slug',
@@ -106,22 +127,18 @@ class SiteController extends Controller
             ->skip($skip)
             ->get();
 
-        // GET TOPIC
-        $topics = Topic::where('status', 1)
-            ->orderBy('name')
-            ->get();
-
-        // GENERATE QR CODE
-        $qrcode_gen = new Generator;
-        $qrcode = $qrcode_gen->size(200)
-            ->generate('https://github.com/vickzkater/lara-s-cms');
-
-        return view('web.blog', compact('page_menu', 'data', 'topics', 'qrcode'));
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Successfully get blog data',
+            'data' => $data,
+            'total' => $total
+        ]);
     }
 
-    public function blog_details($slug)
+    public function get_blog_details(Request $request)
     {
-        $page_menu = 'blog';
+        // GET PARAMATERS DATA
+        $slug = $request->slug;
 
         // GET THE DATA
         $data = Article::select(
@@ -150,20 +167,10 @@ class SiteController extends Controller
             )
             ->first();
 
-        // GET TOPIC
-        $topics = Topic::where('status', 1)
-            ->orderBy('name')
-            ->get();
-
-        // GENERATE QRCODE - https://www.simplesoftware.io/#/docs/simple-qrcode
-        $qrcode_gen = new Generator;
-        $qrcode = $qrcode_gen->size(200)
-            ->generate(route('web.blog', $data->slug));
-
-        $qrcode_gen = new Generator;
-        $qrcode_main = $qrcode_gen->size(200)
-            ->generate('https://github.com/vickzkater/lara-s-cms');
-
-        return view('web.blog_details', compact('page_menu', 'data', 'topics', 'qrcode', 'qrcode_main'));
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Successfully get blog details data',
+            'data' => $data
+        ]);
     }
 }

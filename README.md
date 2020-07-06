@@ -57,7 +57,11 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] [Support Mailchimp API (in DevController)](https://github.com/vickzkater/mailchimp-helper-laravel)
 - [x] [PageBuilder](https://github.com/vickzkater/kiniditech-pagebuilder) (in Article)
 - [x] [The Helper JS - a lot of JS helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-js)
-- [x] Banner Management- [x] Application Configurations
+- [x] Banner Management
+- [x] QR Code Generator
+- [x] Login with social media (Google/Facebook)
+- [x] Support back-end mode (MODEL or API)
+- [x] Support upload file (PDF/TXT/DOCS/etc)
 
 ## Admin Panel
 
@@ -105,12 +109,33 @@ The next thing you should do after installing Lara-S-CMS is set your application
 
 Next, setup environment configuration in `.env` file
 
+- Set `APP_NAME` for application name
 - Set `DISPLAY_SESSION` for enable/disable display session in Admin - Footer (Development Purpose)
+
+- Set `APP_VERSION` for set application version
+- Set `APP_BACKEND` for choose application back-end mode (MODEL or API) if use API, please make sure `APP_URL_API` is not empty
+- Set `ADMIN_CMS` for enable/disable Admin Panel
+- Set `ADMIN_DIR` for set application or admin system directory name (or leave it blank if using the admin dashboard only)
+
+- Set `APP_URL_SITE` for set application URL that used for login with social media
+- Set `APP_URL_API` for set API URL, if this project using back-end mode API (`APP_BACKEND`=API)
 
 - Set `APP_TIMEZONE` for set timezone application, sample: UTC or Asia/Jakarta
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
-- Set `ADMIN_DIR` for set application or admin system directory name (or leave it blank if using the admin dashboard only)
+
 - Set `DEFAULT_LANGUAGE` for set default language in application
+
+- Set `META_DESCRIPTION` for set meta description
+- Set `META_AUTHOR` for set meta author
+
+- Set `APP_FAVICON_TYPE` for set favicon type (ico/png/etc)
+- Set `APP_FAVICON` for set application favicon based on file image (input with image's path), sample: the favicon file is in public/images directory path, then set 'images/favicon.ico'
+
+- Set `APP_LOGO` for set application logo based on Font Awesome (input without 'fa-' just the icon name, example: star/laptop/bank)
+- Set `APP_LOGO_IMAGE` for set application logo based on file image (input with image's path), sample: the logo image is in "public/images" directory path, then set "images/logo.png"
+
+- Set `POWERED` for display developer name
+- Set `POWERED_URL` for display developer URL
 
 - Set `MAIL_FROM_NAME` for set sender email's name
 - Set `MAIL_FROM_ADDRESS` for set sender email's address
@@ -229,6 +254,8 @@ The default template for maintenance mode responses is located in `resources/vie
 - [maatwebsite/excel](https://github.com/Maatwebsite/Laravel-Excel) - used to export & import Excel data
 - [guzzlehttp/guzzle](https://github.com/guzzle/guzzle) - used to send HTTP requests and trivial to integrate with web services
 - [nztim/mailchimp](https://github.com/nztim/mailchimp) - used to Mailchimp API
+- [simplesoftwareio/simple-qrcode](https://github.com/SimpleSoftwareIO/simple-qrcode) - used to generate QR code
+- [laravel/socialite](https://github.com/laravel/socialite) - used to login with social media
 
 ## Libraries Used
 

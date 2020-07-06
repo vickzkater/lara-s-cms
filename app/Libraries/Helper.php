@@ -182,4 +182,49 @@ class Helper extends TheHelper
         }
         return $slug;
     }
+
+    public static function upload_file($dir_path, $file, $reformat_file_name = true, $format_file_name = null, $allowed_extensions = ['pdf', 'txt', 'docx', 'doc'])
+    {
+        // PROCESSING FILE
+        $destination_path = public_path($dir_path);
+        $extension = strtolower($file->getClientOriginalExtension());
+
+        // VALIDATING FOR ALLOWED EXTENSIONS
+        if (!in_array($extension, $allowed_extensions)) {
+            // FAILED
+            return [
+                'status' => 'false',
+                'message' => 'Failed to upload the file, please upload file with allowed extensions (' . implode(",", $allowed_extensions) . ')'
+            ];
+        }
+
+        if ($reformat_file_name) {
+            // REFORMAT FILE NAME USING $format_file_name
+            if ($format_file_name) {
+                $file_name = $format_file_name . '.' . $extension;
+            } else {
+                // REFORMAT FILE NAME USING TIMESTAMP
+                $file_name = time() . '.' . $extension;
+            }
+        } else {
+            // USING ORIGINAL FILENAME
+            $file_name = $file->getClientOriginalName();
+        }
+
+        // UPLOADING...
+        if (!$file->move($destination_path, $file_name)) {
+            // FAILED
+            return [
+                'status' => 'false',
+                'message' => 'Oops, failed to upload file. Please try again or try upload another one.'
+            ];
+        }
+
+        // SUCCESS
+        return [
+            'status' => 'true',
+            'message' => 'Successfully uploaded the file',
+            'data' => $file_name
+        ];
+    }
 }

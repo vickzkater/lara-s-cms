@@ -27,6 +27,9 @@
         background: #F7F7F7 url({{ asset('images/background.jpg') }}) no-repeat fixed center;
         background-size: cover;
       }
+      .btn-social {
+        text-decoration: none !important;
+      }
     </style>
   
     @if (env('RECAPTCHA_SECRET_KEY_ADMIN'))
@@ -66,6 +69,23 @@
 
               <div>
                 <button type="submit" class="btn btn-primary btn-block submit" id="btn-login">{{ ucfirst(lang('log in', $translation)) }}</button>
+              </div>
+
+              <div> - OR - </div>
+
+              <div>
+                @if(env('GOOGLE_CLIENT_MODULE', false))
+                  <a href="{{ route('admin.auth.provider', 'google') }}" class="btn btn-danger btn-block btn-social"><i class="fa fa-google"></i> &nbsp;&nbsp;&nbsp;Login with Google</a>
+                @endif
+                @if(env('FACEBOOK_CLIENT_MODULE', false))
+                  <a href="{{ route('admin.auth.provider', 'facebook') }}" class="btn btn-primary btn-block btn-social"><i class="fa fa-facebook"></i> &nbsp;&nbsp;&nbsp;Login with Facebook</a>
+                @endif
+                @if(env('TWITTER_CLIENT_MODULE', false))
+                  <a href="{{ route('admin.auth.provider', 'twitter') }}" class="btn btn-info btn-block btn-social"><i class="fa fa-twitter"></i> &nbsp;&nbsp;&nbsp;Login with Twitter</a>
+                @endif
+                @if(env('LINKEDIN_CLIENT_MODULE', false))
+                  <a href="#" class="btn btn-dark btn-block btn-social"><i class="fa fa-linkedin"></i> &nbsp;&nbsp;&nbsp;Login with LinkedIn</a>
+                @endif
               </div>
 
               <div class="clearfix"></div>

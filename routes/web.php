@@ -13,14 +13,34 @@
 
 // WEBSITE
 Route::group(['namespace' => 'Web'], function () {
-    // HOME
-    Route::get('/', 'SiteController@home')->name('web.home');
+    /**
+     * DISABLE ADMIN PANEL
+     */
+    if (env('ADMIN_CMS', false) == false) {
+        Route::group(['prefix' => env('ADMIN_DIR')], function () {
+            Route::get('/login', 'SiteController@redirect')->name('admin.login');
+        });
+    }
 
-    // BLOG
-    Route::group(['prefix' => 'blog'], function () {
-        Route::get('/', 'SiteController@blog')->name('web.blog');
-        Route::get('/{slug}', 'SiteController@blog_details')->name('web.blog.details');
-    });
+    if (env('APP_BACKEND', 'MODEL') == 'MODEL') {
+        // HOME
+        Route::get('/', 'SiteController@home')->name('web.home');
+
+        // BLOG
+        Route::group(['prefix' => 'blog'], function () {
+            Route::get('/', 'SiteController@blog')->name('web.blog');
+            Route::get('/{slug}', 'SiteController@blog_details')->name('web.blog.details');
+        });
+    } else {
+        // HOME
+        Route::get('/', 'RemoteController@home')->name('web.home');
+
+        // BLOG
+        Route::group(['prefix' => 'blog'], function () {
+            Route::get('/', 'RemoteController@blog')->name('web.blog');
+            Route::get('/{slug}', 'RemoteController@blog_details')->name('web.blog.details');
+        });
+    }
 });
 
 // ADMIN
@@ -28,9 +48,17 @@ Route::group([
     'prefix' => env('ADMIN_DIR'),
     'namespace' => 'Admin'
 ], function () {
-    Route::get('/login', 'system\AuthController@login')->name('admin.login');
-    Route::post('/do-login', 'system\AuthController@do_login')->name('admin.do_login');
-    Route::get('/logout', 'system\AuthController@logout')->name('admin.logout');
+    /**
+     * DISABLE ADMIN PANEL
+     */
+    if (env('ADMIN_CMS', false) == true) {
+        // AUTH
+        Route::get('/login', 'system\AuthController@login')->name('admin.login');
+        Route::post('/do-login', 'system\AuthController@do_login')->name('admin.do_login');
+        Route::get('/logout', 'system\AuthController@logout')->name('admin.logout');
+        Route::get('/auth/{social}', 'system\AuthController@redirect_to_rovider')->name('admin.auth.provider');
+        Route::get('/auth/{social}/callback', 'system\AuthController@handle_provider_callback')->name('admin.auth.provider.callback');
+    }
 
     // NEED AUTH
     Route::group(['middleware' => 'check.admin'], function () {

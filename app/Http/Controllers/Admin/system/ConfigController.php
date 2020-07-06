@@ -52,7 +52,6 @@ class ConfigController extends Controller
         // LARAVEL VALIDATION
         $validation = [
             'app_name' => 'required',
-            'app_backend' => 'required',
             'app_url_site' => 'required',
             'app_version' => 'required',
             'app_favicon_type' => 'required',
@@ -68,7 +67,6 @@ class ConfigController extends Controller
         ];
         $names = [
             'app_name' => ucwords(lang('application name', $this->translation)),
-            'app_backend' => ucwords(lang('application backend', $this->translation)),
             'app_url_site' => ucwords(lang('application URL', $this->translation)),
             'app_version' => ucwords(lang('application version', $this->translation)),
             'app_favicon_type' => ucwords(lang('favicon type', $this->translation)),
@@ -90,19 +88,6 @@ class ConfigController extends Controller
         }
         $data->app_name = $app_name;
 
-        $app_backend = Helper::validate_input_text($request->app_backend);
-        if (!$app_backend) {
-            return back()
-                ->withInput()
-                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('application backend', $this->translation))]));
-        }
-        if (!in_array($app_backend, ['MODEL', 'API'])) {
-            return back()
-                ->withInput()
-                ->with('error', lang('#item only support MODEL or API', $this->translation, ['#item' => ucwords(lang('application backend', $this->translation))]));
-        }
-        $data->app_backend = $app_backend;
-
         $app_url_site = Helper::validate_input_url($request->app_url_site);
         if (!$app_url_site) {
             return back()
@@ -112,8 +97,6 @@ class ConfigController extends Controller
         $data->app_url_site = $app_url_site;
 
         $data->app_url_main = Helper::validate_input_url($request->app_url_main);
-
-        $data->app_url_api = Helper::validate_input_url($request->app_url_api);
 
         $app_version = Helper::validate_input_text($request->app_version);
         if (!$app_version) {
