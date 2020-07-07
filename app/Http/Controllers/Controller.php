@@ -113,86 +113,113 @@ class Controller extends BaseController
         });
     }
 
-    protected function guzzle_post($url, $token, $parameter)
+    /**
+     * Guzzle GET with token Authorization Bearer
+     * 
+     * @param String $url (Target API URL) required
+     * @param String $token (Token Authorization Bearer) required
+     * @param Array $auth (htaccess auth) optional
+     * 
+     * @return Object (API Response)
+     */
+    protected function guzzle_get($url, $token, $auth = null)
     {
         if (empty($token)) {
             return 'Unauthorized';
         } else {
+            $config = ['http_errors' => false];
             if (env('APP_DEBUG')) {
-                $client = new Client([
-                    'http_errors' => false,
-                    'verify' => false
-                ]);
-            } else {
-                $client = new Client([
-                    'http_errors' => false
-                ]);
+                $config['verify'] = false;
             }
-            $headers = array('Authorization' => 'bearer ' . $token);
-            $request = $client->request('POST', $url, ['headers' => $headers, 'form_params' => $parameter]);
-            $response = $request->getBody()->getContents();
-
-            return json_decode($response, true);
-        }
-    }
-
-    protected function guzzle_get($url, $token)
-    {
-        if (empty($token)) {
-            return 'Unauthorized';
-        } else {
-            if (env('APP_DEBUG')) {
-                $client = new Client([
-                    'http_errors' => false,
-                    'verify' => false
-                ]);
-            } else {
-                $client = new Client([
-                    'http_errors' => false
-                ]);
+            if ($auth) {
+                $config['auth'] = $auth;
             }
+            $client = new Client($config);
             $headers = array('Authorization' => 'bearer ' . $token);
             $request = $client->request('GET', $url, array('headers' => $headers));
             $response = $request->getBody();
 
-            return json_decode($response, true);
+            return json_decode($response);
         }
     }
 
-    protected function guzzle_get_public($url)
+    /**
+     * Guzzle POST with token Authorization Bearer
+     * 
+     * @param String $url (Target API URL) required
+     * @param String $token (Token Authorization Bearer) required
+     * @param Array $parameter (Paramaters) required
+     * @param Array $auth (htaccess auth) optional
+     * 
+     * @return Object (API Response)
+     */
+    protected function guzzle_post($url, $token, $parameter, $auth = null)
     {
-        if (env('APP_DEBUG')) {
-            $client = new Client([
-                'http_errors' => false,
-                'verify' => false
-            ]);
+        if (empty($token)) {
+            return 'Unauthorized';
         } else {
-            $client = new Client([
-                'http_errors' => false
-            ]);
-        }
+            $config = ['http_errors' => false];
+            if (env('APP_DEBUG')) {
+                $config['verify'] = false;
+            }
+            if ($auth) {
+                $config['auth'] = $auth;
+            }
+            $client = new Client($config);
+            $headers = array('Authorization' => 'bearer ' . $token);
+            $request = $client->request('POST', $url, ['headers' => $headers, 'form_params' => $parameter]);
+            $response = $request->getBody()->getContents();
 
+            return json_decode($response);
+        }
+    }
+
+    /**
+     * Guzzle GET Public Access (without token Authorization Bearer)
+     * 
+     * @param String $url (Target API URL) required
+     * @param Array $auth (htaccess auth) optional
+     * 
+     * @return Object (API Response)
+     */
+    protected function guzzle_get_public($url, $auth = null)
+    {
+        $config = ['http_errors' => false];
+        if (env('APP_DEBUG')) {
+            $config['verify'] = false;
+        }
+        if ($auth) {
+            $config['auth'] = $auth;
+        }
+        $client = new Client($config);
         $request = $client->request('GET', $url);
         $response = $request->getBody();
 
-        return json_decode($response, true);
+        return json_decode($response);
     }
 
-    protected function guzzle_post_public($url, $parameter)
+    /**
+     * Guzzle POST Public Access (without token Authorization Bearer)
+     * 
+     * @param String $url (Target API URL) required
+     * @param Array $parameter (Paramaters) required
+     * @param Array $auth (htaccess auth) optional
+     * 
+     * @return Object (API Response)
+     */
+    protected function guzzle_post_public($url, $parameter, $auth = null)
     {
+        $config = ['http_errors' => false];
         if (env('APP_DEBUG')) {
-            $client = new Client([
-                'http_errors' => false,
-                'verify' => false
-            ]);
-        } else {
-            $client = new Client([
-                'http_errors' => false
-            ]);
+            $config['verify'] = false;
         }
+        if ($auth) {
+            $config['auth'] = $auth;
+        }
+        $client = new Client($config);
         $request = $client->request('POST', $url, ['form_params' => $parameter]);
         $response = $request->getBody()->getContents();
 
-        return json_decode($response, true);
+        return json_decode($response);
     }
 }
