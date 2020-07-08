@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use GuzzleHttp\Client;
 
+// LIBRARIES
+use App\Libraries\Helper;
+
+// MODELS
+use App\Models\system\SysUser;
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -28,6 +34,22 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
+            // if password has been changed, then force user to re-login
+            if (Session::has('admin')) {
+                // GET USER DATA
+                $user_session = Session::get('admin');
+				$user_data = SysUser::find($user_session->id);
+				$auth = Helper::generate_token($user_data->password);
+				$token_db = Helper::validate_token($auth);
+				$token_session = Helper::validate_token(Session::get('auth'));
+
+				if ($token_db != $token_session) {
+					// PASSWORD HAS BEEN CHANGED, THEN FORCE USER TO RE-LOGIN
+					Session::flush();
+                    return redirect()->route('admin.login')->with('info', lang('Your password has been changed, please re-login'));
+				}
+			}
+
             // get default language
             $default_lang = env('DEFAULT_LANGUAGE', 'EN');
 

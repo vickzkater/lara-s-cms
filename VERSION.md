@@ -21,6 +21,7 @@ protected function addUserInformation(&$payload)
 }
 ...
 ```
+- Add security update: if password has been changed, then force user to re-login
 
 ## Version 2.0.0
 ### Changelog

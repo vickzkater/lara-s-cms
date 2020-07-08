@@ -55,6 +55,8 @@ class AuthController extends Controller
             }
         }
 
+        $password = Helper::hashing_this($request->login_pass);
+
         // GET THE DATA
         $admin = SysUser::select(
             'sys_users.id',
@@ -68,7 +70,7 @@ class AuthController extends Controller
             ->leftJoin('sys_groups', 'sys_user_group.group', '=', 'sys_groups.id')
             ->where([
                 'username' => Helper::validate_input($request->login_id),
-                'password' => Helper::hashing_this($request->login_pass)
+                'password' => $password
             ])
             ->first();
 
@@ -151,7 +153,8 @@ class AuthController extends Controller
                 ->with(Session::put('admin', $admin))
                 ->with(Session::put('access', $access))
                 ->with(Session::put('branch', $branch_allowed))
-                ->with(Session::put('division', $division_allowed));
+                ->with(Session::put('division', $division_allowed))
+                ->with(Session::put('auth', Helper::generate_token($password)));
         }
 
         // FAILED

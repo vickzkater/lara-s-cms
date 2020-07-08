@@ -63,6 +63,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Support back-end mode (MODEL or API)
 - [x] Support upload file (PDF/TXT/DOCS/etc)
 - [x] Support Session Driver Database (please check section `Session Driver Database`)
+- [x] Security update: if password has been changed, then force user to re-login
 
 ## Admin Panel
 
