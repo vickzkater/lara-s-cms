@@ -12,14 +12,15 @@
 ## What is "Lara-S-CMS" ?
 
 Laravel (S) Content Management System
-- Skeleton
-- Simple
-- Sample
-- Standard
-- Smart
-- Sophisticated
-- SUPER
-- Sucks?
+- Skeleton 💀
+- Simple 😃
+- Sample 🤓
+- Standard 💯
+- Smart 🧠
+- Sophisticated 💡
+- SUPER 💪
+- Sucks? 💢
+- Spinner 🤣
 
 A PHP Laravel Skeleton for Content Management System (CMS) or Admin Dashboard (within/without website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella) as Admin Template.
 
