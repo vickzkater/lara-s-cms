@@ -302,6 +302,7 @@ class AuthController extends Controller
                     'sys_users.id',
                     'sys_users.name',
                     'sys_users.username',
+                    'sys_users.password',
                     'sys_users.status',
                     'sys_groups.id as group_id',
                     'sys_groups.name as group_name'
@@ -394,6 +395,8 @@ class AuthController extends Controller
                     }
                 }
 
+                $password = $admin->password;
+
                 // LOGGING
                 $log = new SysLog();
                 $log->subject = $admin->id;
@@ -411,7 +414,8 @@ class AuthController extends Controller
                     ->with(Session::put('admin', $admin))
                     ->with(Session::put('access', $access))
                     ->with(Session::put('branch', $branch_allowed))
-                    ->with(Session::put('division', $division_allowed));
+                    ->with(Session::put('division', $division_allowed))
+                    ->with(Session::put('auth', Helper::generate_token($password)));
             }
         }
 

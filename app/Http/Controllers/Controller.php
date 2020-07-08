@@ -43,7 +43,7 @@ class Controller extends BaseController
                 // if password has been changed, then force user to re-login
 				$auth = Helper::generate_token($user_data->password);
 				$token_db = Helper::validate_token($auth);
-				$token_session = Helper::validate_token(Session::get('auth'));
+                $token_session = Helper::validate_token(Session::get('auth'));
 				if ($token_db != $token_session) {
 					// PASSWORD HAS BEEN CHANGED, THEN FORCE USER TO RE-LOGIN
 					Session::flush();
