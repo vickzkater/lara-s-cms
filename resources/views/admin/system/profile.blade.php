@@ -67,6 +67,9 @@
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                 <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; {{ ucwords(lang('save changes', $translation)) }}</button>
+                                <a href="{{ route('admin.logout.all') }}" class="btn btn-danger" onclick="return confirm('{{ lang('Are you sure to logout your account from all sessions?', $translation) }}')">
+                                    {{ ucwords(lang('logout all sessions', $translation)) }}&nbsp; <i class="fa fa-sign-out"></i>
+                                </a>
                             </div>
                         </div>
                     </form>

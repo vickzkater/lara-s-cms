@@ -92,7 +92,7 @@
               <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('help', $translation)) }}" onclick="alert('{{ $global_config->help }}')">
                 <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('log out', $translation)) }}" href="{{ route('admin.logout') }}">
+              <a data-toggle="tooltip" data-placement="top" title="{{ ucwords(lang('log out', $translation)) }}" href="{{ route('admin.logout') }}" onclick="return confirm('{{ lang('Are you sure to logout?', $translation) }}')">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>

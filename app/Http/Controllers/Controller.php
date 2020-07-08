@@ -34,20 +34,27 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            // if password has been changed, then force user to re-login
+            
             if (Session::has('admin')) {
                 // GET USER DATA
                 $user_session = Session::get('admin');
-				$user_data = SysUser::find($user_session->id);
+                $user_data = SysUser::find($user_session->id);
+                
+                // if password has been changed, then force user to re-login
 				$auth = Helper::generate_token($user_data->password);
 				$token_db = Helper::validate_token($auth);
 				$token_session = Helper::validate_token(Session::get('auth'));
-
 				if ($token_db != $token_session) {
 					// PASSWORD HAS BEEN CHANGED, THEN FORCE USER TO RE-LOGIN
 					Session::flush();
                     return redirect()->route('admin.login')->with('info', lang('Your password has been changed, please re-login'));
-				}
+                }
+                
+                if($user_data->force_logout){
+                    // FORCE LOGOUT FROM ALL SESSIONS
+					Session::flush();
+                    return redirect()->route('admin.login')->with('info', lang('Your session has been logged out, please re-login'));
+                }
 			}
 
             // get default language

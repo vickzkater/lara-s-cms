@@ -64,6 +64,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Support upload file (PDF/TXT/DOCS/etc)
 - [x] Support Session Driver Database (please check section `Session Driver Database`)
 - [x] Security update: if password has been changed, then force user to re-login
+- [x] Feature logout from all sessions
 
 ## Admin Panel
 

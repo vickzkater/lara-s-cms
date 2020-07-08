@@ -62,6 +62,7 @@ class AuthController extends Controller
             'sys_users.id',
             'sys_users.name',
             'sys_users.username',
+            'sys_users.force_logout',
             'sys_users.status',
             'sys_groups.id as group_id',
             'sys_groups.name as group_name'
@@ -80,6 +81,12 @@ class AuthController extends Controller
                 return back()
                     ->withInput()
                     ->with('error', lang('Login failed! Because your account has been disabled!', $this->translation));
+            }
+
+            // UPDATE "FORCE LOGOUT" STATUS
+            if ($admin->force_logout) {
+                $admin->force_logout = 0;
+                $admin->save();
             }
 
             // SUCCESS LOGIN
@@ -174,10 +181,34 @@ class AuthController extends Controller
             $log->save();
         }
 
-        Session::forget('admin');
+        Session::flush();
         return redirect()
             ->route('admin.login')
             ->with('success', lang('Logout successfully', $this->translation));
+    }
+
+    public function logout_all()
+    {
+        $message = 'Logout successfully';
+
+        $session = Session::get('admin');
+        if (isset($session)) {
+            // LOGGING
+            $log = new SysLog();
+            $log->subject = $session->id;
+            $log->action = 2;
+            $log->save();
+
+            $message = 'Logout from all sessions successfully';
+            $user = SysUser::find($session->id);
+            $user->force_logout = 1;
+            $user->save();
+        }
+
+        Session::flush();
+        return redirect()
+            ->route('admin.login')
+            ->with('success', lang($message, $this->translation));
     }
 
     private function is_provider_allowed($driver)
