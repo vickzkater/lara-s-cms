@@ -234,7 +234,26 @@ chmod o+w -R public/uploads/
 
 ## Session Driver Database
 
-If you choose using `database` as Session Driver, then you need make some changes in `Illuminate\Session\DatabaseSessionHandler.php`
+When using the `database` session driver, you will need to create a table to contain the session items. Below is an example `Schema` declaration for the table:
+```
+Schema::create('sessions', function ($table) {
+    $table->string('id')->unique();
+    $table->foreignId('user_id')->nullable();
+    $table->string('ip_address', 45)->nullable();
+    $table->text('user_agent')->nullable();
+    $table->text('payload');
+    $table->integer('last_activity');
+});
+```
+
+You may use the `session:table` Artisan command to generate this migration:
+```
+php artisan session:table
+
+php artisan migrate
+```
+
+Then you need make some changes in `Illuminate\Session\DatabaseSessionHandler.php`
 ```
 ...
 protected function addUserInformation(&$payload)

@@ -1,26 +1,7 @@
 ## Version 2.0.1
 ### Changelog
 - Add support auth for Guzzle functions
-- Add support Session Driver Database by make some changes in `Illuminate\Session\DatabaseSessionHandler.php`
-```
-...
-protected function addUserInformation(&$payload)
-{
-    if ($this->container->bound(Guard::class)) {
-        $payload['user_id'] = $this->userId();
-    }
-
-    // ADDED FOR LARA-S-CMS BY KINIDI TECH - BEGIN
-    if(\Session::has('admin')){
-        $larascms_user = \Session::get('admin');
-        $payload['user_id'] = $larascms_user->id;
-    }
-    // ADDED FOR LARA-S-CMS BY KINIDI TECH - END
-
-    return $this;
-}
-...
-```
+- Add support Session Driver Database
 - Add security update: if password has been changed, then force user to re-login
 - Add feature logout from all sessions
 
