@@ -14,7 +14,11 @@
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
                         <li><a href="{{ route('admin.profile') }}"> {{ ucwords(lang('my profile', $translation)) }}</a></li>
-                        <li><a href="{{ route('admin.logout') }}"><i class="fa fa-sign-out pull-right"></i> {{ ucwords(lang('log out', $translation)) }}</a></li>
+                        <li>
+                            <a href="{{ route('admin.logout') }}" style="color:rgba(231,76,60,.88); !important;" onclick="return confirm('{{ lang('Are you sure to logout?', $translation) }}')">
+                                <b><i class="fa fa-sign-out pull-right"></i> {{ ucwords(lang('log out', $translation)) }}</b>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li role="presentation" class="dropdown">

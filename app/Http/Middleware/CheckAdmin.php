@@ -18,12 +18,15 @@ class CheckAdmin
     {
         if (Session::has('admin')) {
             return $next($request);
-        }else{
+        } else {
             $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             Session::put('redirect_uri', $actual_link);
 
+            if ($actual_link == route('admin.home')) {
+                return redirect()->route('admin.login');
+            }
+
             return redirect()->route('admin.login')->with('error', lang('You must login first!'));
         }
-        
     }
 }

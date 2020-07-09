@@ -12,14 +12,15 @@
 ## What is "Lara-S-CMS" ?
 
 Laravel (S) Content Management System
-- Skeleton
-- Simple
-- Sample
-- Standard
-- Smart
-- Sophisticated
-- SUPER
-- Sucks?
+- Skeleton 💀
+- Simple 😃
+- Sample 🤓
+- Standard 💯
+- Smart 🧠
+- Sophisticated 💡
+- SUPER 💪
+- Sucks? 💢
+- Spinner 🤣
 
 A PHP Laravel Skeleton for Content Management System (CMS) or Admin Dashboard (within/without website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella) as Admin Template.
 
@@ -62,6 +63,9 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Login with social media (Google/Facebook)
 - [x] Support back-end mode (MODEL or API)
 - [x] Support upload file (PDF/TXT/DOCS/etc)
+- [x] Support Session Driver Database (please check section `Session Driver Database`)
+- [x] Security update: if password has been changed, then force user to re-login
+- [x] Feature logout from all sessions
 
 ## Admin Panel
 
@@ -77,7 +81,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 :---------|:----------
  5.8.x    | 1.0 ; 1.1.0
  6.x      | 1.0.1 ; 1.1.1
- 7.x      | 1.2.x
+ 7.x      | 1.2.x ; 2.x
 
 ## Requirements
 
@@ -112,6 +116,7 @@ Next, setup environment configuration in `.env` file
 - Set `APP_NAME` for application name
 - Set `DISPLAY_SESSION` for enable/disable display session in Admin - Footer (Development Purpose)
 
+- Set `APP_MODE` for set application mode (STAGING/LIVE)
 - Set `APP_VERSION` for set application version
 - Set `APP_BACKEND` for choose application back-end mode (MODEL or API) if use API, please make sure `APP_URL_API` is not empty
 - Set `ADMIN_CMS` for enable/disable Admin Panel
@@ -119,6 +124,9 @@ Next, setup environment configuration in `.env` file
 
 - Set `APP_URL_SITE` for set application URL that used for login with social media
 - Set `APP_URL_API` for set API URL, if this project using back-end mode API (`APP_BACKEND`=API)
+
+- Set `API_USER` for set API auth credential (optional)
+- Set `API_PASS` for set API auth credential (optional)
 
 - Set `APP_TIMEZONE` for set timezone application, sample: UTC or Asia/Jakarta
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
@@ -148,6 +156,8 @@ Next, setup environment configuration in `.env` file
 - Set `RECAPTCHA_SECRET_KEY` for set GOOGLE reCAPTCHA
 - Set `RECAPTCHA_SITE_KEY_ADMIN` for set GOOGLE reCAPTCHA in Admin Dashboard
 - Set `RECAPTCHA_SECRET_KEY_ADMIN` for set GOOGLE reCAPTCHA in Admin Dashboard
+
+- Set `AUTH_WITH_PROVIDER` for enable/disable login with social media/provider
 
 - Set `GOOGLE_CLIENT_MODULE` for enable/disable GOOGLE API Authentication
 - Set `GOOGLE_CLIENT_ID` for set GOOGLE API Authentication
@@ -221,6 +231,48 @@ chmod o+w -R public/uploads/
 
 - `CustomFunction.php` in `app\Libraries\` that automatically called in the load of web because it has been set in `composer.json`
 - `Helper.php` in `app\Libraries\` that can be called in Controller/View by line code `use App\Libraries\Helper;` for call some helper functions
+
+## Session Driver Database
+
+When using the `database` session driver, you will need to create a table to contain the session items. Below is an example `Schema` declaration for the table:
+```
+Schema::create('sessions', function ($table) {
+    $table->string('id')->unique();
+    $table->foreignId('user_id')->nullable();
+    $table->string('ip_address', 45)->nullable();
+    $table->text('user_agent')->nullable();
+    $table->text('payload');
+    $table->integer('last_activity');
+});
+```
+
+You may use the `session:table` Artisan command to generate this migration:
+```
+php artisan session:table
+
+php artisan migrate
+```
+
+Then you need make some changes in `Illuminate\Session\DatabaseSessionHandler.php`
+```
+...
+protected function addUserInformation(&$payload)
+{
+    if ($this->container->bound(Guard::class)) {
+        $payload['user_id'] = $this->userId();
+    }
+
+    // ADDED FOR LARA-S-CMS BY KINIDI TECH - BEGIN
+    if(\Session::has('admin')){
+        $larascms_user = \Session::get('admin');
+        $payload['user_id'] = $larascms_user->id;
+    }
+    // ADDED FOR LARA-S-CMS BY KINIDI TECH - END
+
+    return $this;
+}
+...
+```
 
 ## Maintenance Mode
 

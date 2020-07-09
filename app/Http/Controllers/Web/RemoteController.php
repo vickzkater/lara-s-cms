@@ -15,32 +15,28 @@ class RemoteController extends Controller
 
         // Set API URL - retrieve the data
         $url = env('APP_URL_API') . '/banner';
-        // Set parameters
-        $params = [];
         // Hit API - using method GET
-        $response = $this->guzzle_get_public($url, $params);
+        $response = $this->guzzle_get_public($url);
         // validating the API response
         $data = null;
         if (!empty($response)) {
-            if ($response['status'] == 'true') {
+            if ($response->status == 'true') {
                 // SUCCESS - convert array to object
-                $data = json_decode(json_encode($response['data']));
+                $data = json_decode(json_encode($response->data));
             }
         }
         $banners = $data;
 
         // Set API URL - retrieve the data
         $url = env('APP_URL_API') . '/product';
-        // Set parameters
-        $params = [];
         // Hit API - using method GET
-        $response = $this->guzzle_get_public($url, $params);
+        $response = $this->guzzle_get_public($url);
         // validating the API response
         $data = null;
         if (!empty($response)) {
-            if ($response['status'] == 'true') {
+            if ($response->status == 'true') {
                 // SUCCESS - convert array to object
-                $data = json_decode(json_encode($response['data']));
+                $data = json_decode(json_encode($response->data));
             }
         }
         $products = $data;
@@ -55,16 +51,14 @@ class RemoteController extends Controller
         // GET TOPIC
         // Set API URL - retrieve the data
         $url = env('APP_URL_API') . '/topic';
-        // Set parameters
-        $params = [];
         // Hit API - using method GET
-        $response = $this->guzzle_get_public($url, $params);
+        $response = $this->guzzle_get_public($url);
         // validating the API response
         $data = null;
         if (!empty($response)) {
-            if ($response['status'] == 'true') {
+            if ($response->status == 'true') {
                 // SUCCESS - convert array to object
-                $data = json_decode(json_encode($response['data']));
+                $data = json_decode(json_encode($response->data));
             }
         }
         $topics = $data;
@@ -90,9 +84,9 @@ class RemoteController extends Controller
         // validating the API response
         $data = null;
         if (!empty($response)) {
-            if ($response['status'] == 'true') {
+            if ($response->status == 'true') {
                 // SUCCESS - convert array to object
-                $data = json_decode(json_encode($response['data']));
+                $data = json_decode(json_encode($response->data));
             }
         }
 
@@ -111,16 +105,14 @@ class RemoteController extends Controller
         // GET TOPIC
         // Set API URL - retrieve the data
         $url = env('APP_URL_API') . '/topic';
-        // Set parameters
-        $params = [];
         // Hit API - using method GET
-        $response = $this->guzzle_get_public($url, $params);
+        $response = $this->guzzle_get_public($url);
         // validating the API response
         $data = null;
         if (!empty($response)) {
-            if ($response['status'] == 'true') {
+            if ($response->status == 'true') {
                 // SUCCESS - convert array to object
-                $data = json_decode(json_encode($response['data']));
+                $data = json_decode(json_encode($response->data));
             }
         }
         $topics = $data;
@@ -136,9 +128,9 @@ class RemoteController extends Controller
         // validating the API response
         $data = null;
         if (!empty($response)) {
-            if ($response['status'] == 'true') {
+            if ($response->status == 'true') {
                 // SUCCESS - convert array to object
-                $data = json_decode(json_encode($response['data']));
+                $data = json_decode(json_encode($response->data));
             }
         }
 

@@ -19,9 +19,9 @@ use App\Models\system\SysGroupBranch;
 class AuthController extends Controller
 {
     protected $providers = [
-        'google','facebook','twitter'
+        'google', 'facebook', 'twitter', 'instagram'
     ];
-    
+
     public function login()
     {
         if (Session::get('admin')) {
@@ -55,11 +55,14 @@ class AuthController extends Controller
             }
         }
 
+        $password = Helper::hashing_this($request->login_pass);
+
         // GET THE DATA
         $admin = SysUser::select(
             'sys_users.id',
             'sys_users.name',
             'sys_users.username',
+            'sys_users.force_logout',
             'sys_users.status',
             'sys_groups.id as group_id',
             'sys_groups.name as group_name'
@@ -68,7 +71,7 @@ class AuthController extends Controller
             ->leftJoin('sys_groups', 'sys_user_group.group', '=', 'sys_groups.id')
             ->where([
                 'username' => Helper::validate_input($request->login_id),
-                'password' => Helper::hashing_this($request->login_pass)
+                'password' => $password
             ])
             ->first();
 
@@ -78,6 +81,12 @@ class AuthController extends Controller
                 return back()
                     ->withInput()
                     ->with('error', lang('Login failed! Because your account has been disabled!', $this->translation));
+            }
+
+            // UPDATE "FORCE LOGOUT" STATUS
+            if ($admin->force_logout) {
+                $admin->force_logout = 0;
+                $admin->save();
             }
 
             // SUCCESS LOGIN
@@ -151,7 +160,8 @@ class AuthController extends Controller
                 ->with(Session::put('admin', $admin))
                 ->with(Session::put('access', $access))
                 ->with(Session::put('branch', $branch_allowed))
-                ->with(Session::put('division', $division_allowed));
+                ->with(Session::put('division', $division_allowed))
+                ->with(Session::put('auth', Helper::generate_token($password)));
         }
 
         // FAILED
@@ -171,17 +181,41 @@ class AuthController extends Controller
             $log->save();
         }
 
-        Session::forget('admin');
+        Session::flush();
         return redirect()
             ->route('admin.login')
             ->with('success', lang('Logout successfully', $this->translation));
     }
-    
+
+    public function logout_all()
+    {
+        $message = 'Logout successfully';
+
+        $session = Session::get('admin');
+        if (isset($session)) {
+            // LOGGING
+            $log = new SysLog();
+            $log->subject = $session->id;
+            $log->action = 2;
+            $log->save();
+
+            $message = 'Logout from all sessions successfully';
+            $user = SysUser::find($session->id);
+            $user->force_logout = 1;
+            $user->save();
+        }
+
+        Session::flush();
+        return redirect()
+            ->route('admin.login')
+            ->with('success', lang($message, $this->translation));
+    }
+
     private function is_provider_allowed($driver)
     {
         return in_array($driver, $this->providers) && config()->has("services.{$driver}");
     }
-    
+
     protected function send_failed_response($msg = null)
     {
         return redirect()
@@ -189,139 +223,200 @@ class AuthController extends Controller
             ->withErrors(['msg' => $msg ?: 'Unable to login, try with another provider to login.']);
     }
 
-    public function redirect_to_rovider($driver)
+    public function redirect_to_provider($driver)
     {
-        if( ! $this->is_provider_allowed($driver) ) {
+        if (!$this->is_provider_allowed($driver)) {
             return $this->send_failed_response("{$driver} is not currently supported");
         }
 
         try {
-            return Socialite::driver($driver)->redirect();
+            if ($driver == 'instagram') {
+                $appId = env('INSTAGRAM_CLIENT_ID');
+                $redirectUri = urlencode(env('INSTAGRAM_CALLBACK_URL'));
+                return redirect()->to("https://api.instagram.com/oauth/authorize?app_id={$appId}&redirect_uri={$redirectUri}&scope=user_profile,user_media&response_type=code");
+            } else {
+                return Socialite::driver($driver)->redirect();
+            }
         } catch (Exception $e) {
             // You should show something simple fail message
             return $this->send_failed_response($e->getMessage());
         }
     }
 
-    public function handle_provider_callback($social)
+    public function handle_provider_callback($social, Request $request)
     {
-        $user = Socialite::driver($social)->user();
+        if ($social == 'instagram') {
+            $code = $request->code;
+            if (empty($code)) {
+                return redirect()
+                    ->route('admin.login')
+                    ->with('error', 'Authentication with ' . ucwords($social) . ' failed, please try again.');
+            }
 
-        if ($user) {
-            $admin = SysUser::select(
-                'sys_users.id',
-                'sys_users.name',
-                'sys_users.username',
-                'sys_users.status',
-                'sys_groups.id as group_id',
-                'sys_groups.name as group_name'
-            )
-                ->leftJoin('sys_user_group', 'sys_users.id', '=', 'sys_user_group.user')
-                ->leftJoin('sys_groups', 'sys_user_group.group', '=', 'sys_groups.id')
-                ->where('sys_users.email', $user->email)
-                ->first();
+            $appId = env('INSTAGRAM_CLIENT_ID');
+            $secret = env('INSTAGRAM_CLIENT_SECRET');
+            $redirectUri = urlencode(env('INSTAGRAM_CALLBACK_URL'));
 
-            if (!$admin) {
-                // USER NOT FOUND, SO CREATE NEW USER DATA 
-                $admin = new SysUser();
-                $admin->name = $user->name;
-                $admin->username = Helper::random_string();
-                $admin->email = $user->email;
-                $admin->email_verified_at = date('Y-m-d H:i:s');
-                $admin->password = Helper::hashing_this(Helper::random_string());
-                // $admin->$social_id = $user->id;
+            // Set API URL - retrieve the data (Get access token)
+            $url = 'https://api.instagram.com/oauth/access_token';
+            // Set parameters
+            $params = [
+                'app_id' => $appId,
+                'app_secret' => $secret,
+                'grant_type' => 'authorization_code',
+                'redirect_uri' => $redirectUri,
+                'code' => $code
+            ];
+            // Hit API - using method POST
+            $response = $this->guzzle_post_public($url, $params);
 
-                if (!$admin->save()) {
-                    // FAILED
-                    return redirect()
-                        ->route('admin.login')
-                        ->with('error', 'Failed to register new user, please try again.');
-                }
+            if ($response->getStatusCode() != 200) {
+                return redirect()
+                    ->route('admin.login')
+                    ->with('error', 'Unauthorized login to Instagram');
+            }
 
-                $access = [];
-                $division_allowed = [];
-                $branch_allowed = [];
-            } else {
-                // REGISTERED
-                if ($admin->status != 1) {
-                    return back()
-                        ->withInput()
-                        ->with('error', lang('Login failed! Because your account has been disabled!', $this->translation));
-                }
+            $content = $response->getBody()->getContents();
+            $content = json_decode($content);
 
-                // GET USER'S ACCESS
-                $access = [];
-                $get_access = SysGroupRule::select(
-                    'sys_group_rule.rule_id',
-                    'sys_rules.name as rule_name',
-                    'sys_rules.description as rule_desc',
-                    'sys_modules.name as module_name'
+            $accessToken = $content->access_token;
+            $userId = $content->user_id;
+
+            // Set API URL - retrieve the data (Get user info)
+            $url = "https://graph.instagram.com/me?fields=id,username,account_type&access_token={$accessToken}";
+            // Hit API - using method GET
+            $response = $this->guzzle_get_public($url);
+
+            $content = $response->getBody()->getContents();
+            $oAuth = json_decode($content);
+
+            // Get instagram user name 
+            $username = $oAuth->username;
+
+            dd($content, $userId, $username, $oAuth);
+        } else {
+            $user = Socialite::driver($social)->user();
+
+            if ($user) {
+                $admin = SysUser::select(
+                    'sys_users.id',
+                    'sys_users.name',
+                    'sys_users.username',
+                    'sys_users.password',
+                    'sys_users.status',
+                    'sys_groups.id as group_id',
+                    'sys_groups.name as group_name'
                 )
-                    ->leftJoin('sys_rules', 'sys_rules.id', 'sys_group_rule.rule_id')
-                    ->leftJoin('sys_modules', 'sys_rules.module_id', 'sys_modules.id')
-                    ->where('sys_group_rule.group_id', $admin->group_id)
-                    ->where('sys_modules.status', 1)
-                    ->get();
-                if (count($get_access) > 0) {
-                    foreach ($get_access as $item) {
-                        $obj = new \stdClass();
-                        $obj->rule_id = $item->rule_id;
-                        $obj->rule_name = $item->rule_name;
-                        $obj->rule_desc = $item->rule_desc;
-                        $obj->module_name = $item->module_name;
-                        $access[] = $obj;
+                    ->leftJoin('sys_user_group', 'sys_users.id', '=', 'sys_user_group.user')
+                    ->leftJoin('sys_groups', 'sys_user_group.group', '=', 'sys_groups.id')
+                    ->where('sys_users.email', $user->email)
+                    ->first();
+
+                if (!$admin) {
+                    // USER NOT FOUND, SO CREATE NEW USER DATA 
+                    $admin = new SysUser();
+                    $admin->name = $user->name;
+                    $admin->username = Helper::random_string();
+                    $admin->email = $user->email;
+                    $admin->email_verified_at = date('Y-m-d H:i:s');
+                    $admin->password = Helper::hashing_this(Helper::random_string());
+                    // $admin->$social_id = $user->id;
+
+                    if (!$admin->save()) {
+                        // FAILED
+                        return redirect()
+                            ->route('admin.login')
+                            ->with('error', 'Failed to register new user, please try again.');
                     }
-                }
 
-                // GET USER'S ACCESS DIVISIONS & BRANCHES
-                $division_allowed = [];
-                $branch_allowed = [];
-                $get_branch_allowed = SysGroupBranch::select(
-                    'sys_branches.*',
-                    'sys_divisions.name as division_name',
-                    'sys_divisions.id as division_id'
-                )
-                    ->leftJoin('sys_branches', 'sys_group_branch.branch', '=', 'sys_branches.id')
-                    ->leftJoin('sys_divisions', 'sys_branches.division_id', '=', 'sys_divisions.id')
-                    ->whereNull('sys_branches.deleted_at')
-                    ->where('sys_group_branch.group', $admin->group_id)
-                    ->orderBy('sys_divisions.name')
-                    ->orderBy('sys_branches.name')
-                    ->get();
-                if (count($get_branch_allowed) > 0) {
-                    foreach ($get_branch_allowed as $item) {
-                        $obj = new \stdClass();
-                        $obj->branch_id = $item->id;
-                        $obj->branch = $item->name;
-                        $obj->division_id = $item->division_id;
-                        $obj->division = $item->division_name;
-                        $branch_allowed[] = $obj;
+                    $access = [];
+                    $division_allowed = [];
+                    $branch_allowed = [];
+                } else {
+                    // REGISTERED
+                    if ($admin->status != 1) {
+                        return back()
+                            ->withInput()
+                            ->with('error', lang('Login failed! Because your account has been disabled!', $this->translation));
+                    }
 
-                        if (!in_array($item->division_name, $division_allowed)) {
-                            $division_allowed[] = $item->division_name;
+                    // GET USER'S ACCESS
+                    $access = [];
+                    $get_access = SysGroupRule::select(
+                        'sys_group_rule.rule_id',
+                        'sys_rules.name as rule_name',
+                        'sys_rules.description as rule_desc',
+                        'sys_modules.name as module_name'
+                    )
+                        ->leftJoin('sys_rules', 'sys_rules.id', 'sys_group_rule.rule_id')
+                        ->leftJoin('sys_modules', 'sys_rules.module_id', 'sys_modules.id')
+                        ->where('sys_group_rule.group_id', $admin->group_id)
+                        ->where('sys_modules.status', 1)
+                        ->get();
+                    if (count($get_access) > 0) {
+                        foreach ($get_access as $item) {
+                            $obj = new \stdClass();
+                            $obj->rule_id = $item->rule_id;
+                            $obj->rule_name = $item->rule_name;
+                            $obj->rule_desc = $item->rule_desc;
+                            $obj->module_name = $item->module_name;
+                            $access[] = $obj;
+                        }
+                    }
+
+                    // GET USER'S ACCESS DIVISIONS & BRANCHES
+                    $division_allowed = [];
+                    $branch_allowed = [];
+                    $get_branch_allowed = SysGroupBranch::select(
+                        'sys_branches.*',
+                        'sys_divisions.name as division_name',
+                        'sys_divisions.id as division_id'
+                    )
+                        ->leftJoin('sys_branches', 'sys_group_branch.branch', '=', 'sys_branches.id')
+                        ->leftJoin('sys_divisions', 'sys_branches.division_id', '=', 'sys_divisions.id')
+                        ->whereNull('sys_branches.deleted_at')
+                        ->where('sys_group_branch.group', $admin->group_id)
+                        ->orderBy('sys_divisions.name')
+                        ->orderBy('sys_branches.name')
+                        ->get();
+                    if (count($get_branch_allowed) > 0) {
+                        foreach ($get_branch_allowed as $item) {
+                            $obj = new \stdClass();
+                            $obj->branch_id = $item->id;
+                            $obj->branch = $item->name;
+                            $obj->division_id = $item->division_id;
+                            $obj->division = $item->division_name;
+                            $branch_allowed[] = $obj;
+
+                            if (!in_array($item->division_name, $division_allowed)) {
+                                $division_allowed[] = $item->division_name;
+                            }
                         }
                     }
                 }
+
+                $password = $admin->password;
+
+                // LOGGING
+                $log = new SysLog();
+                $log->subject = $admin->id;
+                $log->action = 1;
+                $log->save();
+
+                // SET REDIRECT URI FROM SESSION (IF ANY)
+                $redirect_uri = route('admin.home');
+                if (Session::has('redirect_uri')) {
+                    $redirect_uri = Session::get('redirect_uri');
+                }
+
+                // SUCCESS
+                return redirect($redirect_uri)
+                    ->with(Session::put('admin', $admin))
+                    ->with(Session::put('access', $access))
+                    ->with(Session::put('branch', $branch_allowed))
+                    ->with(Session::put('division', $division_allowed))
+                    ->with(Session::put('auth', Helper::generate_token($password)));
             }
-
-            // LOGGING
-            $log = new SysLog();
-            $log->subject = $admin->id;
-            $log->action = 1;
-            $log->save();
-
-            // SET REDIRECT URI FROM SESSION (IF ANY)
-            $redirect_uri = route('admin.home');
-            if (Session::has('redirect_uri')) {
-                $redirect_uri = Session::get('redirect_uri');
-            }
-
-            // SUCCESS
-            return redirect($redirect_uri)
-                ->with(Session::put('admin', $admin))
-                ->with(Session::put('access', $access))
-                ->with(Session::put('branch', $branch_allowed))
-                ->with(Session::put('division', $division_allowed));
         }
 
         // FAILED

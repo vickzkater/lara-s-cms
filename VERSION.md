@@ -1,3 +1,10 @@
+## Version 2.0.1
+### Changelog
+- Add support auth for Guzzle functions
+- Add support Session Driver Database
+- Add security update: if password has been changed, then force user to re-login
+- Add feature logout from all sessions
+
 ## Version 2.0.0
 ### Changelog
 - Add QR Code Generator

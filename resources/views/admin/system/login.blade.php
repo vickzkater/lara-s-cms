@@ -27,6 +27,17 @@
         background: #F7F7F7 url({{ asset('images/background.jpg') }}) no-repeat fixed center;
         background-size: cover;
       }
+      .instagram { 
+        background: #f09433; 
+        background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+        background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+        background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+        color: white !important;
+      }
+      .instagram:hover {
+        background: #e6683c;
+      }
       .btn-social {
         text-decoration: none !important;
       }
@@ -82,6 +93,9 @@
                 @endif
                 @if(env('TWITTER_CLIENT_MODULE', false))
                   <a href="{{ route('admin.auth.provider', 'twitter') }}" class="btn btn-info btn-block btn-social"><i class="fa fa-twitter"></i> &nbsp;&nbsp;&nbsp;Login with Twitter</a>
+                @endif
+                @if(env('INSTAGRAM_CLIENT_MODULE', false))
+                  <a href="{{ route('admin.auth.provider', 'instagram') }}" class="btn instagram btn-block btn-social"><i class="fa fa-instagram"></i> &nbsp;&nbsp;&nbsp;Login with Instagram</a>
                 @endif
                 @if(env('LINKEDIN_CLIENT_MODULE', false))
                   <a href="#" class="btn btn-dark btn-block btn-social"><i class="fa fa-linkedin"></i> &nbsp;&nbsp;&nbsp;Login with LinkedIn</a>
