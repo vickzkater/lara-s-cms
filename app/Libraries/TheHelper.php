@@ -626,4 +626,34 @@ class TheHelper
             return false;
         }
     }
+
+    /**
+     * Get family name (firstname & lastname)
+     * 
+     * @param String $fullname required
+     * @param String $default_lastname optional
+     * 
+     * @return Object
+     */
+    public static function get_family_name($fullname, $default_lastname = null)
+    {
+        $arr_names = explode(' ', $fullname);
+        if (count($arr_names) == 1) {
+            $lastname = $arr_names[0];
+            if($default_lastname){
+                $lastname = $default_lastname;
+            }
+            $firstname = $arr_names[0];
+        } else {
+            $lastname = $arr_names[(count($arr_names) - 1)];
+            array_pop($arr_names);
+            $firstname = implode(' ', $arr_names);
+        }
+
+        $obj = new \stdClass();
+        $obj->firstname = $firstname;
+        $obj->lastname = $lastname;
+
+        return $obj;
+    }
 }

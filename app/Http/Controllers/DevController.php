@@ -11,6 +11,9 @@ use App\Libraries\MailchimpHelper;
 
 class DevController extends Controller
 {
+    /**
+     * GOSMS
+     */
     public function gosms_send(Request $request)
     {
         // SET THE PARAMETERS
@@ -25,6 +28,9 @@ class DevController extends Controller
         dd($result); // Boolean
     }
 
+    /**
+     * MAILCHIMP
+     */
     public function mailchimp_list()
     {
         $result = MailchimpHelper::list();
@@ -86,5 +92,37 @@ class DevController extends Controller
         $result = MailchimpHelper::view_tags_in_contact($email_address);
 
         dd($result);
+    }
+
+    /**
+     * EMAIL
+     */
+    /**
+     * EMAIL
+     */
+    public function email_send(Request $request)
+    {
+        // GET THE DATA
+        $data = '';
+
+        // SET EMAIL SUBJECT
+        $subject_email = '';
+
+        $email_address = $request->email;
+        if (!$email_address) {
+            // rendering email in browser
+            // return (new SyllabusRequest($data, $subject_email))->render(); 
+        }
+
+        try {
+            // SEND EMAIL
+            // Mail::to($email_address)->send(new SyllabusRequest($data, $subject_email));
+        } catch (\Exception $e) {
+            // Debug via $e->getMessage();
+            dd($e->getMessage());
+            return "We've got errors!";
+        }
+
+        dd('Successfully sent email to ' . $email_address);
     }
 }
