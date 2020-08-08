@@ -1,3 +1,8 @@
+## Version 2.0.2
+### Changelog
+- Update minor in MailchimpHelper
+- Fix issue update config
+
 ## Version 2.0.1
 ### Changelog
 - Add support auth for Guzzle functions
