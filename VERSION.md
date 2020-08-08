@@ -1,8 +1,13 @@
+## Version 2.0.2
+### Changelog
+- Update minor in MailchimpHelper
+- Fix issue update config
+
 ## Version 2.0.1
 ### Changelog
 - Add support auth for Guzzle functions
 - Add support Session Driver Database
-- Add security update: if password has been changed, then force user to re-login
+- Add security update: if the password has been changed, then force the user to re-login
 - Add feature logout from all sessions
 
 ## Version 2.0.0

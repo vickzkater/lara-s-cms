@@ -169,16 +169,6 @@ Next, setup environment configuration in `.env` file
 - Set `FACEBOOK_CLIENT_SECRET` for set FACEBOOK API Authentication
 - Set `FACEBOOK_CALLBACK_URL` for set FACEBOOK API Authentication Callback URL
 
-- Set `TWITTER_CLIENT_MODULE` for enable/disable TWITTER API Authentication
-- Set `TWITTER_CLIENT_ID` for set TWITTER API Authentication
-- Set `TWITTER_CLIENT_SECRET` for set TWITTER API Authentication
-- Set `TWITTER_CALLBACK_URL` for set TWITTER API Authentication Callback URL
-
-- Set `LINKEDIN_CLIENT_MODULE` for enable/disable LINKEDIN API Authentication
-- Set `LINKEDIN_CLIENT_ID` for set LINKEDIN API Authentication
-- Set `LINKEDIN_CLIENT_SECRET` for set LINKEDIN API Authentication
-- Set `LINKEDIN_CALLBACK_URL` for set LINKEDIN API Authentication Callback URL
-
 - Set `FCM_SERVER_KEY` for set Firebase Push Notification
 - Set `FCM_SENDER_ID` for set Firebase Push Notification
 

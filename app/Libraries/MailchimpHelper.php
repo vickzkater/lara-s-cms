@@ -46,12 +46,15 @@ class MailchimpHelper
         return md5(strtolower($email_address));
     }
 
-    public static function add_subscribe($email_address)
+    public static function add_subscribe($email_address, $merge = [], $confirm = false)
     {
         // Adds/updates an existing subscriber:
         $list_id = env('MC_LIST_ID');
-        $merge = [];
-        $confirm = false;
+        // $merge = [
+        //     'FNAME' => 'Vicky',
+        //     'LNAME' => 'Budiman',
+        //     'PHONE' => '+628123123123'
+        // ];
         Mailchimp::subscribe($list_id, $email_address, $merge, $confirm);
         // Use $confirm = false to skip double-opt-in if you already have permission.
         // This method will update an existing subscriber and will not ask an existing subscriber to re-confirm.
