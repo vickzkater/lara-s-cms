@@ -110,7 +110,7 @@ class TheHelper
     }
 
     /**
-     * Allow all characters within "FILTER_SANITIZE_MAGIC_QUOTES"
+     * Allow all characters within "FILTER_SANITIZE_ADD_SLASHES"
      * If ($no_backslash == false) and it contains symbols: single quote (') and double quote (") 
      * Then it will add symbol backslash (\) before those symbols
      * 
@@ -124,7 +124,7 @@ class TheHelper
         if ($string == '' || !$string) {
             return null;
         }
-        $val = filter_var($string, FILTER_SANITIZE_MAGIC_QUOTES);
+        $val = filter_var($string, FILTER_SANITIZE_ADD_SLASHES);
         if ($no_backslash) {
             $val = stripslashes($val);
         }

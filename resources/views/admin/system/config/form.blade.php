@@ -60,9 +60,9 @@
                             echo set_input_form2('text', 'powered', ucwords(lang('powered by', $translation)), $data, $errors, false);
                             echo set_input_form2('text', 'powered_url', ucwords(lang('powered URL', $translation)), $data, $errors, false);
 
-                            echo set_input_form2('tags', 'meta_keywords', ucwords(lang('meta keywords', $translation)), $data, $errors, false);
+                            echo set_input_form2('tags', 'meta_keywords', ucwords(lang('meta keywords', $translation)), $data, $errors, true);
                             echo set_input_form2('text', 'meta_title', ucwords(lang('meta title', $translation)), $data, $errors, true);
-                            echo set_input_form2('textarea', 'meta_description', ucwords(lang('meta description', $translation)), $data, $errors, false);
+                            echo set_input_form2('textarea', 'meta_description', ucwords(lang('meta description', $translation)), $data, $errors, true);
                             echo set_input_form2('text', 'meta_author', ucwords(lang('meta author', $translation)), $data, $errors, true);
                         @endphp
                         

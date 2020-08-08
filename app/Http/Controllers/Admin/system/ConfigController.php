@@ -168,13 +168,31 @@ class ConfigController extends Controller
         }
         $data->help = $help;
 
-        $meta_keywords = Helper::validate_input_text($request->meta_keywords);
-        if (!$meta_keywords) {
-            return back()
-                ->withInput()
-                ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('meta keywords', $this->translation))]));
+        $data->powered = Helper::validate_input_text($request->powered);
+
+        if ($request->powered_url) {
+            $powered_url = Helper::validate_input_url($request->powered_url);
+            if (!$powered_url) {
+                return back()
+                    ->withInput()
+                    ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => (lang('Powered URL', $this->translation))]));
+            }
+            $data->powered_url = $powered_url;
+        } else {
+            $data->powered_url = null;
         }
-        $data->meta_keywords = $meta_keywords;
+
+        if ($request->meta_keywords) {
+            $meta_keywords = Helper::validate_input_text($request->meta_keywords);
+            if (!$meta_keywords) {
+                return back()
+                    ->withInput()
+                    ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('meta keywords', $this->translation))]));
+            }
+            $data->meta_keywords = $meta_keywords;
+        } else {
+            $data->meta_keywords = null;
+        }
 
         $meta_title = Helper::validate_input_text($request->meta_title);
         if (!$meta_title) {
