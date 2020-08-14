@@ -20,6 +20,12 @@ class CheckAdmin
             return $next($request);
         } else {
             $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            
+            if (strpos($actual_link, '/get-data') !== false) {
+                // FOUND
+                $actual_link = route('admin.home');
+            }
+            
             Session::put('redirect_uri', $actual_link);
 
             if ($actual_link == route('admin.home')) {
