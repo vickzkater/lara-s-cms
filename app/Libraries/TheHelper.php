@@ -124,7 +124,7 @@ class TheHelper
         if ($string == '' || !$string) {
             return null;
         }
-        if (function_exists('FILTER_SANITIZE_ADD_SLASHES')) {
+        if (version_compare(PHP_VERSION, '7.4.0') >= 0) {
             $val = filter_var($string, FILTER_SANITIZE_ADD_SLASHES);
         } else {
             $val = filter_var($string, FILTER_SANITIZE_MAGIC_QUOTES);
