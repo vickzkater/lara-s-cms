@@ -277,4 +277,11 @@ Route::group(['prefix' => 'dev'], function () {
         // View tags in a contact - sample: "{URL}/dev/mailchimp/tags-in-contact?email=vicky@domain.com"
         Route::get('/tags-in-contact', 'DevController@mailchimp_view_tags_in_contact');
     });
+
+    // EMAIL
+    Route::group(['prefix' => 'email'], function () {
+        // Send Email using SMTP - sample: "{URL}/dev/email?send=true&email=username@domain.com"
+        // Preview Email - sample: "{URL}/dev/email"
+        Route::get('/', 'DevController@email_send');
+    });
 });
