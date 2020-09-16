@@ -66,6 +66,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Support Session Driver Database (please check section `Session Driver Database`)
 - [x] Security update: if password has been changed, then force user to re-login
 - [x] Feature logout from all sessions
+- [x] Sample function sending email & email template (HTML & Plain Text)
 
 ## Admin Panel
 
@@ -76,6 +77,8 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 <p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_website_v1.2.3.jpg" alt="LARA-S-CMS Website"></p>
 
 ## Version
+
+***Current Version: 2.0.3 (Laravel 7.28.2)**
 
  Laravel  | Lara-S-CMS
 :---------|:----------
