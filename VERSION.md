@@ -3,6 +3,7 @@
 - Update validation redirection URL after login in Admin (if AJAX DataTables, set URL to Admin Home page as default)
 - Add Dev Function to test sending email
 - Add email template & function sending email as sample
+- Update migrations & seeders for add rules automatically
 
 ## Version 2.0.2
 ### Changelog

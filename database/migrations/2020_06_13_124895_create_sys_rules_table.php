@@ -15,7 +15,7 @@ class CreateSysRulesTable extends Migration
     {
         Schema::create('sys_rules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('module_id')->index('FK_sys_modules');
+            $table->unsignedBigInteger('module_id')->index('FK_sys_modules');
             $table->string('name');
             $table->text('description')->nullable();
             $table->boolean('status')->default(1);

@@ -22,6 +22,9 @@ class CreateSysDivisionsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        $seeder = new SysDivisionSeederInitial();
+        $seeder->run();
     }
 
     /**

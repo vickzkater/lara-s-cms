@@ -3,3 +3,7 @@ INSERT INTO `sys_config` (`id`, `app_name`, `app_url_site`, `app_url_main`, `app
 
 INSERT INTO `sys_modules` (`id`, `name`, `status`, `created_at`, `updated_at`)
 VALUES (null,'Config',1,'2020-06-29 09:00:00','2020-06-29 09:00:00');
+
+INSERT INTO `sys_rules` (`id`, `module_id`, `name`, `description`, `status`, `created_at`, `updated_at`, `deleted_at`)
+VALUES
+	(null, 10, 'Update', NULL, 1, '2020-08-09 16:51:34', '2020-08-09 16:51:34', NULL);

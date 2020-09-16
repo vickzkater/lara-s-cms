@@ -20,6 +20,9 @@ class CreateSysLogsTable extends Migration
             $table->unsignedBigInteger('object')->index('FK_object')->nullable();
             $table->timestamps();
         });
+
+        $seeder = new SysLogsSeederInitial();
+        $seeder->run();
     }
 
     /**
