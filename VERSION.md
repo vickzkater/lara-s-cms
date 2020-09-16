@@ -4,6 +4,7 @@
 - Add Dev Function to test sending email
 - Add email template & function sending email as sample
 - Update migrations & seeders for add rules automatically
+- Update the packages (Laravel Frameword 7.18.0 > 7.28.2)
 
 ## Version 2.0.2
 ### Changelog
