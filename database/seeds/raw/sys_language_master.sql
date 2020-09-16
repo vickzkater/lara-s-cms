@@ -134,3 +134,10 @@ INSERT INTO `sys_language_master` (`id`, `phrase`, `status`, `created_at`, `upda
 	(133, 'product', 1, '2020-06-14 09:44:51', '2020-06-14 09:44:51'),
 	(134, 'must be an image', 1, '2020-06-14 09:55:12', '2020-06-14 09:55:12'),
 	(135, 'must be a file of type: #item', 1, '2020-06-14 09:56:48', '2020-06-14 09:56:48');
+
+INSERT INTO `sys_rules` (`id`, `module_id`, `name`, `description`, `status`, `created_at`, `updated_at`, `deleted_at`)
+VALUES
+	(null, 7, 'Add New', NULL, 1, '2020-08-09 16:51:34', '2020-08-09 16:51:34', NULL),
+	(null, 7, 'Edit', NULL, 1, '2020-08-09 16:51:34', '2020-08-09 16:51:34', NULL),
+	(null, 7, 'View List', NULL, 1, '2020-08-09 16:51:34', '2020-08-09 16:51:34', NULL),
+	(null, 7, 'View Details', NULL, 1, '2020-08-09 16:51:34', '2020-08-09 16:51:34', NULL);

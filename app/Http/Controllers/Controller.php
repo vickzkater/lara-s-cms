@@ -143,6 +143,55 @@ class Controller extends BaseController
     }
 
     /**
+     * Guzzle GET Public Access (without token Authorization Bearer)
+     * 
+     * @param String $url (Target API URL) required
+     * @param Array $auth (htaccess auth) optional
+     * 
+     * @return Object (API Response)
+     */
+    protected function guzzle_get_public($url, $auth = null)
+    {
+        $config = ['http_errors' => false];
+        if (env('APP_DEBUG')) {
+            $config['verify'] = false;
+        }
+        if ($auth) {
+            $config['auth'] = $auth;
+        }
+        $client = new Client($config);
+        $request = $client->request('GET', $url);
+        $response = $request->getBody();
+
+        return json_decode($response);
+    }
+
+    /**
+     * Guzzle POST Public Access (without token Authorization Bearer)
+     * 
+     * @param String $url (Target API URL) required
+     * @param Array $parameter (Paramaters) required
+     * @param Array $auth (htaccess auth) optional
+     * 
+     * @return Object (API Response)
+     */
+    protected function guzzle_post_public($url, $parameter, $auth = null)
+    {
+        $config = ['http_errors' => false];
+        if (env('APP_DEBUG')) {
+            $config['verify'] = false;
+        }
+        if ($auth) {
+            $config['auth'] = $auth;
+        }
+        $client = new Client($config);
+        $request = $client->request('POST', $url, ['form_params' => $parameter]);
+        $response = $request->getBody()->getContents();
+
+        return json_decode($response);
+    }
+
+    /**
      * Guzzle GET with token Authorization Bearer
      * 
      * @param String $url (Target API URL) required
@@ -204,51 +253,46 @@ class Controller extends BaseController
     }
 
     /**
-     * Guzzle GET Public Access (without token Authorization Bearer)
+     * Guzzle POST file with token Authorization Bearer
      * 
      * @param String $url (Target API URL) required
-     * @param Array $auth (htaccess auth) optional
-     * 
-     * @return Object (API Response)
-     */
-    protected function guzzle_get_public($url, $auth = null)
-    {
-        $config = ['http_errors' => false];
-        if (env('APP_DEBUG')) {
-            $config['verify'] = false;
-        }
-        if ($auth) {
-            $config['auth'] = $auth;
-        }
-        $client = new Client($config);
-        $request = $client->request('GET', $url);
-        $response = $request->getBody();
-
-        return json_decode($response);
-    }
-
-    /**
-     * Guzzle POST Public Access (without token Authorization Bearer)
-     * 
-     * @param String $url (Target API URL) required
+     * @param String $token (Token Authorization Bearer) required
      * @param Array $parameter (Paramaters) required
      * @param Array $auth (htaccess auth) optional
      * 
      * @return Object (API Response)
      */
-    protected function guzzle_post_public($url, $parameter, $auth = null)
+    // *Sample:
+    // // Set params
+    // $params = [
+    //     [
+    //         'name'     => 'user_id',
+    //         'contents' => $user_id
+    //     ],
+    //     [
+    //         'name'     => 'avatar',
+    //         'contents' => fopen($request->file('avatar')->getRealPath(), "r"),
+    //         'filename' => $request->file('avatar')->hashName()
+    //     ]
+    // ];
+    protected function guzzle_post_multipart($url, $token, $parameter, $auth = null)
     {
-        $config = ['http_errors' => false];
-        if (env('APP_DEBUG')) {
-            $config['verify'] = false;
-        }
-        if ($auth) {
-            $config['auth'] = $auth;
-        }
-        $client = new Client($config);
-        $request = $client->request('POST', $url, ['form_params' => $parameter]);
-        $response = $request->getBody()->getContents();
+        if (empty($token)) {
+            return 'Unauthorized';
+        } else {
+            $config = ['http_errors' => false];
+            if (env('APP_DEBUG')) {
+                $config['verify'] = false;
+            }
+            if ($auth) {
+                $config['auth'] = $auth;
+            }
+            $client = new Client($config);
+            $headers = array('Authorization' => 'bearer ' . $token);
+            $request = $client->request('POST', $url, ['headers' => $headers, 'multipart' => $parameter]);
+            $response = $request->getBody()->getContents();
 
-        return json_decode($response);
+            return json_decode($response);
+        }
     }
 }

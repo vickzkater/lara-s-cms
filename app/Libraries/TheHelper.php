@@ -124,7 +124,11 @@ class TheHelper
         if ($string == '' || !$string) {
             return null;
         }
-        $val = filter_var($string, FILTER_SANITIZE_ADD_SLASHES);
+        if (version_compare(PHP_VERSION, '7.4.0') >= 0) {
+            $val = filter_var($string, FILTER_SANITIZE_ADD_SLASHES);
+        } else {
+            $val = filter_var($string, FILTER_SANITIZE_MAGIC_QUOTES);
+        }
         if ($no_backslash) {
             $val = stripslashes($val);
         }
@@ -640,7 +644,7 @@ class TheHelper
         $arr_names = explode(' ', $fullname);
         if (count($arr_names) == 1) {
             $lastname = $arr_names[0];
-            if($default_lastname){
+            if ($default_lastname) {
                 $lastname = $default_lastname;
             }
             $firstname = $arr_names[0];

@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
+// MAIL
+use App\Mail\MailTester;
 
 // USE LIBRARIES
 use App\Libraries\GoSms;
 use App\Libraries\MailchimpHelper;
+
+// MODELS
+use App\Models\system\SysUser;
 
 class DevController extends Controller
 {
@@ -97,32 +104,34 @@ class DevController extends Controller
     /**
      * EMAIL
      */
-    /**
-     * EMAIL
-     */
     public function email_send(Request $request)
     {
-        // GET THE DATA
-        $data = '';
+        // SET THE DATA
+        $data = SysUser::find(1);
 
         // SET EMAIL SUBJECT
-        $subject_email = '';
+        $subject_email = 'Test Send Email';
 
         $email_address = $request->email;
-        if (!$email_address) {
-            // rendering email in browser
-            // return (new SyllabusRequest($data, $subject_email))->render(); 
+        if ($request->send && !$email_address) {
+            return 'Must set email as recipient in param email';
         }
 
         try {
             // SEND EMAIL
-            // Mail::to($email_address)->send(new SyllabusRequest($data, $subject_email));
+            if ($request->send) {
+                // send email using SMTP
+                Mail::to($email_address)->send(new MailTester($data, $subject_email));
+            } else {
+                // rendering email in browser
+                return (new MailTester($data, $subject_email))->render();
+            }
         } catch (\Exception $e) {
             // Debug via $e->getMessage();
             dd($e->getMessage());
-            return "We've got errors!";
+            // return "We've got errors!";
         }
 
-        dd('Successfully sent email to ' . $email_address);
+        return 'Successfully sent email to ' . $email_address;
     }
 }

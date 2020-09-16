@@ -25,6 +25,9 @@ class CreateSysBranchesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        $seeder = new SysBranchSeederInitial();
+        $seeder->run();
     }
 
     /**
