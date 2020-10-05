@@ -4,9 +4,9 @@
 
 <p align="center">
 <a href="https://travis-ci.org/vickzkater/lara-s-cms" target="_blank"><img src="https://travis-ci.org/vickzkater/lara-s-cms.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="latest_stable_version_img" src="https://poser.pugx.org/vickzkater/lara-s-cms/v/stable" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="total_img" src="https://poser.pugx.org/vickzkater/lara-s-cms/downloads" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="license_img" src="https://poser.pugx.org/vickzkater/lara-s-cms/license" alt="License"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="latest_stable_version_img" src="https://img.shields.io/packagist/v/vickzkater/lara-s-cms" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="total_img" src="https://img.shields.io/packagist/dt/vickzkater/lara-s-cms" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="license_img" src="https://img.shields.io/packagist/l/vickzkater/lara-s-cms" alt="License"></a>
 </p>
 
 ## What is "Lara-S-CMS" ?
@@ -78,7 +78,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 
 ## Version
 
-***Current Version: 2.0.3 (Laravel 7.28.2)**
+***Current Version: 2.0.3.1 (Laravel 7.28.2)**
 
  Laravel  | Lara-S-CMS
 :---------|:----------
@@ -88,7 +88,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 
 ## Requirements
 
-- PHP >= 7.2.5
+- PHP >= 7.3
 - [Laravel 7.x Requirements](https://laravel.com/docs/7.x/installation#server-requirements)
 
 ## Installing Lara-S-CMS

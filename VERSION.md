@@ -1,10 +1,14 @@
+## Version 2.0.3.1
+### Changelog
+- Update README (require PHP >= 7.3)
+
 ## Version 2.0.3
 ### Changelog
 - Update validation redirection URL after login in Admin (if AJAX DataTables, set URL to Admin Home page as default)
 - Add Dev Function to test sending email
 - Add email template & function sending email as sample
 - Update migrations & seeders for add rules automatically
-- Update the packages (Laravel Frameword 7.18.0 > 7.28.2)
+- Update the packages (Laravel Framework 7.18.0 > 7.28.2)
 
 ## Version 2.0.2
 ### Changelog
