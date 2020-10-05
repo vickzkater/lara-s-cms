@@ -78,7 +78,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 
 ## Version
 
-***Current Version: 2.0.3.1 (Laravel 7.28.2)**
+***Current Version: 2.0.3.2 (Laravel 7.28.3)**
 
  Laravel  | Lara-S-CMS
 :---------|:----------
@@ -88,7 +88,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 
 ## Requirements
 
-- PHP >= 7.3
+- PHP >= 7.2
 - [Laravel 7.x Requirements](https://laravel.com/docs/7.x/installation#server-requirements)
 
 ## Installing Lara-S-CMS
@@ -219,6 +219,20 @@ And with additionally configure the permission for directory `public/uploads/`. 
 ```
 chmod o+w -R public/uploads/
 ```
+
+***If after setup all configs, but still display error "500 Internal Server Error"**
+
+Comment first line in `.htaccess` for fix this issue
+```
+#Header always set Content-Security-Policy: upgrade-insecure-requests
+
+<IfModule mod_rewrite.c>
+   RewriteEngine On 
+   RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+```
+
+_*) This issue is reported only occur on some hosting servers, e.g. AWS (Amazon Web Service)_
 
 **Somethings that maybe you must know**
 

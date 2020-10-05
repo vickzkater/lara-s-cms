@@ -1,6 +1,12 @@
+## Version 2.0.3.2
+### Changelog
+- Rollback `composer.lock` (using from v2.0.2) for support PHP >= 7.2
+- Update the packages (Laravel Framework 7.18.0 > 7.28.3)
+- Add solution for issue "500 Internal Server Error" (please check `README`)
+
 ## Version 2.0.3.1
 ### Changelog
-- Update README (require PHP >= 7.3)
+- Update `README` (require PHP >= 7.3)
 
 ## Version 2.0.3
 ### Changelog
