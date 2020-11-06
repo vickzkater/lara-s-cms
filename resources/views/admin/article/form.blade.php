@@ -1,14 +1,14 @@
 {{-- ADD HTML SMALL MODAL [BEGIN] --}}
 @extends('_template_adm.modal_small')
 {{-- SMALL MODAL CONFIG --}}
-@section('small_modal_title', ucwords(lang('add content element', $translation)))
+@section('small_modal_title', ucwords(lang('add #item', $translation, ['#item'=>ucwords(lang('content element', $translation))])))
 @section('small_modal_content')
-    <span class="btn btn-primary btn-block" onclick="add_content_element('text', true)"><i class="fa fa-font"></i>&nbsp; Add Text</span><br>
-    <span class="btn btn-primary btn-block" onclick="add_content_element('image', true)"><i class="fa fa-image"></i>&nbsp; Add Image</span><br>
-    <span class="btn btn-primary btn-block" onclick="add_content_element('image & text', true)"><i class="fa fa-image"></i>&nbsp; Add Image & Text</span><br>
-    <span class="btn btn-primary btn-block" onclick="add_content_element('video', true)"><i class="fa fa-youtube-play"></i>&nbsp; Add Video</span><br>
-    <span class="btn btn-primary btn-block" onclick="add_content_element('video & text', true)"><i class="fa fa-youtube-play"></i>&nbsp; Add Video & Text</span><br>
-    <span class="btn btn-primary btn-block" onclick="add_content_element('plain text', true)"><i class="fa fa-font"></i>&nbsp; Add Plain Text</span>
+    <span class="btn btn-primary btn-block" onclick="add_content_element('text', true)"><i class="fa fa-font"></i>&nbsp; {{ ucwords(lang('add #item', $translation, ['#item'=>ucwords(lang('text', $translation))])) }}</span><br>
+    <span class="btn btn-primary btn-block" onclick="add_content_element('image', true)"><i class="fa fa-image"></i>&nbsp; {{ ucwords(lang('add #item', $translation, ['#item'=>ucwords(lang('image', $translation))])) }}</span><br>
+    <span class="btn btn-primary btn-block" onclick="add_content_element('image & text', true)"><i class="fa fa-image"></i>&nbsp; {{ ucwords(lang('add #item', $translation, ['#item'=>ucwords(lang('image & text', $translation))])) }}</span><br>
+    <span class="btn btn-primary btn-block" onclick="add_content_element('video', true)"><i class="fa fa-youtube-play"></i>&nbsp; {{ ucwords(lang('add #item', $translation, ['#item'=>ucwords(lang('video', $translation))])) }}</span><br>
+    <span class="btn btn-primary btn-block" onclick="add_content_element('video & text', true)"><i class="fa fa-youtube-play"></i>&nbsp; {{ ucwords(lang('add #item', $translation, ['#item'=>ucwords(lang('video & text', $translation))])) }}</span><br>
+    <span class="btn btn-primary btn-block" onclick="add_content_element('plain text', true)"><i class="fa fa-font"></i>&nbsp; {{ ucwords(lang('add #item', $translation, ['#item'=>ucwords(lang('plain text', $translation))])) }}</span>
 @endsection
 {{-- ADD HTML SMALL MODAL [END] --}}
 
@@ -43,7 +43,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>{{ ucwords(lang('article data', $translation)) }}</h2>
+                        <h2>{{ ucwords(lang('form details', $translation)) }}</h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -62,14 +62,18 @@
                                 $config->placeholder = lang('Must be unique. If left empty, system will auto-generate this.', $translation);
                                 echo set_input_form2('text', 'slug', ucwords(lang('slug', $translation)), $data, $errors, false, $config);
 
+                                $config = new \stdClass();
+                                $config->info = '<i class="fa fa-info-circle"></i>&nbsp; '.lang('The image will be cropped & resized to #widthx#height px as a thumbnail image', $translation, ['#width'=>750, '#height'=>300]);
                                 if(isset($data)){
                                     // EDIT - not required
-                                    echo set_input_form2('image', 'thumbnail', ucwords(lang('thumbnail', $translation)), $data, $errors, false);
+                                    echo set_input_form2('image', 'thumbnail', ucwords(lang('thumbnail', $translation)), $data, $errors, false, $config);
                                 }else{
-                                    echo set_input_form2('image', 'thumbnail', ucwords(lang('thumbnail', $translation)), $data, $errors, true);
+                                    echo set_input_form2('image', 'thumbnail', ucwords(lang('thumbnail', $translation)), $data, $errors, true, $config);
                                 }
                                 
-                                echo set_input_form2('tags', 'keywords', ucwords(lang('keywords', $translation)).' <i class="fa fa-info-circle" data-toggle="tooltip" title="'.lang('separate with commas', $translation).'"></i>', $data, $errors, false);
+                                $config = new \stdClass();
+                                $config->info_text = '<i class="fa fa-info-circle"></i>&nbsp; '.lang('separate with commas', $translation);
+                                echo set_input_form2('tags', 'keywords', ucwords(lang('keywords', $translation)), $data, $errors, false, $config);
 
                                 echo set_input_form2('textarea', 'summary', ucwords(lang('summary', $translation)), $data, $errors, true);
                             @endphp
@@ -81,7 +85,7 @@
                                         <div class="checkbox">
                                             <label>
                                                 <input type="checkbox" name="access_all" value="ALL" id="master_check_all">
-                                                <b>*CHECK ALL*</b>
+                                                <b>*{{ strtoupper(lang('check all', $translation)) }}*</b>
                                             </label>
                                         </div>
                                         @php
@@ -149,7 +153,7 @@
                                     <div id="content-pagebuilder" role="tablist" aria-multiselectable="true" class="accordion"></div>
                                     <hr>
                                     <span class="btn btn-primary" data-toggle="modal" data-target=".bs-modal-sm">
-                                        <i class="fa fa-plus-circle"></i> {{ ucwords(lang('add content element', $translation)) }}
+                                        <i class="fa fa-plus-circle"></i> {{ ucwords(lang('add #item', $translation, ['#item'=>ucwords(lang('content element', $translation))])) }}
                                     </span>
                                 </div>
                             </div>
@@ -166,7 +170,13 @@
                                         @endif
                                     </button>
                                     &nbsp;&nbsp;
-                                    <a href="{{ route('admin.article.list') }}" class="btn btn-danger btn-lg"><i class="fa fa-times"></i>&nbsp; {{ ucwords(lang('cancel', $translation)) }}</a>
+                                    <a href="{{ route('admin.article.list') }}" class="btn btn-danger btn-lg"><i class="fa fa-times"></i>&nbsp; 
+                                        @if (isset($data))
+                                            {{ ucwords(lang('close', $translation)) }}
+                                        @else
+                                            {{ ucwords(lang('cancel', $translation)) }}
+                                        @endif
+                                    </a>
                                 </div>
                             </div>
 

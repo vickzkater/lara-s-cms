@@ -130,7 +130,7 @@ class ConfigController extends Controller
             if ($image['status'] != 'true') {
                 return back()
                     ->withInput()
-                    ->with('error', lang($image['message'], $this->translation));
+                    ->with('error', lang($image['message'], $this->translation, $image['dynamic_objects']));
             }
             // GET THE UPLOADED IMAGE RESULT
             $data->app_favicon = $dir_path . $image['data'];
@@ -154,7 +154,7 @@ class ConfigController extends Controller
             if ($image['status'] != 'true') {
                 return back()
                     ->withInput()
-                    ->with('error', lang($image['message'], $this->translation));
+                    ->with('error', lang($image['message'], $this->translation, $image['dynamic_objects']));
             }
             // GET THE UPLOADED IMAGE RESULT
             $data->app_logo_image = $dir_path . $image['data'];

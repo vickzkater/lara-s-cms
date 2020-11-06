@@ -4,6 +4,7 @@ namespace App\Libraries;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Facades\Image;
 
 // MODELS
 use App\Models\system\SysLog;
@@ -110,8 +111,13 @@ class Helper extends TheHelper
         return array(lang('second', $translation), lang('minute', $translation), lang('hour', $translation), lang('day', $translation), lang('week', $translation), lang('month', $translation), lang('year', $translation), lang('decade', $translation));
     }
 
-    public static function upload_image($dir_path, $image_file, $reformat_image_name = true, $format_image_name = null, $allowed_extensions = ['jpeg', 'jpg', 'png', 'gif'])
+    public static function upload_image($dir_path, $image_file, $reformat_image_name = true, $format_image_name = null, $allowed_extensions = null, $generate_thumbnail = false, $thumbnail_width = 0, $thumbnail_height = 0, $thumbnail_quality_percentage = 100)
     {
+        // SET ALLOWED EXTENSIONS DEFAULT
+        if (!$allowed_extensions) {
+            $allowed_extensions = ['jpeg', 'jpg', 'png', 'gif'];
+        }
+
         // PROCESSING IMAGE
         $destination_path = public_path($dir_path);
         $image = $image_file;
@@ -122,10 +128,12 @@ class Helper extends TheHelper
             // FAILED
             return [
                 'status' => 'false',
-                'message' => 'Failed to upload the image, please upload image with allowed extensions (' . implode(",", $allowed_extensions) . ')'
+                'message' => 'Failed to upload the image, please upload image with allowed extensions #item',
+                'dynamic_objects' => ['#item' => '(' . implode("/", $allowed_extensions) . ')']
             ];
         }
 
+        // SET IMAGE FILE NAME
         if ($reformat_image_name) {
             // REFORMAT IMAGE NAME USING $format_image_name
             if ($format_image_name) {
@@ -144,15 +152,75 @@ class Helper extends TheHelper
             // FAILED
             return [
                 'status' => 'false',
-                'message' => 'Oops, failed to upload image. Please try again or try upload another one.'
+                'message' => 'Oops, failed to upload image. Please try again or try upload another one.',
+                'dynamic_objects' => []
             ];
+        }
+
+        // GENERATE IMAGE THUMBNAIL - http://image.intervention.io/api/make
+        $thumbnail_name = null;
+        // VALIDATE THUMBNAIL SIZE
+        $thumbnail_width = (int) $thumbnail_width;
+        $thumbnail_height = (int) $thumbnail_height;
+        if ($generate_thumbnail && $thumbnail_width && $thumbnail_height) {
+            // VALIDATE THUMBNAIL QUALITY PERCENTAGE
+            if ($thumbnail_quality_percentage > 100) {
+                $thumbnail_quality_percentage = 100;
+            } else if ($thumbnail_quality_percentage < 1) {
+                $thumbnail_quality_percentage = 50;
+            }
+            // GET THE UPLOADED IMAGE RESULT
+            $uploaded_image = $dir_path . $image_name;
+            // SET THUMBNAIL FILENAME
+            $thumbnail_name = $image_name . '-' . $thumbnail_width . 'x' . $thumbnail_height . '.' . $extension;
+            try {
+                // CREATE A NEW IMAGE FROM GD RESOURCE
+                switch ($extension) {
+                    case 'jpg':
+                        $image_source = imagecreatefromjpeg(public_path($uploaded_image));
+                        break;
+                    case 'jpeg':
+                        $image_source = imagecreatefromjpeg(public_path($uploaded_image));
+                        break;
+                    case 'png':
+                        $image_source = imagecreatefrompng(public_path($uploaded_image));
+                        break;
+                    case 'gif':
+                        $image_source = imagecreatefromgif(public_path($uploaded_image));
+                        break;
+                    default:
+                        // FAILED
+                        return [
+                            'status' => 'false',
+                            'data' => $image_name,
+                            'message' => 'Successfully uploaded the image, but failed to generate thumbnail as supported formats are only #item',
+                            'dynamic_objects' => ['#item' => 'jpeg/jpg/png/gif']
+                        ];
+                }
+                // OPEN FILE A IMAGE RESOURCE
+                $img_thumb = Image::make($image_source);
+                // CROP THEN RESIZE TO AxB PIXEL
+                $img_thumb->fit($thumbnail_width, $thumbnail_height);
+                // SAVE CROPPED FILE WITH X% QUALITY
+                $img_thumb->save($dir_path . $thumbnail_name, $thumbnail_quality_percentage);
+                // THUMBNAIL IMAGE GENERATED SUCCESSFULLY
+            } catch (\Intervention\Image\Exception\NotReadableException $e) {
+                // THROWING ERROR WHEN EXCEPTION OCCURS
+                // FAILED
+                return [
+                    'status' => 'false',
+                    'message' => $e,
+                    'dynamic_objects' => []
+                ];
+            }
         }
 
         // SUCCESS
         return [
             'status' => 'true',
             'message' => 'Successfully uploaded the image',
-            'data' => $image_name
+            'data' => $image_name,
+            'thumbnail' => $thumbnail_name
         ];
     }
 
