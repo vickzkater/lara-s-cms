@@ -72,7 +72,7 @@
                                 echo set_input_form2('number_format', 'qty', lang('QTY', $translation), $data, $errors, true);
 
                                 $config = new \stdClass();
-                                $config->info = 'Max 2MB per file';
+                                $config->info_text = '<i class="fa fa-info-circle"></i>&nbsp; Max 2MB per file';
                                 if(isset($data)){
                                     $config->delete = true;
                                     echo set_input_form2('file', 'attachments', ucwords(lang('attachments', $translation)), $data, $errors, false, $config);

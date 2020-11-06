@@ -1,3 +1,9 @@
+## Version 2.0.5
+### Changelog
+- Add function generate thumbnail image
+- Fix issue in Article List
+- Add Support One Way SMS Gateway API - send SMS (Short Message Service)
+
 ## Version 2.0.3.2
 ### Changelog
 - Rollback `composer.lock` (using from v2.0.2) for support PHP >= 7.2

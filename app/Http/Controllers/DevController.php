@@ -11,6 +11,7 @@ use App\Mail\MailTester;
 
 // USE LIBRARIES
 use App\Libraries\GoSms;
+use App\Libraries\OnewaySms;
 use App\Libraries\MailchimpHelper;
 
 // MODELS
@@ -33,6 +34,21 @@ class DevController extends Controller
         $result = GoSms::send($mobile, $message, $trxid, $type, $debug);
 
         dd($result); // Boolean
+    }
+
+    /**
+     * ONEWAYSMS
+     */
+    public function onewaysms_send(Request $request)
+    {
+        // SET THE PARAMETERS
+        $mobile = $request->input('mobile_phone');
+        $message = $request->input('message');
+        $debug = false;
+
+        $result = OnewaySms::send($mobile, $message, $debug);
+
+        dd($result);
     }
 
     /**

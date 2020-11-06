@@ -9,7 +9,13 @@
 <a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="license_img" src="https://img.shields.io/packagist/l/vickzkater/lara-s-cms" alt="License"></a>
 </p>
 
+***Latest Version: 2.0.5 (Laravel 7.28.3)**
+
 ## What is "Lara-S-CMS" ?
+
+A PHP Laravel Skeleton for Content Management System (CMS) or Admin Dashboard (within/without website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella) as Admin Template.
+
+For sample as website, we are using [Modern Business](https://startbootstrap.com/templates/modern-business/) a free Bootstrap 4 website template
 
 Laravel (S) Content Management System
 - Skeleton 💀
@@ -21,10 +27,6 @@ Laravel (S) Content Management System
 - SUPER 💪
 - Sucks? 💢
 - Spinner 🤣
-
-A PHP Laravel Skeleton for Content Management System (CMS) or Admin Dashboard (within/without website) using Bootstrap 4 Admin Dashboard Template [Gentelella](https://github.com/ColorlibHQ/gentelella) as Admin Template.
-
-For sample as website, we are using [Modern Business](https://startbootstrap.com/templates/modern-business/) a free Bootstrap 4 website template
 
 Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI Tech](https://kiniditech.com/)) since September 2019
 
@@ -46,13 +48,13 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Product Management (as module sample including upload image feature)
 - [x] Support DataTables AJAX
 - [x] Support reCAPTCHA v2 (in Admin Panel & User Panel)
-- [x] Sortable Data List (in Division)
-- [x] Sortable Data List with Filter (in Branch - Filter by Division)
+- [x] Sortable Data List (in Division Module)
+- [x] Sortable Data List with Filter (in Branch Module - Filter by Division)
 - [x] Application Configurations
-- [x] Import & Export Excel File (in Product)
-- [x] Delete Uploaded Image (in Product)
-- [x] Rich Text Editor/WYSIWYG using TinyMCE (in Product)
-- [x] Datepicker (in Product)
+- [x] Import & Export Excel File (in Product Module)
+- [x] Delete Uploaded Image (in Product Module)
+- [x] Rich Text Editor/WYSIWYG using TinyMCE (in Product Module)
+- [x] Datepicker (in Product Module)
 - [x] [The Helper PHP - a lot of PHP helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-php)
 - [x] [Support GoSMSGateway API - send SMS (in DevController)](https://github.com/vickzkater/gosms-laravel)
 - [x] [Support Mailchimp API (in DevController)](https://github.com/vickzkater/mailchimp-helper-laravel)
@@ -66,7 +68,9 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Support Session Driver Database (please check section `Session Driver Database`)
 - [x] Security update: if password has been changed, then force user to re-login
 - [x] Feature logout from all sessions
-- [x] Sample function sending email & email template (HTML & Plain Text)
+- [x] Sample function sending email & email template (support HTML & Plain Text)
+- [x] Generate thumbnail (in Article Module for saving thumbnail)
+- [x] [Support One Way SMS Gateway API - send SMS (in DevController)](https://github.com/vickzkater/onewaysms-laravel)
 
 ## Admin Panel
 
@@ -77,8 +81,6 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 <p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_website_v1.2.3.jpg" alt="LARA-S-CMS Website"></p>
 
 ## Version
-
-***Current Version: 2.0.3.2 (Laravel 7.28.3)**
 
  Laravel  | Lara-S-CMS
 :---------|:----------
@@ -148,6 +150,8 @@ Next, setup environment configuration in `.env` file
 - Set `POWERED` for display developer name
 - Set `POWERED_URL` for display developer URL
 
+- Set `MAIL_MODULE` for enable/disable Mail Module
+
 - Set `MAIL_FROM_NAME` for set sender email's name
 - Set `MAIL_FROM_ADDRESS` for set sender email's address
 - Set `MAIL_REPLYTO_NAME` for set reply-to email's name
@@ -175,8 +179,14 @@ Next, setup environment configuration in `.env` file
 - Set `FCM_SERVER_KEY` for set Firebase Push Notification
 - Set `FCM_SENDER_ID` for set Firebase Push Notification
 
+- Set `SMS_MODULE` for enable/disable SMS Module
+
 - Set `GOSMS_AUTH_USER` for set GoSMSGateway credentials
 - Set `GOSMS_AUTH_PASS` for set GoSMSGateway credentials
+
+- Set `ONEWAYSMS_API` for set OnewaySMS Gateway API URL
+- Set `ONEWAYSMS_AUTH_USER` for set OnewaySMS Gateway credentials
+- Set `ONEWAYSMS_AUTH_PASS` for set OnewaySMS Gateway credentials
 
 - Set `MC_KEY` for set Mailchimp API key
 - Set `MC_LIST_ID` for set Mailchimp List ID
@@ -203,8 +213,8 @@ http://path-to-project-folder/public/manager
 
 **Administrator**
 ```
-Username: superadmin
-Password: admin123
+Username: superuser
+Password: sudo123!
 ```
 
 ## Configurations
@@ -315,6 +325,7 @@ The default template for maintenance mode responses is located in `resources/vie
 - [nztim/mailchimp](https://github.com/nztim/mailchimp) - used to Mailchimp API
 - [simplesoftwareio/simple-qrcode](https://github.com/SimpleSoftwareIO/simple-qrcode) - used to generate QR code
 - [laravel/socialite](https://github.com/laravel/socialite) - used to login with social media
+- [intervention/image](https://github.com/Intervention/image) - used to generate thumbnail image
 
 ## Libraries Used
 
@@ -323,10 +334,11 @@ The default template for maintenance mode responses is located in `resources/vie
 - [GoSMSGateway API - Laravel Library (GoSms)](https://github.com/vickzkater/gosms-laravel)
 - [Mailchimp API Helper - Laravel Library (MailchimpHelper)](https://github.com/vickzkater/mailchimp-helper-laravel)
 - [PageBuilder (Build pages using content elements)](https://github.com/vickzkater/kiniditech-pagebuilder)
+- [One Way SMS Gateway API - Laravel Library (OnewaySms)](https://github.com/vickzkater/onewaysms-laravel)
 
-## Documentation
+## Lara-S-CMS has been featured on
 
-Coming soon
+- PHP Weekly - [phpweekly.com](http://www.phpweekly.com/archive/2020-08-13.html)
 
 ## Contributing
 

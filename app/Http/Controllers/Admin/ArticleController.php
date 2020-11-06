@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
+use Intervention\Image\Facades\Image;
 
 // LIBRARIES
 use App\Libraries\Helper;
@@ -60,21 +61,12 @@ class ArticleController extends Controller
             'articles.created_at',
             'articles.updated_at',
             'articles.deleted_at',
-            DB::raw('GROUP_CONCAT(topics.name SEPARATOR " | ") AS topic')
+            DB::raw('GROUP_CONCAT(topics.name SEPARATOR " | ") AS topics')
         )
             ->leftJoin('article_topic', 'articles.id', 'article_topic.article_id')
             ->leftJoin('topics', 'article_topic.topic_id', 'topics.id')
             ->groupBy(
-                'articles.id',
-                'articles.title',
-                'articles.slug',
-                'articles.thumbnail',
-                'articles.keywords',
-                'articles.content',
-                'articles.status',
-                'articles.created_at',
-                'articles.updated_at',
-                'articles.deleted_at'
+                'articles.id'
             );
 
         return $datatables->eloquent($query)
@@ -95,6 +87,9 @@ class ArticleController extends Controller
             ->addColumn('image_item', function ($data) {
                 return '<img src="' . asset($data->thumbnail) . '" style="max-width: 200px;max-height: 200px;display: block;margin-left: auto;margin-right: auto;">';
             })
+            ->addColumn('topic', function ($data) {
+                return $data->topics;
+            })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at;
             })
@@ -104,7 +99,7 @@ class ArticleController extends Controller
             ->editColumn('updated_at', function ($data) {
                 return Helper::time_ago(strtotime($data->updated_at), lang('ago', $this->translation), Helper::get_periods($this->translation));
             })
-            ->rawColumns(['item_status', 'action', 'image_item'])
+            ->rawColumns(['item_status', 'action', 'image_item', 'topic'])
             ->toJson();
     }
 
@@ -142,8 +137,8 @@ class ArticleController extends Controller
         ];
         $message = [
             'required' => ':attribute ' . lang('field is required', $this->translation),
-            'unique' => ':attribute ' . lang('has been used, please input another data', $this->translation),
-            'image' => ':attribute ' . lang('must be an image', $this->translation)
+            'image' => ':attribute ' . lang('must be an image', $this->translation),
+            'max' => ':attribute ' . lang('may not be greater than #item', $this->translation, ['#item' => '2MB'])
         ];
         $names = [
             'title' => ucwords(lang('title', $this->translation)),
@@ -192,14 +187,18 @@ class ArticleController extends Controller
         $image_file = $request->file('thumbnail');
         $format_image_name = time() . '-thumbnail';
         $allowed_extensions = ['jpeg', 'jpg', 'png', 'gif'];
-        $image = Helper::upload_image($dir_path, $image_file, true, $format_image_name, $allowed_extensions);
+        $generate_thumbnail = true;
+        $thumbnail_width = 750;
+        $thumbnail_height = 300;
+        $thumbnail_quality_percentage = 80;
+        $image = Helper::upload_image($dir_path, $image_file, true, $format_image_name, $allowed_extensions, $generate_thumbnail, $thumbnail_width, $thumbnail_height, $thumbnail_quality_percentage);
         if ($image['status'] != 'true') {
+            // FAILED TO UPLOAD IMAGE
             return back()
                 ->withInput()
-                ->with('error', lang($image['message'], $this->translation));
+                ->with('error', lang($image['message'], $this->translation, $image['dynamic_objects']));
         }
-        // GET THE UPLOADED IMAGE RESULT
-        $data->thumbnail = $dir_path . $image['data'];
+        $data->thumbnail = $dir_path . $image['thumbnail'];
 
         // PROCESSING CONTENT ELEMENT
         $types = $request->v_element_type;
@@ -212,7 +211,7 @@ class ArticleController extends Controller
         foreach ($types as $key => $value) {
             // SAVE PER ELEMENT TYPE USING OBJECT
             $obj_content = new \stdClass();
-            $obj_content->type = $types[$key];
+            $obj_content->type = $value;
             $obj_content->section = $sections[$key];
             // VALIDATE CONTENT BASED ON TYPE
             switch ($obj_content->type) {
@@ -230,7 +229,7 @@ class ArticleController extends Controller
                     if ($image['status'] != 'true') {
                         return back()
                             ->withInput()
-                            ->with('error', lang($image['message'], $this->translation));
+                            ->with('error', lang($image['message'], $this->translation, $image['dynamic_objects']));
                     }
                     $obj_content->image = $dir_path . $image['data'];
                     break;
@@ -245,7 +244,7 @@ class ArticleController extends Controller
                     if ($image['status'] != 'true') {
                         return back()
                             ->withInput()
-                            ->with('error', lang($image['message'], $this->translation));
+                            ->with('error', lang($image['message'], $this->translation, $image['dynamic_objects']));
                     }
                     $obj_content->image = $dir_path . $image['data'];
                     $obj_content->text = $content_text[$key];
@@ -404,7 +403,7 @@ class ArticleController extends Controller
         $message = [
             'required' => ':attribute ' . lang('field is required', $this->translation),
             'image' => ':attribute ' . lang('must be an image', $this->translation),
-
+            'max' => ':attribute ' . lang('may not be greater than #item', $this->translation, ['#item' => '2MB'])
         ];
         $names = [
             'title' => ucwords(lang('title', $this->translation)),
@@ -454,14 +453,18 @@ class ArticleController extends Controller
             $image_file = $request->file('thumbnail');
             $format_image_name = time() . '-thumbnail';
             $allowed_extensions = ['jpeg', 'jpg', 'png', 'gif'];
-            $image = Helper::upload_image($dir_path, $image_file, true, $format_image_name, $allowed_extensions);
+            $generate_thumbnail = true;
+            $thumbnail_width = 750;
+            $thumbnail_height = 300;
+            $thumbnail_quality_percentage = 80;
+            $image = Helper::upload_image($dir_path, $image_file, true, $format_image_name, $allowed_extensions, $generate_thumbnail, $thumbnail_width, $thumbnail_height, $thumbnail_quality_percentage);
             if ($image['status'] != 'true') {
+                // FAILED TO UPLOAD IMAGE
                 return back()
                     ->withInput()
-                    ->with('error', lang($image['message'], $this->translation));
+                    ->with('error', lang($image['message'], $this->translation, $image['dynamic_objects']));
             }
-            // GET THE UPLOADED IMAGE RESULT
-            $data->thumbnail = $dir_path . $image['data'];
+            $data->thumbnail = $dir_path . $image['thumbnail'];
         }
 
         // PROCESSING CONTENT ELEMENT
@@ -502,7 +505,7 @@ class ArticleController extends Controller
                         if ($image['status'] != 'true') {
                             return back()
                                 ->withInput()
-                                ->with('error', lang($image['message'], $this->translation));
+                                ->with('error', lang($image['message'], $this->translation, $image['dynamic_objects']));
                         }
                         $obj_content->image = $dir_path . $image['data'];
                     } else {
@@ -535,7 +538,7 @@ class ArticleController extends Controller
                         if ($image['status'] != 'true') {
                             return back()
                                 ->withInput()
-                                ->with('error', lang($image['message'], $this->translation));
+                                ->with('error', lang($image['message'], $this->translation, $image['dynamic_objects']));
                         }
                         $obj_content->image = $dir_path . $image['data'];
                     } else {

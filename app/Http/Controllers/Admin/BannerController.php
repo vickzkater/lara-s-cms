@@ -80,7 +80,7 @@ class BannerController extends Controller
         if ($image['status'] != 'true') {
             return back()
                 ->withInput()
-                ->with('error', lang($image['message'], $this->translation));
+                ->with('error', lang($image['message'], $this->translation, $image['dynamic_objects']));
         }
         // GET THE UPLOADED IMAGE RESULT
         $data->image = $dir_path . $image['data'];
@@ -199,7 +199,7 @@ class BannerController extends Controller
             if ($image['status'] != 'true') {
                 return back()
                     ->withInput()
-                    ->with('error', lang($image['message'], $this->translation));
+                    ->with('error', lang($image['message'], $this->translation, $image['dynamic_objects']));
             }
             // GET THE UPLOADED IMAGE RESULT
             $data->image = $dir_path . $image['data'];

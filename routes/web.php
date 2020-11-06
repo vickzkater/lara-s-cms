@@ -254,6 +254,18 @@ Route::group(['prefix' => 'dev'], function () {
         Route::get('/send', 'DevController@gosms_send');
     });
 
+    // GOSMS - support for Indonesian telecommunications operators
+    Route::group(['prefix' => 'gosms'], function () {
+        // Send SMS - sample: "{URL}/dev/gosms/send?mobile_phone=62812345xxx&message=Hello"
+        Route::get('/send', 'DevController@gosms_send');
+    });
+
+    // ONEWAYSMS - support for Malaysian telecommunications operators
+    Route::group(['prefix' => 'onewaysms'], function () {
+        // Send SMS - sample: "{URL}/dev/onewaysms/send?mobile_phone=601234xxx&message=Hello"
+        Route::get('/send', 'DevController@onewaysms_send');
+    });
+
     // MAILCHIMP
     Route::group(['prefix' => 'mailchimp'], function () {
         // Get List - sample: "{URL}/dev/mailchimp/"
