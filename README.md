@@ -70,6 +70,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Feature logout from all sessions
 - [x] Sample function sending email & email template (support HTML & Plain Text)
 - [x] Generate thumbnail (in Article Module for saving thumbnail)
+- [x] [Support One Way SMS Gateway API - send SMS (in DevController)](https://github.com/vickzkater/onewaysms-laravel)
 
 ## Admin Panel
 
@@ -149,6 +150,8 @@ Next, setup environment configuration in `.env` file
 - Set `POWERED` for display developer name
 - Set `POWERED_URL` for display developer URL
 
+- Set `MAIL_MODULE` for enable/disable Mail Module
+
 - Set `MAIL_FROM_NAME` for set sender email's name
 - Set `MAIL_FROM_ADDRESS` for set sender email's address
 - Set `MAIL_REPLYTO_NAME` for set reply-to email's name
@@ -176,8 +179,14 @@ Next, setup environment configuration in `.env` file
 - Set `FCM_SERVER_KEY` for set Firebase Push Notification
 - Set `FCM_SENDER_ID` for set Firebase Push Notification
 
+- Set `SMS_MODULE` for enable/disable SMS Module
+
 - Set `GOSMS_AUTH_USER` for set GoSMSGateway credentials
 - Set `GOSMS_AUTH_PASS` for set GoSMSGateway credentials
+
+- Set `ONEWAYSMS_API` for set OnewaySMS Gateway API URL
+- Set `ONEWAYSMS_AUTH_USER` for set OnewaySMS Gateway credentials
+- Set `ONEWAYSMS_AUTH_PASS` for set OnewaySMS Gateway credentials
 
 - Set `MC_KEY` for set Mailchimp API key
 - Set `MC_LIST_ID` for set Mailchimp List ID
@@ -325,6 +334,7 @@ The default template for maintenance mode responses is located in `resources/vie
 - [GoSMSGateway API - Laravel Library (GoSms)](https://github.com/vickzkater/gosms-laravel)
 - [Mailchimp API Helper - Laravel Library (MailchimpHelper)](https://github.com/vickzkater/mailchimp-helper-laravel)
 - [PageBuilder (Build pages using content elements)](https://github.com/vickzkater/kiniditech-pagebuilder)
+- [One Way SMS Gateway API - Laravel Library (OnewaySms)](https://github.com/vickzkater/onewaysms-laravel)
 
 ## Lara-S-CMS has been featured on
 
