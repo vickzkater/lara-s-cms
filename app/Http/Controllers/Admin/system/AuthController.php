@@ -233,7 +233,7 @@ class AuthController extends Controller
             if ($driver == 'instagram') {
                 $appId = env('INSTAGRAM_CLIENT_ID');
                 $redirectUri = urlencode(env('INSTAGRAM_CALLBACK_URL'));
-                return redirect()->to("https://api.instagram.com/oauth/authorize?app_id={$appId}&redirect_uri={$redirectUri}&scope=user_profile,user_media&response_type=code");
+                return redirect()->to("https://api.instagram.com/oauth/authorize?client_id={$appId}&redirect_uri={$redirectUri}&scope=user_profile,user_media&response_type=code");
             } else {
                 return Socialite::driver($driver)->redirect();
             }
@@ -246,6 +246,8 @@ class AuthController extends Controller
     public function handle_provider_callback($social, Request $request)
     {
         if ($social == 'instagram') {
+            // https://stackoverflow.com/questions/59142407/laravel-integrate-with-instagram-api-after-october-2019
+            // https://developers.facebook.com/docs/instagram-basic-display-api/getting-started
             $code = $request->code;
             if (empty($code)) {
                 return redirect()
@@ -255,7 +257,7 @@ class AuthController extends Controller
 
             $appId = env('INSTAGRAM_CLIENT_ID');
             $secret = env('INSTAGRAM_CLIENT_SECRET');
-            $redirectUri = urlencode(env('INSTAGRAM_CALLBACK_URL'));
+            $redirectUri = env('INSTAGRAM_CALLBACK_URL');
 
             // Set API URL - retrieve the data (Get access token)
             $url = 'https://api.instagram.com/oauth/access_token';
@@ -270,30 +272,29 @@ class AuthController extends Controller
             // Hit API - using method POST
             $response = $this->guzzle_post_public($url, $params);
 
-            if ($response->getStatusCode() != 200) {
+            if (isset($response->code)) {
                 return redirect()
                     ->route('admin.login')
                     ->with('error', 'Unauthorized login to Instagram');
             }
 
-            $content = $response->getBody()->getContents();
-            $content = json_decode($content);
-
-            $accessToken = $content->access_token;
-            $userId = $content->user_id;
+            // get access token for exchange it for a token
+            $accessToken = $response->access_token;
 
             // Set API URL - retrieve the data (Get user info)
-            $url = "https://graph.instagram.com/me?fields=id,username,account_type&access_token={$accessToken}";
+            $url = "https://graph.instagram.com/me?fields=id,username,account_type,media_count&access_token={$accessToken}";
             // Hit API - using method GET
             $response = $this->guzzle_get_public($url);
+            $oAuth = $response;
+            
+            // *dumping $oAuth
+            // {#448 ▼
+            //   +"id": "17841401572570570"
+            //   +"username": "vickzkater"
+            //   +"account_type": "PERSONAL"
+            // }
 
-            $content = $response->getBody()->getContents();
-            $oAuth = json_decode($content);
-
-            // Get instagram user name 
-            $username = $oAuth->username;
-
-            dd($content, $userId, $username, $oAuth);
+            dd($oAuth);
         } else {
             $user = Socialite::driver($social)->user();
 
