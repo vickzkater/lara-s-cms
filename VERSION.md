@@ -2,7 +2,10 @@
 ### Changelog
 - Add function generate thumbnail image
 - Fix issue in Article List
-- Add Support One Way SMS Gateway API - send SMS (Short Message Service)
+- Change the superadmin account credentials that do not conflict with the username 'superadmin'
+- Add some language phrases for the language pack
+- Add support One Way SMS Gateway API - send SMS (Short Message Service)
+- Add support Login with Instagram
 
 ## Version 2.0.3.2
 ### Changelog

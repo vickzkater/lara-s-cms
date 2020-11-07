@@ -71,14 +71,15 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Sample function sending email & email template (support HTML & Plain Text)
 - [x] Generate thumbnail (in Article Module for saving thumbnail)
 - [x] [Support One Way SMS Gateway API - send SMS (in DevController)](https://github.com/vickzkater/onewaysms-laravel)
+- [x] Add support Login with Instagram - to use it read [Instagram's Official Guide](https://developers.facebook.com/docs/instagram-basic-display-api/getting-started)
 
 ## Admin Panel
 
-<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.2.2.jpg" alt="LARA-S-CMS Modules"></p>
+<p><img src="https://hosting.kiniditech.com/lara-s-cms_modules_v1.2.2.jpg" alt="LARA-S-CMS Modules" width="700"></p>
 
 ## Website
 
-<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_website_v1.2.3.jpg" alt="LARA-S-CMS Website"></p>
+<p><img src="https://hosting.kiniditech.com/lara-s-cms_website_v1.2.3.jpg" alt="LARA-S-CMS Website" width="700"></p>
 
 ## Version
 
@@ -133,7 +134,7 @@ Next, setup environment configuration in `.env` file
 - Set `API_USER` for set API auth credential (optional)
 - Set `API_PASS` for set API auth credential (optional)
 
-- Set `APP_TIMEZONE` for set timezone application, sample: UTC or Asia/Jakarta
+- Set `APP_TIMEZONE` for set timezone application, sample: UTC (GMT) or Asia/Jakarta (GMT+7) or Asia/Kuala_Lumpur (GMT+8)
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
 
 - Set `DEFAULT_LANGUAGE` for set default language in application
@@ -176,6 +177,11 @@ Next, setup environment configuration in `.env` file
 - Set `FACEBOOK_CLIENT_SECRET` for set FACEBOOK API Authentication
 - Set `FACEBOOK_CALLBACK_URL` for set FACEBOOK API Authentication Callback URL
 
+- Set `INSTAGRAM_CLIENT_MODULE` for enable/disable INSTAGRAM API Authentication
+- Set `INSTAGRAM_CLIENT_ID` for set INSTAGRAM API Authentication
+- Set `INSTAGRAM_CLIENT_SECRET` for set INSTAGRAM API Authentication
+- Set `INSTAGRAM_CALLBACK_URL` for set INSTAGRAM API Authentication Callback URL
+
 - Set `FCM_SERVER_KEY` for set Firebase Push Notification
 - Set `FCM_SENDER_ID` for set Firebase Push Notification
 
@@ -207,7 +213,7 @@ After migration finish run the command `php artisan serve` or browse the link to
 http://path-to-project-folder/public/manager
 ```
 
-<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_loginpage_v1.2.2.jpg" alt="LARA-S-CMS Login Page"></p>
+<p><img src="https://hosting.kiniditech.com/lara-s-cms_loginpage_v1.2.2.jpg" alt="LARA-S-CMS Login Page" width="500"></p>
 
 ### Login details (default)
 
@@ -311,7 +317,7 @@ php artisan down --allow=127.0.0.1 --allow=192.168.0.0/16
 
 Source: [Laravel Documentations](https://laravel.com/docs/7.x/configuration#maintenance-mode)
 
-<p align="center"><img src="https://hosting.kiniditech.com/lara-s-cms_maintenance_v1.2.2.jpg" alt="LARA-S-CMS Maintenance Mode"></p>
+<p><img src="https://hosting.kiniditech.com/lara-s-cms_maintenance_v1.2.2.jpg" alt="LARA-S-CMS Maintenance Mode"  width="700"></p>
 
 ### Maintenance Mode Response Template
 
@@ -339,6 +345,8 @@ The default template for maintenance mode responses is located in `resources/vie
 ## Lara-S-CMS has been featured on
 
 - PHP Weekly - [phpweekly.com](http://www.phpweekly.com/archive/2020-08-13.html)
+
+<p><img src="https://hosting.kiniditech.com/lara-s-cms_on_phpweeklydotcom.png?v=2" alt="LARA-S-CMS on PHP Weekly" width="400"></p>
 
 ## Contributing
 
