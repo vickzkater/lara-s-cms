@@ -1,3 +1,7 @@
+@php
+  use App\Libraries\Helper;
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,12 +12,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <link rel="icon" href="{{ asset($global_config->app_favicon) }}" type="image/{{ $global_config->app_favicon_type }}" />
 
-    <title>
-      @if(View::hasSection('title')) 
-        @yield('title') -
-      @endif
-      {{ $global_config->app_name }} Admin
-    </title>
+    <title>@if(View::hasSection('title'))@yield('title') - @endif{!! $global_config->app_name !!}</title>
+
+    <meta name="description" content="{!! $global_config->meta_description !!}">
+    <meta name="keywords" content="{!! str_replace(',', ', ', $global_config->meta_keywords) !!}">
+
+    @if(View::hasSection('open_graph'))
+      @yield('open_graph')
+    @else
+      {{-- DEFAULT OPEN GRAPH --}}
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="{!! $global_config->app_name !!}" />
+      <meta property="og:title" content="{!! $global_config->meta_title !!}" />
+      <meta property="og:image" content="{{ asset($global_config->app_logo_image) }}" />
+      <meta property="og:description" content="{!! $global_config->meta_description !!}" />
+      <meta property="og:url" content="{{ Helper::get_url() }}" />
+
+      <meta property="fb:app_id" content="" />
+
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:site" content="@kiniditech" />
+      <meta name="twitter:site:id" content="@kiniditech" />
+      <meta property="twitter:creator" content="@kiniditech" />
+      <meta property="twitter:description" content="{!! $global_config->meta_description !!}" />
+      <meta property="twitter:image" content="{{ asset($global_config->app_logo_image) }}" />
+    @endif
 
     <!-- Bootstrap -->
     <link href="{{ asset('admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -33,21 +56,43 @@
 
     <style>
       .scroll-top {
-          width: 40px;
-          height: 30px;
-          position: fixed;
-          bottom: 50px;
-          right: 17px;
-          display: none;
-          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";       /* IE 8 */
-          filter: alpha(opacity=50);  /* IE 5-7 */
-          -moz-opacity: 0.5;          /* Netscape */
-          -khtml-opacity: 0.5;        /* Safari 1.x */
-          opacity: 0.5;               /* Good browsers */
+        width: 40px;
+        height: 30px;
+        position: fixed;
+        bottom: 50px;
+        right: 17px;
+        display: none;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";       /* IE 8 */
+        filter: alpha(opacity=50);  /* IE 5-7 */
+        -moz-opacity: 0.5;          /* Netscape */
+        -khtml-opacity: 0.5;        /* Safari 1.x */
+        opacity: 0.5;               /* Good browsers */
       }
       .scroll-top i {
-          display: inline-block;
-          color: #FFFFFF;
+        display: inline-block;
+        color: #FFFFFF;
+      }
+
+      /* template coloring setup */
+      .left_col, .nav_title, body, .sidebar-footer {
+        background: #143c6d !important;
+      }
+      .nav.side-menu>li.active>a{
+        background: linear-gradient(#334556,#2C4257),#143c6d !important;
+      }
+      .sidebar-footer a {
+        background: #fae54d !important;
+        color: #143c6d !important;
+      }
+      .sidebar-footer a:hover {
+        background: #46a2db !important;
+        color: white !important;
+      }
+      .nav_menu {
+        background: #fae54d !important;
+      }
+      .nav.navbar-nav>li>a{
+        color :#143c6d !important;
       }
     </style>
 
