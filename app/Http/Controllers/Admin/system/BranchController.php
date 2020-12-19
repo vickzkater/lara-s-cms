@@ -99,7 +99,7 @@ class BranchController extends Controller
             'required' => ':attribute ' . lang('field is required', $this->translation)
         ];
         $names = [
-            'division_id' => ucwords(lang('division', $this->translation)),
+            'division_id' => ucwords(lang('office', $this->translation)),
             'name' => ucwords(lang('name', $this->translation))
         ];
         $this->validate($request, $validation, $message, $names);
@@ -109,7 +109,7 @@ class BranchController extends Controller
         if ($division_id < 1) {
             return back()
                 ->withInput()
-                ->with('error', lang('#item must be chosen at least one', $this->translation, ['#item' => ucwords(lang('division', $this->translation))]));
+                ->with('error', lang('#item must be chosen at least one', $this->translation, ['#item' => ucwords(lang('office', $this->translation))]));
         }
         $name = Helper::validate_input_text($request->name);
         if (!$name) {

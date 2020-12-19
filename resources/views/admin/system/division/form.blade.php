@@ -1,7 +1,7 @@
 @extends('_template_adm.master')
 
 @php
-    $pagetitle = ucwords(lang('division', $translation)); 
+    $pagetitle = ucwords(lang('office', $translation)); 
     if(isset($data)){
         $pagetitle .= ' ('.ucwords(lang('edit', $translation)).')';
         $link = route('admin.division.do_edit', $data->id);

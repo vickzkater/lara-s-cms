@@ -24,7 +24,7 @@ class UsergroupController extends Controller
     // SET THIS MODULE
     private $module = 'Usergroup';
     // SET THIS OBJECT/ITEM NAME
-    private $item = 'usergroup';
+    private $item = 'admin group';
 
     public function list()
     {

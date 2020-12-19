@@ -19,7 +19,7 @@ class DivisionController extends Controller
     // SET THIS MODULE
     private $module = 'Division';
     // SET THIS OBJECT/ITEM NAME
-    private $item = 'division';
+    private $item = 'office';
 
     public function list()
     {

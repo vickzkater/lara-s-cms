@@ -70,7 +70,7 @@
               <table id="datatables" class="table table-striped table-bordered" style="display:none">
                 <thead>
                   <tr>
-                    <th>{{ ucwords(lang('division', $translation)) }}</th>
+                    <th>{{ ucwords(lang('office', $translation)) }}</th>
                     <th>{{ ucwords(lang('branch', $translation)) }}</th>
                     <th>{{ ucwords(lang('status', $translation)) }}</th>
                     <th>{{ ucwords(lang('created', $translation)) }}</th>
@@ -84,7 +84,7 @@
               <table id="datatables-deleted" class="table table-striped table-bordered" style="display:none">
                 <thead>
                   <tr>
-                    <th>{{ ucwords(lang('division', $translation)) }}</th>
+                    <th>{{ ucwords(lang('office', $translation)) }}</th>
                     <th>{{ ucwords(lang('branch', $translation)) }}</th>
                     <th>{{ ucwords(lang('status', $translation)) }}</th>
                     <th>{{ ucwords(lang('created', $translation)) }}</th>

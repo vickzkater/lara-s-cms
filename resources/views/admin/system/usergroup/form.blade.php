@@ -1,7 +1,7 @@
 @extends('_template_adm.master')
 
 @php
-    $pagetitle = ucwords(lang('usergroup', $translation)); 
+    $pagetitle = ucwords(lang('admin group', $translation)); 
     if(isset($data)){
         $pagetitle .= ' ('.ucwords(lang('edit', $translation)).')';
         $link = route('admin.usergroup.do_edit', $data->id);

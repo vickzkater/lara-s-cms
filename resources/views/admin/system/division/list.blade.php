@@ -4,7 +4,7 @@
   // USE LIBRARIES
   use App\Libraries\Helper;
 
-  $this_object = ucwords(lang('division', $translation));
+  $this_object = ucwords(lang('office', $translation));
 
   if(isset($data)){
     $pagetitle = $this_object;

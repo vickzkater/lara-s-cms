@@ -47,11 +47,11 @@
                     <ul class="nav child_menu">
                         @if (Helper::authorizing('User', 'Restore')['status'] == 'true')
                             <?php $priv_restore++; ?>
-                            <li><a href="{{ route('admin.user.deleted') }}">{{ ucwords(lang('user', $translation)) }}</a></li>
+                            <li><a href="{{ route('admin.user.deleted') }}">{{ ucwords(lang('admin', $translation)) }}</a></li>
                         @endif
                         @if (Helper::authorizing('Usergroup', 'Restore')['status'] == 'true')
                             <?php $priv_restore++; ?>
-                            <li><a href="{{ route('admin.usergroup.deleted') }}">{{ ucwords(lang('usergroup', $translation)) }}</a></li>
+                            <li><a href="{{ route('admin.usergroup.deleted') }}">{{ ucwords(lang('admin group', $translation)) }}</a></li>
                         @endif
                         @if (Helper::authorizing('Rule', 'Restore')['status'] == 'true')
                             <?php $priv_restore++; ?>
@@ -106,11 +106,11 @@
             
             @if (Helper::authorizing('User', 'View List')['status'] == 'true')
                 <?php $priv_admin++; ?>
-                <li><a href="{{ route('admin.user.list') }}"><i class="fa fa-user"></i> {{ ucwords(lang('user', $translation)) }}</a></li>
+                <li><a href="{{ route('admin.user.list') }}"><i class="fa fa-user"></i> {{ ucwords(lang('admin', $translation)) }}</a></li>
             @endif
             @if (Helper::authorizing('Usergroup', 'View List')['status'] == 'true')
                 <?php $priv_admin++; ?>
-                <li><a href="{{ route('admin.usergroup.list') }}"><i class="fa fa-users"></i> {{ ucwords(lang('usergroup', $translation)) }}</a></li>
+                <li><a href="{{ route('admin.usergroup.list') }}"><i class="fa fa-users"></i> {{ ucwords(lang('admin group', $translation)) }}</a></li>
             @endif
             @if (Helper::authorizing('Rule', 'View List')['status'] == 'true')
                 <?php $priv_admin++; ?>
@@ -122,7 +122,7 @@
             @endif
             @if (Helper::authorizing('Division', 'View List')['status'] == 'true')
                 <?php $priv_admin++; ?>
-                <li><a href="{{ route('admin.division.list') }}"><i class="fa fa-bank"></i> {{ ucwords(lang('division', $translation)) }}</a></li>
+                <li><a href="{{ route('admin.division.list') }}"><i class="fa fa-bank"></i> {{ ucwords(lang('office', $translation)) }}</a></li>
             @endif
 
             @if (Helper::authorizing('Config', 'Update')['status'] == 'true')

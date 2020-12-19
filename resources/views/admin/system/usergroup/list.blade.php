@@ -1,7 +1,7 @@
 @extends('_template_adm.master')
 
 @php
-  $this_object = ucwords(lang('usergroup', $translation));
+  $this_object = ucwords(lang('admin group', $translation));
 
   if(isset($data)){
     $pagetitle = $this_object;
