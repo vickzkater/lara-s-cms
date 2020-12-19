@@ -25,6 +25,8 @@
     <link href="{{ asset('admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet">
     <!-- bootstrap-progressbar -->
     <link href="{{ asset('admin/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+    <!-- animate.css -->
+    <link href="{{ asset('admin/vendors/animate.css/animate.min.css') }}" rel="stylesheet">
     
     <!-- Custom Theme Style -->
     <link href="{{ asset('admin/build/css/custom.css') }}" rel="stylesheet">

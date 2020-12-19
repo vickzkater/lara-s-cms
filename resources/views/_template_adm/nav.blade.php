@@ -12,7 +12,7 @@
                     <img src="{{ asset('/images/avatar.png') }}" alt="">{{ Session::get('admin')->name }}
                     <span class=" fa fa-angle-down"></span>
                     </a>
-                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
                         <li><a href="{{ route('admin.profile') }}"> {{ ucwords(lang('my profile', $translation)) }}</a></li>
                         <li>
                             <a href="{{ route('admin.logout') }}" style="color:rgba(231,76,60,.88); !important;" onclick="return confirm('{{ lang('Are you sure to logout?', $translation) }}')">
