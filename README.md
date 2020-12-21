@@ -9,7 +9,7 @@
 <a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="license_img" src="https://img.shields.io/packagist/l/vickzkater/lara-s-cms" alt="License"></a>
 </p>
 
-***Latest Version: 2.0.5 (Laravel 7.28.3)**
+***Latest Version: 2.0.6 (Laravel 7.28.3)**
 
 ## What is "Lara-S-CMS" ?
 
@@ -72,6 +72,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Generate thumbnail (in Article Module for saving thumbnail)
 - [x] [Support One Way SMS Gateway API - send SMS (in DevController)](https://github.com/vickzkater/onewaysms-laravel)
 - [x] Add support Login with Instagram - to use it read [Instagram's Official Guide](https://developers.facebook.com/docs/instagram-basic-display-api/getting-started)
+- [x] Setup Open Graph configurations (based on [ogp.me](https://ogp.me/), [Twitter Dev Docs](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup), & [FB Dev Docs](https://developers.facebook.com/docs/sharing/webmasters/))
 
 ## Admin Panel
 

@@ -21,21 +21,30 @@
       @yield('open_graph')
     @else
       {{-- DEFAULT OPEN GRAPH --}}
-      <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="{!! $global_config->app_name !!}" />
-      <meta property="og:title" content="{!! $global_config->meta_title !!}" />
-      <meta property="og:image" content="{{ asset($global_config->app_logo_image) }}" />
-      <meta property="og:description" content="{!! $global_config->meta_description !!}" />
+      <meta property="og:type" content="{!! $global_config->og_type !!}" />
+      <meta property="og:site_name" content="{!! $global_config->og_site_name !!}" />
+      <meta property="og:title" content="{!! $global_config->og_title !!}" />
+      <meta property="og:image" content="{{ asset($global_config->og_image) }}" />
+      <meta property="og:description" content="{!! $global_config->og_description !!}" />
       <meta property="og:url" content="{{ Helper::get_url() }}" />
 
-      <meta property="fb:app_id" content="" />
+      @if ($global_config->fb_app_id)
+        <meta property="fb:app_id" content="{!! $global_config->fb_app_id !!}" />
+      @endif
 
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:site" content="@kiniditech" />
-      <meta name="twitter:site:id" content="@kiniditech" />
-      <meta property="twitter:creator" content="@kiniditech" />
-      <meta property="twitter:description" content="{!! $global_config->meta_description !!}" />
-      <meta property="twitter:image" content="{{ asset($global_config->app_logo_image) }}" />
+      <meta property="twitter:card" content="{!! $global_config->twitter_card !!}" />
+      @if ($global_config->twitter_site)
+        <meta property="twitter:site" content="{!! $global_config->twitter_site !!}" />
+      @endif
+      @if ($global_config->twitter_site_id)
+        <meta property="twitter:site:id" content="{!! $global_config->twitter_site_id !!}" />
+      @endif
+      @if ($global_config->twitter_creator)
+        <meta property="twitter:creator" content="{!! $global_config->twitter_creator !!}" />
+      @endif
+      @if ($global_config->twitter_creator_id)
+        <meta property="twitter:creator:id" content="{!! $global_config->twitter_creator_id !!}" />
+      @endif
     @endif
 
     <!-- Bootstrap -->

@@ -43,7 +43,7 @@ if (!function_exists('lang')) {
                     // if not found the translation, just return the param
                     $result = $phrase;
                 }
-            }else{
+            } else {
                 // coz using API as back-end mode, so we can't get translation data from database - just return the param
                 $result = $phrase;
             }
@@ -527,13 +527,24 @@ if (!function_exists('set_input_form2')) {
                 }
                 // set options
                 if (!empty($defined_data)) {
-                    foreach ($defined_data as $key => $val) {
-                        $stats = '';
-                        if ($key == $value && !empty($value)) {
-                            $stats = 'selected';
-                        }
+                    if (isset($defined_data[0])) {
+                        foreach ($defined_data as $opt) {
+                            $stats = '';
+                            if ($opt == $value && !empty($value)) {
+                                $stats = 'selected';
+                            }
 
-                        $input_element .= '<option value="' . $key . '" ' . $stats . '>' . $val . '</option>';
+                            $input_element .= '<option value="' . $opt . '" ' . $stats . '>' . $opt . '</option>';
+                        }
+                    } else {
+                        foreach ($defined_data as $key => $val) {
+                            $stats = '';
+                            if ($key == $value && !empty($value)) {
+                                $stats = 'selected';
+                            }
+
+                            $input_element .= '<option value="' . $key . '" ' . $stats . '>' . $val . '</option>';
+                        }
                     }
                 } else {
                     $input_element .= '<option value="" disabled>NO DATA</option>';

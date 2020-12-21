@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin\system;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 
 // LIBRARIES
 use App\Libraries\Helper;
@@ -217,6 +215,47 @@ class ConfigController extends Controller
                 ->with('error', lang('Invalid format for #item', $this->translation, ['#item' => ucwords(lang('meta author', $this->translation))]));
         }
         $data->meta_author = $meta_author;
+
+        // Open Graph
+        $og_type = Helper::validate_input_text($request->og_type);
+        $data->og_type = $og_type;
+        $og_site_name = Helper::validate_input_text($request->og_site_name);
+        $data->og_site_name = $og_site_name;
+        $og_title = Helper::validate_input_text($request->og_title);
+        $data->og_title = $og_title;
+        // IF UPLOAD NEW IMAGE
+        if ($request->og_image) {
+            // PROCESSING IMAGE
+            $dir_path = 'uploads/config/';
+            $image_file = $request->file('og_image');
+            $format_image_name = Helper::generate_slug($app_name) . '-og-' . time();
+            $image = Helper::upload_image($dir_path, $image_file, true, $format_image_name);
+            if ($image['status'] != 'true') {
+                return back()
+                    ->withInput()
+                    ->with('error', lang($image['message'], $this->translation, $image['dynamic_objects']));
+            }
+            // GET THE UPLOADED IMAGE RESULT
+            $data->og_image = $dir_path . $image['data'];
+        }
+        $og_description = Helper::validate_input_text($request->og_description);
+        $data->og_description = $og_description;
+
+        // Twitter OG
+        $twitter_card = Helper::validate_input_text($request->twitter_card);
+        $data->twitter_card = $twitter_card;
+        $twitter_site = Helper::validate_input_text($request->twitter_site);
+        $data->twitter_site = $twitter_site;
+        $twitter_site_id = Helper::validate_input_text($request->twitter_site_id);
+        $data->twitter_site_id = $twitter_site_id;
+        $twitter_creator = Helper::validate_input_text($request->twitter_creator);
+        $data->twitter_creator = $twitter_creator;
+        $twitter_creator_id = Helper::validate_input_text($request->twitter_creator_id);
+        $data->twitter_creator_id = $twitter_creator_id;
+
+        // FB
+        $fb_app_id = Helper::validate_input_text($request->fb_app_id);
+        $data->fb_app_id = $fb_app_id;
 
         if ($data->save()) {
             // SUCCESS
