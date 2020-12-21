@@ -23,7 +23,7 @@
       {{-- DEFAULT OPEN GRAPH --}}
       <meta property="og:type" content="{!! $global_config->og_type !!}" />
       <meta property="og:site_name" content="{!! $global_config->og_site_name !!}" />
-      <meta property="og:title" content="{!! $global_config->og_title !!}" />
+      <meta property="og:title" content="@if(View::hasSection('title'))@yield('title')@else{!! $global_config->og_title !!}@endif" />
       <meta property="og:image" content="{{ asset($global_config->og_image) }}" />
       <meta property="og:description" content="{!! $global_config->og_description !!}" />
       <meta property="og:url" content="{{ Helper::get_url() }}" />

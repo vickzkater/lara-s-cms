@@ -28,6 +28,9 @@ class AddOgColumnsInSysConfigTable extends Migration
             $table->string('twitter_creator')->nullable()->after('twitter_site_id')->comment('@username for the content creator/author. Used with summary_large_image cards.');
             $table->string('twitter_creator_id')->nullable()->after('twitter_creator')->comment('Twitter user ID of content creator. Used with summary, summary_large_image cards.');
         });
+
+        $seeder = new OgSeederInitial();
+        $seeder->run();
     }
 
     /**
