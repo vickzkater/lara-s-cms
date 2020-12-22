@@ -470,7 +470,7 @@ class UserController extends Controller
     public function get_data_deleted(Datatables $datatables, Request $request)
     {
         // AUTHORIZING...
-        $authorize = Helper::authorizing($this->module, 'View List');
+        $authorize = Helper::authorizing($this->module, 'Restore');
         if ($authorize['status'] != 'true') {
             return back()->with('error', $authorize['message']);
         }

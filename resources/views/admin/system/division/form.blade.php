@@ -60,7 +60,13 @@
                                         {{ ucwords(lang('submit', $translation)) }}
                                     @endif
                                 </button>
-                                <a href="{{ route('admin.division.list') }}" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; {{ ucwords(lang('cancel', $translation)) }}</a>
+                                <a href="{{ route('admin.division.list') }}" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; 
+                                    @if (isset($data))
+                                        {{ ucwords(lang('close', $translation)) }}
+                                    @else
+                                        {{ ucwords(lang('cancel', $translation)) }}
+                                    @endif
+                                </a>
                             </div>
                         </div>
 

@@ -1,6 +1,9 @@
 @extends('_template_adm.master')
 
 @php
+  // USE LIBRARIES
+  use App\Libraries\Helper;
+
   $this_object = ucwords(lang('admin', $translation));
 
   if(isset($data)){
@@ -29,9 +32,24 @@
       @if (isset($data))
         <div class="title_right">
           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
-            <a href="{{ route('admin.user.create') }}" class="btn btn-round btn-success" style="float: right;">{{ ucwords(lang('add new', $translation)) }}</a>
+            @if (Helper::authorizing('User', 'Restore')['status'] == 'true')
+              <a href="{{ route('admin.user.deleted') }}" class="btn btn-round btn-danger" style="float: right; margin-bottom: 5px;" data-toggle="tooltip" title="{{ ucwords(lang('view deleted items', $translation)) }}">
+                <i class="fa fa-trash"></i>
+              </a>
+            @endif
+            <a href="{{ route('admin.user.create') }}" class="btn btn-round btn-success" style="float: right;">
+              <i class="fa fa-plus-circle"></i>&nbsp; {{ ucwords(lang('add new', $translation)) }}
+            </a>
           </div>
-        </div>  
+        </div>
+      @else
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
+            <a href="{{ route('admin.user.list') }}" class="btn btn-round btn-primary" style="float: right;">
+              <i class="fa fa-check-circle"></i>&nbsp; {{ ucwords(lang('active items', $translation)) }}
+            </a>
+          </div>
+        </div> 
       @endif
     </div>
 

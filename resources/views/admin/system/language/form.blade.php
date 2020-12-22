@@ -51,23 +51,25 @@
                                 $config->default = 'checked';
                                 echo set_input_form2('switch', 'status', ucwords(lang('status', $translation)), $data, $errors, false, $config);
                                 
-                                echo '<hr><center><h2>>> '.strtoupper(lang('master translation', $translation)).' <<</h2></center><hr>';
-                                if(isset($master_data)){
-                                    $values = [];
-                                    foreach ($master_data as $item) {
-                                        $values[$item->id] = $item->translate;
-                                    }
-                                }
-                                if(isset($master)){
-                                    foreach ($master as $item) {
-                                        $value = null;
-                                        $empty = '<span class="label label-warning"><i class="fa fa-warning"></i></span>&nbsp; ';
-                                        if(isset($values[$item->id])){
-                                            $value = $values[$item->id];
-                                            $empty = '';
+                                if($data){
+                                    echo '<hr><center><h2>>> '.strtoupper(lang('master translation', $translation)).' <<</h2></center><hr>';
+                                    if(isset($master_data)){
+                                        $values = [];
+                                        foreach ($master_data as $item) {
+                                            $values[$item->id] = $item->translate;
                                         }
-                                        // set_input_form ($type, $input_name, $label_name, $data, $errors, $required = false, $placeholder = null, $id_name = null, $value = null, $attributes = null, $defined_data = null, $options = [])
-                                        echo set_input_form('text', 'translate['.$item->id.']', $empty.$item->phrase, $data, $errors, false, 'input translation here', 'translate_'.$item->id, $value);
+                                    }
+                                    if(isset($master)){
+                                        foreach ($master as $item) {
+                                            $value = null;
+                                            $empty = '<span class="label label-warning"><i class="fa fa-warning"></i></span>&nbsp; ';
+                                            if(isset($values[$item->id])){
+                                                $value = $values[$item->id];
+                                                $empty = '';
+                                            }
+                                            // set_input_form ($type, $input_name, $label_name, $data, $errors, $required = false, $placeholder = null, $id_name = null, $value = null, $attributes = null, $defined_data = null, $options = [])
+                                            echo set_input_form('text', 'translate['.$item->id.']', $empty.$item->phrase, $data, $errors, false, 'input translation here', 'translate_'.$item->id, $value);
+                                        }
                                     }
                                 }
                             @endphp
@@ -83,7 +85,13 @@
                                             {{ ucwords(lang('submit', $translation)) }}
                                         @endif
                                     </button>
-                                    <a href="{{ route('admin.language.list') }}" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; {{ ucwords(lang('cancel', $translation)) }}</a>
+                                    <a href="{{ route('admin.language.list') }}" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; 
+                                        @if (isset($data))
+                                            {{ ucwords(lang('close', $translation)) }}
+                                        @else
+                                            {{ ucwords(lang('cancel', $translation)) }}
+                                        @endif
+                                    </a>
                                 </div>
                             </div>
 

@@ -1,8 +1,9 @@
 @extends('_template_adm.master')
 
 @php
+  // USE LIBRARIES
   use App\Libraries\Helper;
-  
+
   $this_object = ucwords(lang('banner', $translation));
 
   if(isset($data)){
@@ -32,7 +33,7 @@
         <div class="title_right">
           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
             @if (Helper::authorizing('Banner', 'Restore')['status'] == 'true')
-              <a href="{{ route('admin.banner.deleted') }}" class="btn btn-round btn-danger" style="float: right; margin-bottom: 5px;" data-toggle="tooltip" title="View Deleted Items">
+              <a href="{{ route('admin.banner.deleted') }}" class="btn btn-round btn-danger" style="float: right; margin-bottom: 5px;" data-toggle="tooltip" title="{{ ucwords(lang('view deleted items', $translation)) }}">
                 <i class="fa fa-trash"></i>
               </a>
             @endif
@@ -129,7 +130,7 @@
                 html += '<tr><td colspan="6"><h2 class="text-center">{{ strtoupper(lang("no data available", $translation)) }}</h2></td></tr>';
               } else {
                 $.each(response.data, function (index, value) {
-                  html += '<tr role="row" id="row-'+value.id+'" title="Drag & drop to sorting" data-toggle="tooltip">';
+                  html += '<tr role="row" id="row-'+value.id+'" title="{{ ucfirst(lang("Drag & drop to sorting", $translation)) }}" data-toggle="tooltip">';
                     html += '<td class="dragndrop"><img src="'+value.image_item+'" style="max-width:200px;"></td>';
                     html += '<td>'+value.title+'</td>';
 
