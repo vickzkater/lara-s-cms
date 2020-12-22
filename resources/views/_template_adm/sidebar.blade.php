@@ -13,6 +13,20 @@
             <li><a href="{{ route('admin.home') }}"><i class="fa fa-dashboard"></i> {{ ucwords(lang('dashboard', $translation)) }}</a></li>
             <li><a href="{{ route('admin.profile') }}"><i class="fa fa-user"></i> {{ ucwords(lang('my profile', $translation)) }}</a></li>
 
+            @if (Helper::authorizing('Banner', 'View List')['status'] == 'true')
+                @php
+                    $menu_active = '';
+                    if(Helper::is_menu_active('/banner/')){
+                        $menu_active = 'current-page';
+                    }
+                @endphp
+                <li class="{{ $menu_active }}">
+                    <a href="{{ route('admin.banner.list') }}">
+                        <i class="fa fa-image"></i> {{ ucwords(lang('banner', $translation)) }}
+                    </a>
+                </li>
+            @endif
+            
             @if (Helper::authorizing('Product', 'View List')['status'] == 'true')
                 <li><a href="{{ route('admin.product.list') }}"><i class="fa fa-cubes"></i> {{ ucwords(lang('product', $translation)) }}</a></li>
             @endif
@@ -29,10 +43,6 @@
                         @endif
                     </ul>
                 </li>
-            @endif
-
-            @if (Helper::authorizing('Banner', 'View List')['status'] == 'true')
-                <li><a href="{{ route('admin.banner.list') }}"><i class="fa fa-image"></i> {{ ucwords(lang('banner', $translation)) }}</a></li>
             @endif
         </ul>
     </div>
@@ -68,10 +78,6 @@
                         @if (Helper::authorizing('Product', 'Restore')['status'] == 'true')
                             <?php $priv_restore++; ?>
                             <li><a href="{{ route('admin.product.deleted') }}">{{ ucwords(lang('product', $translation)) }}</a></li>
-                        @endif
-                        @if (Helper::authorizing('Banner', 'Restore')['status'] == 'true')
-                            <?php $priv_restore++; ?>
-                            <li><a href="{{ route('admin.banner.deleted') }}">{{ ucwords(lang('banner', $translation)) }}</a></li>
                         @endif
                     </ul>
                 </li>

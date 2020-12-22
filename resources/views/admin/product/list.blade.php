@@ -145,7 +145,7 @@
       $('#datatables').show();
       $('#datatables').dataTable().fnDestroy();
       var table = $('#datatables').DataTable({
-        order: [[ 0, "asc" ]],
+        order: [[ 4, "desc" ]],
         orderCellsTop: true,
         fixedHeader: false,
         serverSide: true,

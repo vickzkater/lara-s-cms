@@ -35,20 +35,20 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] Support Multi Languages
 - [x] Admin Login
 - [x] My Profile
-- [x] Division/Subsidiary Management
-- [x] Branch per Division Management
+- [x] Office/Subsidiary Management
+- [x] Branch per Office Management
 - [x] Rule Management
 - [x] Usergroup Management
 - [x] User (Admin) Management
 - [x] Access/Privilege/User Roles Management
-- [x] System Logs
+- [x] Simple System Logs
 - [x] Restore Deleted Data
 - [x] Custom 404 Error Page
 - [x] Custom Maintenance Mode
 - [x] Product Management (as module sample including upload image feature)
 - [x] Support DataTables AJAX
-- [x] Support reCAPTCHA v2 (in Admin Panel & User Panel)
-- [x] Sortable Data List (in Division Module)
+- [x] Support reCAPTCHA v2 (optional for Admin Panel & User Panel)
+- [x] Sortable Data List (in Banner Module)
 - [x] Sortable Data List with Filter (in Branch Module - Filter by Division)
 - [x] Application Configurations
 - [x] Import & Export Excel File (in Product Module)
@@ -73,6 +73,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 - [x] [Support One Way SMS Gateway API - send SMS (in DevController)](https://github.com/vickzkater/onewaysms-laravel)
 - [x] Add support Login with Instagram - to use it read [Instagram's Official Guide](https://developers.facebook.com/docs/instagram-basic-display-api/getting-started)
 - [x] Setup Open Graph configurations (based on [ogp.me](https://ogp.me/), [Twitter Dev Docs](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup), & [FB Dev Docs](https://developers.facebook.com/docs/sharing/webmasters/))
+- [x] Guzzle-Client helper functions (please check on Controller.php)
 
 ## Admin Panel
 
