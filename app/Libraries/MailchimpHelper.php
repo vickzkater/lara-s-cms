@@ -30,7 +30,7 @@ class MailchimpHelper
         // Check the staus of a subscriber:
         $list_id = env('MC_LIST_ID');
         $response = Mailchimp::status($list_id, $email_address);
-        // Returns 'subscribed', 'unsubscribed', 'cleaned', 'pending', 'transactional' or 'not found'
+        // Returns 'subscribed', 'unsubscribed', 'cleaned', 'pending', 'archived', 'transactional' or 'not found'
 
         return $response;
     }
