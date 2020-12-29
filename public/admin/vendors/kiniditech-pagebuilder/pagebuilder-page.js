@@ -1,6 +1,6 @@
 /**
  * PageBuilder - Landing Page (Build landing pages using content elements)
- * Version: 1.0.0 (2020-06-10)
+ * Version: 1.0.1 (2020-12-22)
  *
  * Copyright (c) KINIDI Tech and other contributors
  * Released under the MIT license.
@@ -19,6 +19,7 @@
  * - Image + Text + Button (Support 3 Items)
  * - Video (Video Only or Video + Text + Button)
  * - Button (Support Multiple Item)
+ * - Plain Text
  */
 
 // SET OPTIONS FOR SECTION STYLE IN PAGEBUILDER
@@ -191,6 +192,10 @@ function add_content_element_page(type, collapsed = false, identifier = 0, data 
             html_content_element = set_element_page_button(collapsed, uniqid, data);
             break;
   
+        case "plain":
+            html_content_element = set_element_page_plain(collapsed, uniqid, data);
+            break;
+
         default:
             alert("NO CONTENT ELEMENT TYPE SELECTED");
             return false;
@@ -225,6 +230,10 @@ function add_content_element_page(type, collapsed = false, identifier = 0, data 
 
         case "video":
             initialize_tinymce('.page-element-text-editor');
+            break;
+
+        case "button":
+            $('#list-button-'+uniqid).sortable();
             break;
     }
 }
@@ -376,6 +385,7 @@ function add_masthead_item(section_page_id, uniqid, identifier = 0, data = "", d
                         html += '<img src="' + v_page_element_image + '" class="pagebuilder-content-image">';
                         html += '<input type="file" name="v_page_element_image[' + section_page_id + '][' + uniqid + '][' + identifier + ']" ' + is_required + ' class="form-control col-md-7 col-xs-12" accept=".jpg, .jpeg, .png" onchange="display_img_input(this, \'before\');" style="margin-top:5px">';
                         html += '<input type="hidden" name="v_page_element_imagex[' + section_page_id + '][' + uniqid + '][' + identifier + ']" value="'+v_page_element_imagex+'">';
+                        html += '<br><span class="infotext">Recommended image size is 1920 x 720 px. Use images with same height if you have multiple images.</span>';
                     html += '</div>';
                 html += '</div>';
 
@@ -386,6 +396,7 @@ function add_masthead_item(section_page_id, uniqid, identifier = 0, data = "", d
                         html += '<img src="' + v_page_element_image_mobile + '" class="pagebuilder-content-image">';
                         html += '<input type="file" name="v_page_element_image_mobile[' + section_page_id + '][' + uniqid + '][' + identifier + ']" ' + is_required + ' class="form-control col-md-7 col-xs-12" accept=".jpg, .jpeg, .png" onchange="display_img_input(this, \'before\');" style="margin-top:5px">';
                         html += '<input type="hidden" name="v_page_element_image_mobilex[' + section_page_id + '][' + uniqid + '][' + identifier + ']" value="'+v_page_element_image_mobilex+'">';
+                        html += '<br><span class="infotext">Recommended image size is 800 x 800 px. Use images with same height if you have multiple images.</span>';
                     html += '</div>';
                 html += '</div>';
 
@@ -573,7 +584,7 @@ function set_element_page_text(collapsed, uniqid, data) {
             v_page_element_status_inactive = "selected";
         }
         v_page_element_width = data.v_page_element_width;
-        if (data.v_page_element_alignment == 'left') {
+        if (data.v_page_element_alignment == 'center') {
             v_page_element_alignment_center = 'selected';
         }
         v_page_element_total_item = data.v_page_element_total_item;
@@ -643,7 +654,7 @@ function set_element_page_text(collapsed, uniqid, data) {
                     var max_items_text = 3;
                 }
                 html += '<div class="form-group">';
-                    html += '<label class="control-label col-md-3 col-sm-3 col-xs-12">Column <span class="required">*</span></label>';
+                    html += '<label class="control-label col-md-3 col-sm-3 col-xs-12">No. of Columns <span class="required">*</span></label>';
                     html += '<div class="col-md-6 col-sm-6 col-xs-12">';
                         html += '<select name="v_page_element_total_item[' + section_page_id + '][' + uniqid + ']" id="v_page_element_total_item' + section_page_id + uniqid + '" class="form-control col-md-7 col-xs-12" required="required" onchange="show_multiple_text(this.value, '+max_items_text+', ' + uniqid + ')">';
                             html += '<option value="" selected disabled>- Please Choose One -</option>';
@@ -851,6 +862,7 @@ function add_image_item(section_page_id, uniqid, identifier = 0, data = "") {
                         html += '<img src="' + v_page_element_image + '" class="pagebuilder-content-image">';
                         html += '<input type="file" name="v_page_element_image[' + section_page_id + '][' + uniqid + '][' + identifier + ']" '+is_required+' class="form-control col-md-7 col-xs-12" accept=".jpg, .jpeg, .png" onchange="display_img_input(this, \'before\');" style="margin-top:5px">';
                         html += '<input type="hidden" name="v_page_element_imagex[' + section_page_id + '][' + uniqid + '][' + identifier + ']" value="'+v_page_element_imagex+'">';
+                        html += '<br><span class="infotext">Recommended image size is 960 x 365 px for Slideshow and 960 x 640 px for Carousel. Use images with same dimensions if you have multiple images.</span>';
                     html += '</div>';
                 html += '</div>';
 
@@ -1067,6 +1079,7 @@ function set_element_page_imagetextbutton(collapsed, uniqid, data) {
                         html += '<img src="' + v_page_element_image + '" class="pagebuilder-content-image">';
                         html += '<input type="file" name="v_page_element_image[' + section_page_id + '][' + uniqid + '][]" class="form-control col-md-7 col-xs-12" accept=".jpg, .jpeg, .png" onchange="display_img_input(this, \'before\');" style="margin-top:5px">';
                         html += '<input type="hidden" name="v_page_element_imagex[' + section_page_id + '][' + uniqid + '][]" value="'+v_page_element_imagex+'">';
+                        html += '<br><span class="infotext">It is recommended to resize your image to 800 px width to ensure best quality with minimum loading time.</span>';
                     html += '</div>';
                 html += '</div>';
 
@@ -1201,6 +1214,7 @@ function set_element_page_imagetextbutton(collapsed, uniqid, data) {
                             html += '<img src="' + v_page_element_image + '" class="pagebuilder-content-image">';
                             html += '<input type="file" name="v_page_element_image[' + section_page_id + '][' + uniqid + '][]" class="form-control col-md-7 col-xs-12" accept=".jpg, .jpeg, .png" onchange="display_img_input(this, \'before\');" style="margin-top:5px">';
                             html += '<input type="hidden" name="v_page_element_imagex[' + section_page_id + '][' + uniqid + '][]" value="'+v_page_element_imagex+'">';
+                            html += '<br><span class="infotext">It is recommended to resize your image to 800 px width to ensure best quality with minimum loading time.</span>';
                         html += '</div>';
                     html += '</div>';
 
@@ -1434,6 +1448,7 @@ function set_element_page_video(collapsed, uniqid, data) {
                     html += '<label class="control-label col-md-3 col-sm-3 col-xs-12">Video Link <span class="required">*</span></label>';
                     html += '<div class="col-md-6 col-sm-6 col-xs-12">';
                         html += '<input type="text" autocomplete="off" value="'+v_page_element_video+'" name="v_page_element_video[' + section_page_id + '][' + uniqid + ']" required="required" placeholder="https://www.youtube.com/watch?v=XXX" class="form-control col-md-7 col-xs-12">';
+                        html += '<br><span class="infotext">Embed a video from YouTube by copying and pasting the link here.</span>';
                     html += '</div>';
                 html += '</div>';
 
@@ -1806,3 +1821,72 @@ function delete_button_item(id) {
     return false;
 }
 // BUTTON - END
+
+// PLAIN - BEGIN
+function set_element_page_plain(collapsed, uniqid, data) {
+    var element_type = "plain";
+    var element_type_title = "Script";
+    var v_page_element_section = "";
+    var v_page_element_status_inactive = "";
+    var v_page_element_text = "";
+    if (data != "") {
+        v_page_element_section = decodeURI(data.v_page_element_section);
+        if (data.v_page_element_status == 0) {
+            v_page_element_status_inactive = "selected";
+        }
+        v_page_element_text = decodeURI(data.v_page_element_text);
+    }
+  
+    var html = '<div class="panel panel-content-element" id="pagebuilder_elm_' + uniqid + '">';
+        html += '<input type="hidden" name="v_page_element_type[' + section_page_id + '][' + uniqid + ']" value="'+element_type+'">';
+  
+    if (collapsed) {
+        html += '<a class="panel-heading" role="tab" data-toggle="collapse" data-parent="' + content_container + '" href="#collapse' + uniqid + '" aria-expanded="false">';
+    } else {
+        html += '<a class="panel-heading" role="tab" data-toggle="collapse" data-parent="' + content_container + '" href="#collapse' + uniqid + '" aria-expanded="true">';
+    }
+            html += '<h4 class="panel-title">'+element_type_title+' - Section <i id=section' + uniqid + ">" + v_page_element_section + '</i><span class="pull-right"><i class="fa fa-sort"></i><i class="fa fa-trash" style="color:red; margin-left: 20px;" onclick="delete_content_element(' + uniqid + ')"></i></span></h4>';
+        html += "</a>";
+  
+    if (collapsed) {
+        html += '<div id="collapse' + uniqid + '" class="panel-collapse collapse" role="tabpanel">';
+    } else {
+        html += '<div id="collapse' + uniqid + '" class="panel-collapse collapse in" role="tabpanel">';
+    }
+  
+            html += '<div class="panel-body">';
+
+                // SECTION
+                html += '<div class="form-group">';
+                    html += '<label class="control-label col-md-3 col-sm-3 col-xs-12">Section <span class="required">*</span></label>';
+                    html += '<div class="col-md-6 col-sm-6 col-xs-12">';
+                        html += '<input type="text" autocomplete="off" value="' + v_page_element_section + '" name="v_page_element_section[' + section_page_id + '][' + uniqid + ']" required="required" class="form-control col-md-7 col-xs-12" onblur="set_section_name(' + uniqid + ', this.value)">';
+                    html += '</div>';
+                html += '</div>';
+
+                // TEXT
+                html += '<div class="form-group">';
+                    html += '<label class="control-label col-md-3 col-sm-3 col-xs-12">Content</label>';
+                    html += '<div class="col-md-9 col-sm-9 col-xs-12">';
+                        html += '<textarea rows="20" name="v_page_element_text[' + section_page_id + '][' + uniqid + ']" class="form-control col-md-7 col-xs-12">'+v_page_element_text+'</textarea>';
+                    html += '</div>';
+                html += '</div>';
+
+                // STATUS
+                html += '<hr><div class="form-group">';
+                    html += '<label class="control-label col-md-3 col-sm-3 col-xs-12">Status<span class="required">*</span></label>';
+                    html += '<div class="col-md-6 col-sm-6 col-xs-12">';
+                        html += '<select name="v_page_element_status[' + section_page_id + '][' + uniqid + ']" required="required" class="form-control col-md-7 col-xs-12">';
+                            html += '<option value="1">ACTIVE</option>';
+                            html += '<option value="0" '+v_page_element_status_inactive+'>Not Active</option>';
+                        html += '</select>';
+                    html += '</div>';
+                html += '</div>';
+            
+            html += '</div><!-- /.panel-body -->';
+        html += '</div><!-- /.panel-collapse -->';
+    html += '</div><!-- /.panel -->';
+  
+    return html;
+}
+// PLAIN - END

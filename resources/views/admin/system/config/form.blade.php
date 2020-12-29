@@ -72,6 +72,7 @@
 
                             $config = new \stdClass();
                             $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;Enter a short description as Help popup content.';
+                            $config->autosize = true;
                             echo set_input_form2('textarea', 'help', ucwords(lang('help', $translation)), $data, $errors, true, $config);
 
                             echo set_input_form2('text', 'powered', ucwords(lang('powered by', $translation)), $data, $errors, false);
@@ -82,7 +83,10 @@
 
                         @php
                             echo set_input_form2('text', 'meta_title', ucwords(lang('meta title', $translation)), $data, $errors, true);
-                            echo set_input_form2('textarea', 'meta_description', ucwords(lang('meta description', $translation)), $data, $errors, true);
+
+                            $config = new \stdClass();
+                            $config->autosize = true;
+                            echo set_input_form2('textarea', 'meta_description', ucwords(lang('meta description', $translation)), $data, $errors, true, $config);
                             echo set_input_form2('text', 'meta_author', ucwords(lang('meta author', $translation)), $data, $errors, true);
                             echo set_input_form2('tags', 'meta_keywords', ucwords(lang('meta keywords', $translation)), $data, $errors, true);
                         @endphp
@@ -112,6 +116,7 @@
 
                             $config = new \stdClass();
                             $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;A one to two sentence description of your object.';
+                            $config->autosize = true;
                             echo set_input_form2('textarea', 'og_description', ucwords(lang('open graph description', $translation)), $data, $errors, true, $config);
                         @endphp
 
@@ -179,6 +184,8 @@
 @section('script')
     <!-- Switchery -->
     @include('_form_element.switchery.script')
+    <!-- autosize -->
+    @include('_form_element.autosize.script')
     <!-- jQuery Tags Input -->
     @include('_form_element.tagsinput.script')
 @endsection

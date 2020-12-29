@@ -1,0 +1,1 @@
+<script src="{{ asset('/admin/vendors/kiniditech-pagebuilder/pagebuilder-form.js') }}"></script>

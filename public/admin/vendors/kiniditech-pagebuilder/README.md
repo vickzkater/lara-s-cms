@@ -11,13 +11,28 @@
 
 Developed by [KINIDI Tech](https://kiniditech.com/) ([@vickzkater](https://github.com/vickzkater/)) on June 2020
 
-## Support Content Elements:
-
+## PageBuilder (Build pages using content elements)
  - Text (Rich Text Editor / WYSIWYG HTML Editor)
  - Image
  - Image & Text (Rich Text Editor / WYSIWYG HTML Editor)
  - Video
  - Video & Text (Rich Text Editor / WYSIWYG HTML Editor)
+ - Plain Text
+
+## PageBuilder - Form (Build form pages using content elements)
+ - Multiple Choice (Text)
+ - Multiple Choice (Image)
+ - Checkboxes (Text)
+ - Dropdown
+ - Linear Scale
+
+## PageBuilder - Landing Page (Build landing pages using content elements)
+ - Masthead (Support Multiple Item)
+ - Text (Support 3 Items)
+ - Image (Support Multiple Item)
+ - Image + Text + Button (Support 3 Items)
+ - Video (Video Only or Video + Text + Button)
+ - Button (Support Multiple Item)
  - Plain Text
 
 ## Documentation

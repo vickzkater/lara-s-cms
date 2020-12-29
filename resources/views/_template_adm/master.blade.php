@@ -103,6 +103,13 @@
       .nav.navbar-nav>li>a{
         color :#143c6d !important;
       }
+      .top_nav .nav .open>a,.top_nav .nav .open>a:focus,.top_nav .nav .open>a:hover,.top_nav .nav>li>a:focus,.top_nav .nav>li>a:hover{
+        background:#46a2db !important;
+        color: white !important;
+      }
+      #menu_toggle {
+        color: #143c6d !important;
+      }
     </style>
 
     @yield('css')
