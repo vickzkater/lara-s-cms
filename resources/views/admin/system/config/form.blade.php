@@ -42,7 +42,7 @@
                             echo set_input_form2('text', 'app_url_site', ucwords(lang('application URL', $translation)), $data, $errors, true, $config);
 
                             $config = new \stdClass();
-                            $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;Input Main URL, if this application used for manage microsite. <br>(If this is used by "blog.kiniditech.com" as microsite, then input "kiniditech.com" as Main URL)';
+                            $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;Input Main URL, if this application used for manage microsite. <br>(If this is used by "blog.your-domain.com" as microsite, then input "your-domain.com" as Main URL)';
                             echo set_input_form2('text', 'app_url_main', ucwords(lang('main application URL', $translation)), $data, $errors, false, $config);
                             
                             $config = new \stdClass();
@@ -95,7 +95,7 @@
 
                         @php
                             $config = new \stdClass();
-                            $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;Example: website/article/etc. Read more on <a href="https://ogp.me/#types" target="_blank" style="font-style:italic; text-decoration:underline;">ogp.me</a>.';
+                            $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;Example: website/article/etc. Read more on <a href="https://ogp.me/#types" target="_blank" style="font-style:italic; text-decoration:underline;">ogp.me <i class="fa fa-external-link"></i></a>.';
                             echo set_input_form2('text', 'og_type', ucwords(lang('open graph type', $translation)), $data, $errors, true, $config);
 
                             $config = new \stdClass();
@@ -125,7 +125,7 @@
                         @php
                             $config = new \stdClass();
                             $config->defined_data = ["summary", "summary_large_image", "app", "player"];
-                            $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;You can check <a href="https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup" target="_blank" style="font-style:italic; text-decoration:underline;">Twitter Dev Docs</a> for more details. And test your Twitter Card on <a href="https://cards-dev.twitter.com/validator" target="_blank" style="font-style:italic; text-decoration:underline;">Card Validator</a>.';
+                            $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;You can check <a href="https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup" target="_blank" style="font-style:italic; text-decoration:underline;">Twitter Dev Docs <i class="fa fa-external-link"></i></a> for more details. And test your Twitter Card on <a href="https://cards-dev.twitter.com/validator" target="_blank" style="font-style:italic; text-decoration:underline;">Card Validator <i class="fa fa-external-link"></i></a>.';
                             echo set_input_form2('select', 'twitter_card', ucwords(lang('twitter card', $translation)), $data, $errors, true, $config);
 
                             $config = new \stdClass();
@@ -133,7 +133,7 @@
                             echo set_input_form2('text', 'twitter_site', ucwords(lang('twitter site', $translation)), $data, $errors, false, $config);
 
                             $config = new \stdClass();
-                            $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;Same as Twitter Site, but the user’s Twitter ID. You can use <a href="https://tweeterid.com/" target="_blank" style="font-style:italic; text-decoration:underline;">tweeterid.com</a> to get Twitter ID.';
+                            $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;Same as Twitter Site, but the user’s Twitter ID. You can use <a href="https://tweeterid.com/" target="_blank" style="font-style:italic; text-decoration:underline;">tweeterid.com <i class="fa fa-external-link"></i></a> to get Twitter ID.';
                             echo set_input_form2('text', 'twitter_site_id', (lang('Twitter Site ID', $translation)), $data, $errors, false, $config);
 
                             $config = new \stdClass();
@@ -149,7 +149,7 @@
 
                         @php
                             $config = new \stdClass();
-                            $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;In order to use Facebook Insights you must add the app ID to your page. Insights lets you view analytics for traffic to your site from Facebook. Read more on <a href="https://developers.facebook.com/docs/sharing/webmasters/" target="_blank" style="font-style:italic; text-decoration:underline;">FB Dev Docs</a>. And test your markup on <a href="https://developers.facebook.com/tools/debug/" target="_blank" style="font-style:italic; text-decoration:underline;">Sharing Debugger</a>.';
+                            $config->info_text = '<i class="fa fa-info-circle"></i> &nbsp;In order to use Facebook Insights you must add the app ID to your page. Insights lets you view analytics for traffic to your site from Facebook. Read more on <a href="https://developers.facebook.com/docs/sharing/webmasters/" target="_blank" style="font-style:italic; text-decoration:underline;">FB Dev Docs <i class="fa fa-external-link"></i></a>. And test your markup on <a href="https://developers.facebook.com/tools/debug/" target="_blank" style="font-style:italic; text-decoration:underline;">Sharing Debugger <i class="fa fa-external-link"></i></a>.';
                             echo set_input_form2('text', 'fb_app_id', (lang('FB App ID', $translation)), $data, $errors, false, $config);
                         @endphp
 
