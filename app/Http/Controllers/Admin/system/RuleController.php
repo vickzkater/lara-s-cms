@@ -432,7 +432,7 @@ class RuleController extends Controller
         if (!$data) {
             // DATA NOT FOUND
             return redirect()
-                ->route('admin.division.deleted')
+                ->route('admin.rule.deleted')
                 ->with('error', lang('#item not found, please recheck your link again', $this->translation, ['#item' => $this->item]));
         }
 
@@ -447,7 +447,7 @@ class RuleController extends Controller
 
             // SUCCESS
             return redirect()
-                ->route('admin.division.deleted')
+                ->route('admin.rule.deleted')
                 ->with('success', lang('Successfully restored #item : #name', $this->translation, ['#item' => $this->item, '#name' => $data->name]));
         }
 

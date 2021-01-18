@@ -1,3 +1,7 @@
+@php
+  use App\Libraries\Helper;
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,12 +12,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <link rel="icon" href="{{ asset($global_config->app_favicon) }}" type="image/{{ $global_config->app_favicon_type }}" />
 
-    <title>
-      @if(View::hasSection('title')) 
-        @yield('title') -
+    <title>@if(View::hasSection('title'))@yield('title') - @endif{!! $global_config->app_name !!} Admin</title>
+
+    <meta name="description" content="{!! $global_config->meta_description !!}">
+    <meta name="keywords" content="{!! str_replace(',', ', ', $global_config->meta_keywords) !!}">
+
+    @if(View::hasSection('open_graph'))
+      @yield('open_graph')
+    @else
+      {{-- DEFAULT OPEN GRAPH --}}
+      <meta property="og:type" content="{!! $global_config->og_type !!}" />
+      <meta property="og:site_name" content="{!! $global_config->og_site_name !!}" />
+      <meta property="og:title" content="@if(View::hasSection('title'))@yield('title')@else{!! $global_config->og_title !!}@endif" />
+      <meta property="og:image" content="{{ asset($global_config->og_image) }}" />
+      <meta property="og:description" content="{!! $global_config->og_description !!}" />
+      <meta property="og:url" content="{{ Helper::get_url() }}" />
+
+      @if ($global_config->fb_app_id)
+        <meta property="fb:app_id" content="{!! $global_config->fb_app_id !!}" />
       @endif
-      {{ $global_config->app_name }} Admin
-    </title>
+
+      <meta property="twitter:card" content="{!! $global_config->twitter_card !!}" />
+      @if ($global_config->twitter_site)
+        <meta property="twitter:site" content="{!! $global_config->twitter_site !!}" />
+      @endif
+      @if ($global_config->twitter_site_id)
+        <meta property="twitter:site:id" content="{!! $global_config->twitter_site_id !!}" />
+      @endif
+      @if ($global_config->twitter_creator)
+        <meta property="twitter:creator" content="{!! $global_config->twitter_creator !!}" />
+      @endif
+      @if ($global_config->twitter_creator_id)
+        <meta property="twitter:creator:id" content="{!! $global_config->twitter_creator_id !!}" />
+      @endif
+    @endif
 
     <!-- Bootstrap -->
     <link href="{{ asset('admin/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -25,27 +57,58 @@
     <link href="{{ asset('admin/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}" rel="stylesheet">
     <!-- bootstrap-progressbar -->
     <link href="{{ asset('admin/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+    <!-- animate.css -->
+    <link href="{{ asset('admin/vendors/animate.css/animate.min.css') }}" rel="stylesheet">
     
     <!-- Custom Theme Style -->
     <link href="{{ asset('admin/build/css/custom.css') }}" rel="stylesheet">
 
     <style>
       .scroll-top {
-          width: 40px;
-          height: 30px;
-          position: fixed;
-          bottom: 50px;
-          right: 17px;
-          display: none;
-          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";       /* IE 8 */
-          filter: alpha(opacity=50);  /* IE 5-7 */
-          -moz-opacity: 0.5;          /* Netscape */
-          -khtml-opacity: 0.5;        /* Safari 1.x */
-          opacity: 0.5;               /* Good browsers */
+        width: 40px;
+        height: 30px;
+        position: fixed;
+        bottom: 50px;
+        right: 17px;
+        display: none;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";       /* IE 8 */
+        filter: alpha(opacity=50);  /* IE 5-7 */
+        -moz-opacity: 0.5;          /* Netscape */
+        -khtml-opacity: 0.5;        /* Safari 1.x */
+        opacity: 0.5;               /* Good browsers */
       }
       .scroll-top i {
-          display: inline-block;
-          color: #FFFFFF;
+        display: inline-block;
+        color: #FFFFFF;
+      }
+
+      /* template coloring setup */
+      .left_col, .nav_title, body, .sidebar-footer {
+        background: #143c6d !important;
+      }
+      .nav.side-menu>li.active>a{
+        background: linear-gradient(#334556,#2C4257),#143c6d !important;
+      }
+      .sidebar-footer a {
+        background: #fae54d !important;
+        color: #143c6d !important;
+      }
+      .sidebar-footer a:hover {
+        background: #46a2db !important;
+        color: white !important;
+      }
+      .nav_menu {
+        background: #fae54d !important;
+      }
+      .nav.navbar-nav>li>a{
+        color :#143c6d !important;
+      }
+      .top_nav .nav .open>a,.top_nav .nav .open>a:focus,.top_nav .nav .open>a:hover,.top_nav .nav>li>a:focus,.top_nav .nav>li>a:hover{
+        background:#46a2db !important;
+        color: white !important;
+      }
+      #menu_toggle {
+        color: #143c6d !important;
       }
     </style>
 

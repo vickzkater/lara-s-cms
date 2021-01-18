@@ -44,7 +44,7 @@
                                 $config->defined_data = $divisions;
                                 $config->field_value = 'id';
                                 $config->field_text = 'name';
-                                echo set_input_form2('select2', 'division_id', ucwords(lang('division', $translation)), $data, $errors, true, $config);
+                                echo set_input_form2('select2', 'division_id', ucwords(lang('office', $translation)), $data, $errors, true, $config);
 
                                 $config = new \stdClass();
                                 $config->attributes = 'autocomplete="off"';
@@ -78,7 +78,13 @@
                                             {{ ucwords(lang('submit', $translation)) }}
                                         @endif
                                     </button>
-                                    <a href="{{ route('admin.branch.list') }}" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; {{ ucwords(lang('cancel', $translation)) }}</a>
+                                    <a href="{{ route('admin.branch.list') }}" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; 
+                                        @if (isset($data))
+                                            {{ ucwords(lang('close', $translation)) }}
+                                        @else
+                                            {{ ucwords(lang('cancel', $translation)) }}
+                                        @endif
+                                    </a>
                                 </div>
                             </div>
 

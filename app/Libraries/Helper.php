@@ -295,4 +295,14 @@ class Helper extends TheHelper
             'data' => $file_name
         ];
     }
+
+    public static function is_menu_active($word_in_url)
+    {
+        $actual_link = Helper::get_url();
+        if (strpos($actual_link, $word_in_url) !== false) {
+            // FOUND
+            return true;
+        }
+        return false;
+    }
 }

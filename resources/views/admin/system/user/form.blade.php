@@ -1,7 +1,7 @@
 @extends('_template_adm.master')
 
 @php
-    $pagetitle = ucwords(lang('user', $translation)); 
+    $pagetitle = ucwords(lang('admin', $translation)); 
     if(isset($data)){
         $pagetitle .= ' ('.ucwords(lang('edit', $translation)).')';
         $link = route('admin.user.do_edit', $data->id);
@@ -102,7 +102,13 @@
                                             {{ ucwords(lang('submit', $translation)) }}
                                         @endif
                                     </button>
-                                    <a href="{{ route('admin.user.list') }}" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; {{ ucwords(lang('cancel', $translation)) }}</a>
+                                    <a href="{{ route('admin.user.list') }}" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; 
+                                        @if (isset($data))
+                                            {{ ucwords(lang('close', $translation)) }}
+                                        @else
+                                            {{ ucwords(lang('cancel', $translation)) }}
+                                        @endif
+                                    </a>
                                 </div>
                             </div>
 

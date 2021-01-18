@@ -43,7 +43,7 @@ if (!function_exists('lang')) {
                     // if not found the translation, just return the param
                     $result = $phrase;
                 }
-            }else{
+            } else {
                 // coz using API as back-end mode, so we can't get translation data from database - just return the param
                 $result = $phrase;
             }
@@ -325,6 +325,10 @@ if (!function_exists('set_input_form2')) {
             if (isset($config->rows)) {
                 $textarea_rows = $config->rows;
             }
+            // config for textarea
+            if (isset($config->autosize)) {
+                $textarea_autosize = true;
+            }
             // config for switch
             if (isset($config->default)) {
                 $default = $config->default;
@@ -421,12 +425,17 @@ if (!function_exists('set_input_form2')) {
                 break;
 
             case 'textarea':
-                $attr = '';
                 // set rows attribute
+                $attr = '';
                 if (isset($textarea_rows)) {
                     $attr = 'rows="' . (int) $textarea_rows . '"';
                 }
-                $input_element = '<textarea ' . $properties . ' ' . $attr . ' class="form-control col-md-7 col-xs-12">' . $value . '</textarea>';
+                // set autosize
+                $autosize = '';
+                if (isset($textarea_autosize) && $textarea_autosize == true) {
+                    $autosize = 'resizable_textarea';
+                }
+                $input_element = '<textarea ' . $properties . ' ' . $attr . ' class="form-control col-md-7 col-xs-12 ' . $autosize . '">' . $value . '</textarea>';
                 break;
 
             case 'switch':
@@ -527,13 +536,24 @@ if (!function_exists('set_input_form2')) {
                 }
                 // set options
                 if (!empty($defined_data)) {
-                    foreach ($defined_data as $key => $val) {
-                        $stats = '';
-                        if ($key == $value && !empty($value)) {
-                            $stats = 'selected';
-                        }
+                    if (isset($defined_data[0])) {
+                        foreach ($defined_data as $opt) {
+                            $stats = '';
+                            if ($opt == $value && !empty($value)) {
+                                $stats = 'selected';
+                            }
 
-                        $input_element .= '<option value="' . $key . '" ' . $stats . '>' . $val . '</option>';
+                            $input_element .= '<option value="' . $opt . '" ' . $stats . '>' . $opt . '</option>';
+                        }
+                    } else {
+                        foreach ($defined_data as $key => $val) {
+                            $stats = '';
+                            if ($key == $value && !empty($value)) {
+                                $stats = 'selected';
+                            }
+
+                            $input_element .= '<option value="' . $key . '" ' . $stats . '>' . $val . '</option>';
+                        }
                     }
                 } else {
                     $input_element .= '<option value="" disabled>NO DATA</option>';
@@ -590,7 +610,26 @@ if (!function_exists('set_input_form2')) {
             case 'file':
                 $input_element = '';
                 if (!empty($value)) {
-                    $input_element .= '<a href="' . asset($value) . '" target="_blank" id="' . $id_name . '-file-preview">' . asset($value) . ' <i class="fa fa-external-link"></i></a>';
+                    // validate $value is local path or link
+                    $string = filter_var($value, FILTER_VALIDATE_URL);
+                    // for sanitize (">) ('>)
+                    if ($string == 34 || $string == 39 || $string == false) {
+                        // local path
+                        $url_value = asset($value);
+                    } else {
+                        $headers = get_headers($value);
+                        $value_is_url = stripos($headers[0], "200 OK") ? true : false;
+
+                        if ($value_is_url) {
+                            // link
+                            $url_value = $value;
+                        } else {
+                            // local path
+                            $url_value = asset($value);
+                        }
+                    }
+
+                    $input_element .= '<a href="' . $url_value . '" target="_blank" id="' . $id_name . '-file-preview">' . $url_value . ' <i class="fa fa-external-link"></i></a>';
                     if ($delete) {
                         $input_element .= '&nbsp; <span class="btn btn-danger btn-xs" id="' . $id_name . '-delbtn" style="margin: 5px 0 !important;" onclick="remove_uploaded_file(\'#' . $id_name . '\')"><i class="fa fa-trash"></i></span><br>';
                         $input_element .= ' <input type="hidden" name="' . $input_name . '_delete" id="' . $input_name . '-delete">';

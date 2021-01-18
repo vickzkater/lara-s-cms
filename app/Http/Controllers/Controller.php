@@ -109,14 +109,19 @@ class Controller extends BaseController
             $global_config = new \stdClass();
             $global_config->app_name = env('APP_NAME');
             $global_config->app_version = env('APP_VERSION');
-            $global_config->meta_description = env('META_DESCRIPTION');
-            $global_config->meta_author = env('META_AUTHOR');
+            $global_config->app_url_site = env('APP_URL_SITE');
             $global_config->app_favicon_type = env('APP_FAVICON_TYPE');
             $global_config->app_favicon = env('APP_FAVICON');
             $global_config->app_logo = env('APP_LOGO');
             $global_config->app_logo_image = env('APP_LOGO_IMAGE');
             $global_config->powered = env('POWERED');
             $global_config->powered_url = env('POWERED_URL');
+
+            $global_config->meta_title = env('APP_NAME');
+            $global_config->meta_description = env('META_DESCRIPTION');
+            $global_config->meta_author = env('META_AUTHOR');
+            $global_config->meta_keywords = '';
+            
             if (env('APP_BACKEND', 'MODEL') != 'API') {
                 $global_config = DB::table('sys_config')->first();
             }

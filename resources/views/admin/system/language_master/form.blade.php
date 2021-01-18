@@ -64,7 +64,13 @@
                                     @if (!isset($data))
                                         <span class="btn btn-primary" onclick="save_then_add()"><i class="fa fa-save"></i>&nbsp; {{ ucwords(lang('add new again', $translation)) }}</span>
                                     @endif
-                                    <a href="{{ route('admin.langmaster.list') }}" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; {{ ucwords(lang('cancel', $translation)) }}</a>
+                                    <a href="{{ route('admin.langmaster.list') }}" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; 
+                                        @if (isset($data))
+                                            {{ ucwords(lang('close', $translation)) }}
+                                        @else
+                                            {{ ucwords(lang('cancel', $translation)) }}
+                                        @endif
+                                    </a>
                                 </div>
                             </div>
 

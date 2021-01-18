@@ -4,7 +4,7 @@
   // USE LIBRARIES
   use App\Libraries\Helper;
 
-  $this_object = ucwords(lang('division', $translation));
+  $this_object = ucwords(lang('office', $translation));
 
   if(isset($data)){
     $pagetitle = $this_object;
@@ -28,9 +28,24 @@
       @if (isset($data))
         <div class="title_right">
           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
-            <a href="{{ route('admin.division.create') }}" class="btn btn-round btn-success" style="float: right;">{{ ucwords(lang('add new', $translation)) }}</a>
+            @if (Helper::authorizing('Division', 'Restore')['status'] == 'true')
+              <a href="{{ route('admin.division.deleted') }}" class="btn btn-round btn-danger" style="float: right; margin-bottom: 5px;" data-toggle="tooltip" title="{{ ucwords(lang('view deleted items', $translation)) }}">
+                <i class="fa fa-trash"></i>
+              </a>
+            @endif
+            <a href="{{ route('admin.division.create') }}" class="btn btn-round btn-success" style="float: right;">
+              <i class="fa fa-plus-circle"></i>&nbsp; {{ ucwords(lang('add new', $translation)) }}
+            </a>
           </div>
         </div>  
+      @else
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
+            <a href="{{ route('admin.division.list') }}" class="btn btn-round btn-primary" style="float: right;">
+              <i class="fa fa-check-circle"></i>&nbsp; {{ ucwords(lang('active items', $translation)) }}
+            </a>
+          </div>
+        </div>
       @endif
     </div>
 
@@ -62,7 +77,7 @@
                 @if (isset($data) && count($data) > 0)
                   <tbody class="sorted_table">
                     @foreach ($data as $item)
-                      <tr role="row" id="row-{{ $item->id }}">
+                      <tr role="row" id="row-{{ $item->id }}" title="{{ ucfirst(lang("Drag & drop to sorting", $translation)) }}" data-toggle="tooltip">
                         <td class="dragndrop">{{ $item->name }}</td>
                         <td>
                           @if ($item->status != 1)

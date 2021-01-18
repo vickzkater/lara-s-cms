@@ -183,6 +183,21 @@ Route::group([
 
         // HOME
         Route::get('/', 'system\HomeController@index')->name('admin.home');
+        
+        // BANNER
+        Route::group(['prefix' => 'banner'], function () {
+            Route::get('/', 'BannerController@list')->name('admin.banner.list');
+            Route::get('/get-data', 'BannerController@get_data')->name('admin.banner.get_data');
+            Route::get('/create', 'BannerController@create')->name('admin.banner.create');
+            Route::post('/do-create', 'BannerController@do_create')->name('admin.banner.do_create');
+            Route::get('/edit/{id}', 'BannerController@edit')->name('admin.banner.edit');
+            Route::post('/do-edit/{id}', 'BannerController@do_edit')->name('admin.banner.do_edit');
+            Route::post('/sorting', 'BannerController@sorting')->name('admin.banner.sorting');
+            Route::post('/delete', 'BannerController@delete')->name('admin.banner.delete');
+            Route::get('/deleted', 'BannerController@list_deleted')->name('admin.banner.deleted');
+            Route::get('/get-data-deleted', 'BannerController@get_data_deleted')->name('admin.banner.get_data_deleted');
+            Route::post('/restore', 'BannerController@restore')->name('admin.banner.restore');
+        });
 
         // PRODUCT
         Route::group(['prefix' => 'product'], function () {
@@ -227,21 +242,6 @@ Route::group([
             Route::post('/delete', 'ArticleController@delete')->name('admin.article.delete');
             Route::get('/enable/{id}', 'ArticleController@enable')->name('admin.article.enable');
             Route::get('/disable/{id}', 'ArticleController@disable')->name('admin.article.disable');
-        });
-
-        // BANNER
-        Route::group(['prefix' => 'banner'], function () {
-            Route::get('/', 'BannerController@list')->name('admin.banner.list');
-            Route::get('/get-data', 'BannerController@get_data')->name('admin.banner.get_data');
-            Route::get('/create', 'BannerController@create')->name('admin.banner.create');
-            Route::post('/do-create', 'BannerController@do_create')->name('admin.banner.do_create');
-            Route::get('/edit/{id}', 'BannerController@edit')->name('admin.banner.edit');
-            Route::post('/do-edit/{id}', 'BannerController@do_edit')->name('admin.banner.do_edit');
-            Route::post('/delete', 'BannerController@delete')->name('admin.banner.delete');
-            Route::get('/deleted', 'BannerController@list_deleted')->name('admin.banner.deleted');
-            Route::get('/get-data-deleted', 'BannerController@get_data_deleted')->name('admin.banner.get_data_deleted');
-            Route::post('/restore', 'BannerController@restore')->name('admin.banner.restore');
-            Route::post('/sorting', 'BannerController@sorting')->name('admin.banner.sorting');
         });
     });
 });

@@ -18,6 +18,7 @@
 @extends('_template_adm.master')
 
 @php
+  // USE LIBRARIES
   use App\Libraries\Helper;
 
   $this_object = ucwords(lang('product', $translation));
@@ -49,39 +50,54 @@
       @if (isset($data))
         <div class="title_right">
           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
+            @if (Helper::authorizing('Product', 'Restore')['status'] == 'true')
+              <a href="{{ route('admin.product.deleted') }}" class="btn btn-round btn-danger" style="float: right; margin-bottom: 5px;" data-toggle="tooltip" title="{{ ucwords(lang('view deleted items', $translation)) }}">
+                <i class="fa fa-trash"></i>
+              </a>
+            @endif
             <a href="{{ route('admin.product.create') }}" class="btn btn-round btn-success" style="float: right;">
               <i class="fa fa-plus-circle"></i>&nbsp; {{ ucwords(lang('add new', $translation)) }}
+            </a>
+          </div>
+        </div>
+      @else
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
+            <a href="{{ route('admin.product.list') }}" class="btn btn-round btn-primary" style="float: right;">
+              <i class="fa fa-check-circle"></i>&nbsp; {{ ucwords(lang('active items', $translation)) }}
             </a>
           </div>
         </div>  
       @endif
 
-      <div class="title_left">
-        @if (Helper::authorizing($this_module, 'Export Excel')['status'] == 'true')
-          <a href="{{ route('admin.product.export_excel') }}" class="btn btn-round btn-warning" style="margin: 10px 0;" target="_blank">
-            <i class="fa fa-cloud-download"></i>&nbsp; {{ ucwords(lang('export', $translation)) }} Excel
-          </a>
-        @else
-          &nbsp;
-        @endif
-
-        @if (Helper::authorizing($this_module, 'Import Excel')['status'] == 'true')
-          <a href="{{ route('admin.product.import_excel_template') }}" class="btn btn-round btn-info" style="margin: 10px 0;" target="_blank">
-            <i class="fa fa-download"></i>&nbsp; {{ lang('Download template for Import', $translation) }} Excel
-          </a>
-        @endif
-      </div>
-      <div class="title_right">
-        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
-          @if (Helper::authorizing($this_module, 'Import Excel')['status'] == 'true')
-            <button type="button" class="btn btn-primary btn-round" data-toggle="modal" data-target=".bs-modal-sm" style="float: right;">
-              <i class="fa fa-cloud-upload"></i>&nbsp; {{ ucwords(lang('import', $translation)) }} Excel
-            </button>
+      @if (isset($data))
+        <div class="title_left">
+          @if (Helper::authorizing($this_module, 'Export Excel')['status'] == 'true')
+            <a href="{{ route('admin.product.export_excel') }}" class="btn btn-round btn-warning" style="margin: 10px 0;" target="_blank">
+              <i class="fa fa-cloud-download"></i>&nbsp; {{ ucwords(lang('export', $translation)) }} Excel
+            </a>
           @else
             &nbsp;
           @endif
+
+          @if (Helper::authorizing($this_module, 'Import Excel')['status'] == 'true')
+            <a href="{{ route('admin.product.import_excel_template') }}" class="btn btn-round btn-info" style="margin: 10px 0;" target="_blank">
+              <i class="fa fa-download"></i>&nbsp; {{ lang('Download template for Import', $translation) }} Excel
+            </a>
+          @endif
         </div>
-      </div>  
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
+            @if (Helper::authorizing($this_module, 'Import Excel')['status'] == 'true')
+              <button type="button" class="btn btn-primary btn-round" data-toggle="modal" data-target=".bs-modal-sm" style="float: right;">
+                <i class="fa fa-cloud-upload"></i>&nbsp; {{ ucwords(lang('import', $translation)) }} Excel
+              </button>
+            @else
+              &nbsp;
+            @endif
+          </div>
+        </div>
+      @endif
     </div>
 
     <div class="clearfix"></div>
@@ -145,7 +161,7 @@
       $('#datatables').show();
       $('#datatables').dataTable().fnDestroy();
       var table = $('#datatables').DataTable({
-        order: [[ 0, "asc" ]],
+        order: [[ 4, "desc" ]],
         orderCellsTop: true,
         fixedHeader: false,
         serverSide: true,

@@ -62,8 +62,8 @@ return [
 
     // In addition, you may define a global "reply_to" address
     'reply_to' => [
-        'address' => env('MAIL_REPLYTO_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_REPLYTO_NAME', 'Example'),
+        'address' => env('MAIL_REPLYTO_ADDRESS', env('MAIL_FROM_ADDRESS', 'hello@example.com')),
+        'name' => env('MAIL_REPLYTO_NAME', env('MAIL_FROM_NAME', 'Example')),
     ],
 
     /*
