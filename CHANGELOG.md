@@ -4,6 +4,9 @@ Changelog
 ## Version 2.0.7
 - Update the packages (Laravel Framework 7.30.3 > 7.30.4)
 - Optimize multi languages
+- Add [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar)
+- Remove package fzaninotto/faker (security issue)
+- Update package phpunit to version 9 (warning issue)
 
 ## Version 2.0.6
 - Update config global mail for setup reply-to

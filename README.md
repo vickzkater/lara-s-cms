@@ -252,10 +252,14 @@ Comment first line in `.htaccess` for fix this issue
 
 _*) This issue is reported only occur on some hosting servers, e.g. AWS (Amazon Web Service)_
 
-**Somethings that maybe you must know**
+***For your information**
 
 - `CustomFunction.php` in `app\Libraries\` that automatically called in the load of web because it has been set in `composer.json`
 - `Helper.php` in `app\Libraries\` that can be called in Controller/View by line code `use App\Libraries\Helper;` for call some helper functions
+
+## IMPORTANT NOTE!
+
+Please set `APP_DEBUG` to `false` on Production to disable [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar).
 
 ## Session Driver Database
 
