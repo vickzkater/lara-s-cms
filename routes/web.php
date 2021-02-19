@@ -23,6 +23,10 @@ Route::group(['namespace' => 'Web'], function () {
     }
 
     if (env('APP_BACKEND', 'MODEL') == 'MODEL') {
+        /**
+         * USING MODEL AS BACK-END PROCESSOR
+         */
+
         // HOME
         Route::get('/', 'SiteController@home')->name('web.home');
 
@@ -32,6 +36,10 @@ Route::group(['namespace' => 'Web'], function () {
             Route::get('/{slug}', 'SiteController@blog_details')->name('web.blog.details');
         });
     } else {
+        /**
+         * USING API AS BACK-END PROCESSOR
+         */
+
         // HOME
         Route::get('/', 'RemoteController@home')->name('web.home');
 
@@ -183,7 +191,7 @@ Route::group([
 
         // HOME
         Route::get('/', 'system\HomeController@index')->name('admin.home');
-        
+
         // BANNER
         Route::group(['prefix' => 'banner'], function () {
             Route::get('/', 'BannerController@list')->name('admin.banner.list');

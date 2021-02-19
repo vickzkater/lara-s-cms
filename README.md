@@ -139,6 +139,7 @@ Next, setup environment configuration in `.env` file
 - Set `APP_TIMEZONE` for set timezone application, sample: UTC (GMT) or Asia/Jakarta (GMT+7) or Asia/Kuala_Lumpur (GMT+8)
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
 
+- Set `MULTILANG_MODULE` for enable/disable multi languages module in application
 - Set `DEFAULT_LANGUAGE` for set default language in application
 
 - Set `META_DESCRIPTION` for set meta description

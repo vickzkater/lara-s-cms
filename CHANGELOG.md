@@ -7,6 +7,7 @@ Changelog
 - Add [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar)
 - Remove package fzaninotto/faker (security issue)
 - Update package phpunit to version 9 (warning issue)
+- Fix issue for 404 error page when using the admin dashboard only
 
 ## Version 2.0.6
 - Update config global mail for setup reply-to
