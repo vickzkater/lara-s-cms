@@ -69,7 +69,7 @@ class Controller extends BaseController
 
             // get language data
             $translation = [];
-            if (env('APP_BACKEND', 'MODEL') != 'API') {
+            if (env('APP_BACKEND', 'MODEL') != 'API' && env('MULTILANG_MODULE', false)) {
                 $getLanguageMasterMenu = DB::table('sys_language_master_details')
                     ->select('sys_language_master.phrase', 'sys_language_master_details.translate')
                     ->leftJoin('sys_languages', 'sys_language_master_details.language_id', '=', 'sys_languages.id')
@@ -89,7 +89,7 @@ class Controller extends BaseController
 
             // set available languages
             $languages = [];
-            if (env('APP_BACKEND', 'MODEL') != 'API') {
+            if (env('APP_BACKEND', 'MODEL') != 'API' && env('MULTILANG_MODULE', false)) {
                 $getLanguages = DB::table('sys_languages')->where('status', 1)->get();
 
                 // convert to single array

@@ -9,12 +9,7 @@
     <meta name="author" content="{{ $global_config->meta_author }}">
     <link rel="icon" href="{{ asset($global_config->app_favicon) }}" type="image/{{ $global_config->app_favicon_type }}" />
 
-    <title>
-        @if(View::hasSection('title')) 
-            @yield('title') -
-        @endif
-        {{ $global_config->app_name }}
-    </title>
+    <title>@if(View::hasSection('title'))@yield('title') | @endif{!! $global_config->app_name !!}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('web/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">

@@ -9,7 +9,7 @@
 <a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="license_img" src="https://img.shields.io/packagist/l/vickzkater/lara-s-cms" alt="License"></a>
 </p>
 
-***Latest Version: 2.0.6 (Laravel 7.30.3)**
+***Latest Version: 2.0.7 (Laravel 7.30.4)**
 
 ## What is "Lara-S-CMS" ?
 
@@ -93,7 +93,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 
 ## Requirements
 
-- PHP >= 7.2
+- PHP >= 7.3
 - [Laravel 7.x Requirements](https://laravel.com/docs/7.x/installation#server-requirements)
 
 ## Installing Lara-S-CMS
