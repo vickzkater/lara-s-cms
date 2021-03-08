@@ -339,6 +339,7 @@ The default template for maintenance mode responses is located in `resources/vie
 - [simplesoftwareio/simple-qrcode](https://github.com/SimpleSoftwareIO/simple-qrcode) - used to generate QR code
 - [laravel/socialite](https://github.com/laravel/socialite) - used to login with social media
 - [intervention/image](https://github.com/Intervention/image) - used to generate thumbnail image
+- [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar) -  used to development
 
 ## Libraries Used
 
