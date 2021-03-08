@@ -9,7 +9,7 @@
 <a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="license_img" src="https://img.shields.io/packagist/l/vickzkater/lara-s-cms" alt="License"></a>
 </p>
 
-***Latest Version: 2.0.6 (Laravel 7.30.3)**
+***Latest Version: 2.0.7 (Laravel 7.30.4)**
 
 ## What is "Lara-S-CMS" ?
 
@@ -93,7 +93,7 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 
 ## Requirements
 
-- PHP >= 7.2
+- PHP >= 7.3
 - [Laravel 7.x Requirements](https://laravel.com/docs/7.x/installation#server-requirements)
 
 ## Installing Lara-S-CMS
@@ -139,6 +139,7 @@ Next, setup environment configuration in `.env` file
 - Set `APP_TIMEZONE` for set timezone application, sample: UTC (GMT) or Asia/Jakarta (GMT+7) or Asia/Kuala_Lumpur (GMT+8)
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
 
+- Set `MULTILANG_MODULE` for enable/disable multi languages module in application
 - Set `DEFAULT_LANGUAGE` for set default language in application
 
 - Set `META_DESCRIPTION` for set meta description
@@ -252,10 +253,14 @@ Comment first line in `.htaccess` for fix this issue
 
 _*) This issue is reported only occur on some hosting servers, e.g. AWS (Amazon Web Service)_
 
-**Somethings that maybe you must know**
+***For your information**
 
 - `CustomFunction.php` in `app\Libraries\` that automatically called in the load of web because it has been set in `composer.json`
 - `Helper.php` in `app\Libraries\` that can be called in Controller/View by line code `use App\Libraries\Helper;` for call some helper functions
+
+## IMPORTANT NOTE!
+
+Please set `APP_DEBUG` to `false` on Production to disable [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar).
 
 ## Session Driver Database
 
@@ -334,6 +339,7 @@ The default template for maintenance mode responses is located in `resources/vie
 - [simplesoftwareio/simple-qrcode](https://github.com/SimpleSoftwareIO/simple-qrcode) - used to generate QR code
 - [laravel/socialite](https://github.com/laravel/socialite) - used to login with social media
 - [intervention/image](https://github.com/Intervention/image) - used to generate thumbnail image
+- [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar) -  used to development
 
 ## Libraries Used
 

@@ -2,9 +2,10 @@
     use Illuminate\Support\Facades\DB;
     $global_config = DB::table('sys_config')->first();
 
-    $homepage = route('web.home');
-    if(Session::get('admin')){
+    if (env('ADMIN_DIR') == '' || Session::get('admin')) {
         $homepage = route('admin.home');
+    } else {
+        $homepage = route('web.home');
     }
 @endphp
 

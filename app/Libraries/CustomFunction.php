@@ -16,20 +16,21 @@ if (!function_exists('lang')) {
      */
     function lang($phrase, $translation = [], $replace_words = [])
     {
+        // get default language
+        $default_lang = env('DEFAULT_LANGUAGE', 'EN');
+
+        // set language
+        $language = Session::get('language');
+        if (empty($language)) {
+            $language = $default_lang;
+        }
+
         // if not found the translation, search from database
-        if (!is_array($translation) || count($translation) < 1) {
-            // get default language
-            $default_lang = env('DEFAULT_LANGUAGE', 'EN');
-
-            // set language
-            $language = Session::get('language');
-            if (empty($language)) {
-                $language = $default_lang;
-            }
-
+        if ((!is_array($translation) || count($translation) < 1) && $language != $default_lang) {
             // get language data
-            if (env('APP_BACKEND', 'MODEL') != 'API') {
-                $translation = DB::table('sys_language_master_details')->select('sys_language_master.phrase', 'sys_language_master_details.translate')
+            if (env('APP_BACKEND', 'MODEL') != 'API' && env('MULTILANG_MODULE', false)) {
+                $translation = DB::table('sys_language_master_details')
+                    ->select('sys_language_master.phrase', 'sys_language_master_details.translate')
                     ->leftJoin('sys_languages', 'sys_languages.id', 'sys_language_master_details.language_id')
                     ->leftJoin('sys_language_master', 'sys_language_master.id', 'sys_language_master_details.language_master_id')
                     ->where('sys_languages.alias', $language)
