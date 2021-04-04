@@ -32,48 +32,48 @@ Developed by [@vickzkater](https://github.com/vickzkater/) (Powered by [KINIDI T
 
 ## Features
 
-- [x] Support Multi Languages
-- [x] Admin Login
-- [x] My Profile
-- [x] Office/Subsidiary Management
-- [x] Branch per Office Management
-- [x] Rule Management
-- [x] Usergroup Management
-- [x] User (Admin) Management
-- [x] Access/Privilege/User Roles Management
-- [x] Simple System Logs
-- [x] Restore Deleted Data
-- [x] Custom 404 Error Page
-- [x] Custom Maintenance Mode
-- [x] Product Management (as module sample including upload image feature)
-- [x] Support DataTables AJAX
-- [x] Support reCAPTCHA v2 (optional for Admin Panel & User Panel)
-- [x] Sortable Data List (in Banner Module)
-- [x] Sortable Data List with Filter (in Branch Module - Filter by Division)
-- [x] Application Configurations
-- [x] Import & Export Excel File (in Product Module)
-- [x] Delete Uploaded Image (in Product Module)
-- [x] Rich Text Editor/WYSIWYG using TinyMCE (in Product Module)
-- [x] Datepicker (in Product Module)
-- [x] [The Helper PHP - a lot of PHP helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-php)
-- [x] [Support GoSMSGateway API - send SMS (in DevController)](https://github.com/vickzkater/gosms-laravel)
-- [x] [Support Mailchimp API (in DevController)](https://github.com/vickzkater/mailchimp-helper-laravel)
-- [x] [PageBuilder](https://github.com/vickzkater/kiniditech-pagebuilder) (in Article)
-- [x] [The Helper JS - a lot of JS helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-js)
-- [x] Banner Management
-- [x] QR Code Generator
-- [x] Login with social media (Google/Facebook)
-- [x] Support back-end mode (MODEL or API)
-- [x] Support upload file (PDF/TXT/DOCS/etc)
-- [x] Support Session Driver Database (please check section `Session Driver Database`)
-- [x] Security update: if password has been changed, then force user to re-login
-- [x] Feature logout from all sessions
-- [x] Sample function sending email & email template (support HTML & Plain Text)
-- [x] Generate thumbnail (in Article Module for saving thumbnail)
-- [x] [Support One Way SMS Gateway API - send SMS (in DevController)](https://github.com/vickzkater/onewaysms-laravel)
-- [x] Add support Login with Instagram - to use it read [Instagram's Official Guide](https://developers.facebook.com/docs/instagram-basic-display-api/getting-started)
-- [x] Setup Open Graph configurations (based on [ogp.me](https://ogp.me/), [Twitter Dev Docs](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup), & [FB Dev Docs](https://developers.facebook.com/docs/sharing/webmasters/))
-- [x] Guzzle-Client helper functions (please check on Controller.php)
+- Support Multi Languages
+- Admin Login
+- My Profile
+- Office/Subsidiary Management
+- Branch per Office Management
+- Rule Management
+- Usergroup Management
+- User (Admin) Management
+- Access/Privilege/User Roles Management
+- Simple System Logs
+- Restore Deleted Data
+- Custom 404 Error Page
+- Custom Maintenance Mode
+- Product Management (as module sample including upload image feature)
+- Support DataTables AJAX
+- Support reCAPTCHA v2 (optional for Admin Panel & User Panel)
+- Sortable Data List (in Banner Module)
+- Sortable Data List with Filter (in Branch Module - Filter by Division)
+- Application Configurations
+- Import & Export Excel File (in Product Module)
+- Delete Uploaded Image (in Product Module)
+- Rich Text Editor/WYSIWYG using TinyMCE (in Product Module)
+- Datepicker (in Product Module)
+- [The Helper PHP - a lot of PHP helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-php)
+- [Support GoSMSGateway API - send SMS (in DevController)](https://github.com/vickzkater/gosms-laravel)
+- [Support Mailchimp API (in DevController)](https://github.com/vickzkater/mailchimp-helper-laravel)
+- [PageBuilder](https://github.com/vickzkater/kiniditech-pagebuilder) (in Article)
+- [The Helper JS - a lot of JS helper functions that are ready to help in your project](https://github.com/vickzkater/the-helper-js)
+- Banner Management
+- QR Code Generator
+- Login with social media (Google/Facebook)
+- Support back-end mode (MODEL or API)
+- Support upload file (PDF/TXT/DOCS/etc)
+- Support Session Driver Database (please check section `Session Driver Database`)
+- Security update: if password has been changed, then force user to re-login
+- Feature logout from all sessions
+- Sample function sending email & email template (support HTML & Plain Text)
+- Generate thumbnail (in Article Module for saving thumbnail)
+- [Support One Way SMS Gateway API - send SMS (in DevController)](https://github.com/vickzkater/onewaysms-laravel)
+- Add support Login with Instagram - to use it read [Instagram's Official Guide](https://developers.facebook.com/docs/instagram-basic-display-api/getting-started)
+- Setup Open Graph configurations (based on [ogp.me](https://ogp.me/), [Twitter Dev Docs](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup), & [FB Dev Docs](https://developers.facebook.com/docs/sharing/webmasters/))
+- Guzzle-Client helper functions (please check on Controller.php)
 
 ## Admin Panel
 
@@ -139,7 +139,7 @@ Next, setup environment configuration in `.env` file
 - Set `APP_TIMEZONE` for set timezone application, sample: UTC (GMT) or Asia/Jakarta (GMT+7) or Asia/Kuala_Lumpur (GMT+8)
 - Set `APP_MAINTENANCE_UNTIL` for set deadline maintenance application using format (Y, m - 1, d)
 
-- Set `MULTILANG_MODULE` for enable/disable multi languages module in application
+- Set `MULTILANG_MODULE` for enable/disable multi-languages module in application, if you're not using multi-lang, then we recommend you to disable this
 - Set `DEFAULT_LANGUAGE` for set default language in application
 
 - Set `META_DESCRIPTION` for set meta description

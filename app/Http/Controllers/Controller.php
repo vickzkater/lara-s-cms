@@ -34,28 +34,28 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            
+
             if (Session::has('admin')) {
                 // GET USER DATA
                 $user_session = Session::get('admin');
                 $user_data = SysUser::find($user_session->id);
-                
+
                 // if password has been changed, then force user to re-login
-				$auth = Helper::generate_token($user_data->password);
-				$token_db = Helper::validate_token($auth);
+                $auth = Helper::generate_token($user_data->password);
+                $token_db = Helper::validate_token($auth);
                 $token_session = Helper::validate_token(Session::get('auth'));
-				if ($token_db != $token_session) {
-					// PASSWORD HAS BEEN CHANGED, THEN FORCE USER TO RE-LOGIN
-					Session::flush();
+                if ($token_db != $token_session) {
+                    // PASSWORD HAS BEEN CHANGED, THEN FORCE USER TO RE-LOGIN
+                    Session::flush();
                     return redirect()->route('admin.login')->with('info', lang('Your password has been changed, please re-login'));
                 }
-                
-                if($user_data->force_logout){
+
+                if ($user_data->force_logout) {
                     // FORCE LOGOUT FROM ALL SESSIONS
-					Session::flush();
+                    Session::flush();
                     return redirect()->route('admin.login')->with('info', lang('Your session has been logged out, please re-login'));
                 }
-			}
+            }
 
             // get default language
             $default_lang = env('DEFAULT_LANGUAGE', 'EN');
@@ -69,7 +69,7 @@ class Controller extends BaseController
 
             // get language data
             $translation = [];
-            if (env('APP_BACKEND', 'MODEL') != 'API' && env('MULTILANG_MODULE', false)) {
+            if (env('APP_BACKEND', 'MODEL') != 'API' && env('MULTILANG_MODULE', false) && $language != $default_lang) {
                 $getLanguageMasterMenu = DB::table('sys_language_master_details')
                     ->select('sys_language_master.phrase', 'sys_language_master_details.translate')
                     ->leftJoin('sys_languages', 'sys_language_master_details.language_id', '=', 'sys_languages.id')
@@ -82,8 +82,10 @@ class Controller extends BaseController
                     $translation[$list->phrase] = $list->translate;
                 }
             }
+
             // share variable to all Views
             View::share('translation', $translation);
+            
             // set this variable with translation data
             $this->translation = $translation;
 
@@ -100,33 +102,37 @@ class Controller extends BaseController
                     $languages[$list->id] = $obj;
                 }
             }
+
             // share variable to all Views
             View::share('languages', $languages);
+
             // set this variable with languages data
             $this->languages = $languages;
 
             // get global config data
-            $global_config = new \stdClass();
-            $global_config->app_name = env('APP_NAME');
-            $global_config->app_version = env('APP_VERSION');
-            $global_config->app_url_site = env('APP_URL_SITE');
-            $global_config->app_favicon_type = env('APP_FAVICON_TYPE');
-            $global_config->app_favicon = env('APP_FAVICON');
-            $global_config->app_logo = env('APP_LOGO');
-            $global_config->app_logo_image = env('APP_LOGO_IMAGE');
-            $global_config->powered = env('POWERED');
-            $global_config->powered_url = env('POWERED_URL');
-
-            $global_config->meta_title = env('APP_NAME');
-            $global_config->meta_description = env('META_DESCRIPTION');
-            $global_config->meta_author = env('META_AUTHOR');
-            $global_config->meta_keywords = '';
-            
             if (env('APP_BACKEND', 'MODEL') != 'API') {
                 $global_config = DB::table('sys_config')->first();
+            } else {
+                $global_config = new \stdClass();
+                $global_config->app_name = env('APP_NAME');
+                $global_config->app_version = env('APP_VERSION');
+                $global_config->app_url_site = env('APP_URL_SITE');
+                $global_config->app_favicon_type = env('APP_FAVICON_TYPE');
+                $global_config->app_favicon = env('APP_FAVICON');
+                $global_config->app_logo = env('APP_LOGO');
+                $global_config->app_logo_image = env('APP_LOGO_IMAGE');
+                $global_config->powered = env('POWERED');
+                $global_config->powered_url = env('POWERED_URL');
+
+                $global_config->meta_title = env('APP_NAME');
+                $global_config->meta_description = env('META_DESCRIPTION');
+                $global_config->meta_author = env('META_AUTHOR');
+                $global_config->meta_keywords = '';
             }
+
             // share variable to all Views
             View::share('global_config', $global_config);
+
             // set this variable with translation data
             $this->global_config = $global_config;
 
@@ -139,7 +145,7 @@ class Controller extends BaseController
 
             // share variable to all Views
             View::share('app_logo', $app_logo);
-
+            
             // set this variable with translation data
             $this->app_logo = $app_logo;
 
