@@ -9,7 +9,7 @@
 <a href="https://packagist.org/packages/vickzkater/lara-s-cms" target="_blank"><img class="license_img" src="https://img.shields.io/packagist/l/vickzkater/lara-s-cms" alt="License"></a>
 </p>
 
-***Latest Version: 2.0.7 (Laravel 7.30.4)**
+***Latest Version: 2.0.8 (Laravel 7.30.4)**
 
 ## What is "Lara-S-CMS" ?
 

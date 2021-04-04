@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## Version 2.0.8
+- Remove unused URL route
+- Update all packages, especially for `facade/ignition` to patch vulnerability in version < 2.5.2 [Source](https://snyk.io/vuln/composer:facade%2Fignition)
+
 ## Version 2.0.7
 - Update the packages (Laravel Framework 7.30.3 > 7.30.4)
 - Optimize multi languages
