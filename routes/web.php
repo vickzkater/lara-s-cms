@@ -256,12 +256,6 @@ Route::group([
 
 // DEVELOPMENT TESTER
 Route::group(['prefix' => 'dev'], function () {
-    // GOSMS
-    Route::group(['prefix' => 'gosms'], function () {
-        // Send SMS - sample: "{URL}/dev/gosms/send?mobile_phone=62812345xxx&message=Hello"
-        Route::get('/send', 'DevController@gosms_send');
-    });
-
     // GOSMS - support for Indonesian telecommunications operators
     Route::group(['prefix' => 'gosms'], function () {
         // Send SMS - sample: "{URL}/dev/gosms/send?mobile_phone=62812345xxx&message=Hello"
