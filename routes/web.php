@@ -298,4 +298,10 @@ Route::group(['prefix' => 'dev'], function () {
         // Preview Email - sample: "{URL}/dev/email"
         Route::get('/', 'DevController@email_send');
     });
+
+    // AMAZON S3
+    Route::group(['prefix' => 'amazon-s3'], function () {
+        Route::get('/', 'DevController@amazon_s3_view')->name('dev.amazon_s3');
+        Route::post('/upload', 'DevController@amazon_s3_upload')->name('dev.amazon_s3.post');
+    });
 });

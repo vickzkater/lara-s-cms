@@ -29,7 +29,7 @@ class DevController extends Controller
         $message = $request->input('message');
         $trxid = uniqid();
         $type = 0;
-        $debug = false;
+        $debug = true;
 
         $result = GoSms::send($mobile, $message, $trxid, $type, $debug);
 
@@ -149,5 +149,44 @@ class DevController extends Controller
         }
 
         return 'Successfully sent email to ' . $email_address;
+    }
+
+    /**
+     * AMAZON S3
+     */
+    public function amazon_s3_view()
+    {
+        return view('_example.amazon_s3');
+    }
+
+    public function amazon_s3_upload(Request $request)
+    {
+        // Docs: https://laravel.com/docs/8.x/filesystem#specifying-a-disk
+
+        // get uploaded file
+        $uploaded_file = $request->file('uploaded_file');
+
+        // set target disk
+        $storage_disk = 's3';
+
+        // target location path in disk
+        $target_path = 'brand';
+
+        // rename file
+        $file_name = 'sample-' . time() . '.' . $uploaded_file->getClientOriginalExtension();
+
+        // upload to Amazon S3
+        $uploaded_path = $uploaded_file->storeAs(
+            $target_path,
+            $file_name,
+            $storage_disk
+        );
+
+        // save the image to user data
+        $uploaded_file_on_s3_url = 'https://' . env('AWS_BUCKET') . '/' . $uploaded_path;
+
+        return redirect()
+            ->route('dev.amazon_s3')
+            ->with('result', $uploaded_file_on_s3_url);
     }
 }
