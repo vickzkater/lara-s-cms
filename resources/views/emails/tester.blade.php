@@ -185,7 +185,7 @@
           <!-- Logo -->
           <tr>
             <td class="email-masthead">
-              <a class="email-masthead_name"><img src="{{ asset('/images/logo.png') }}" alt="Lara-S-CMS"></a>
+              <a class="email-masthead_name"><img src="{{ asset('images/logo.png') }}" alt="Lara-S-CMS"></a>
             </td>
           </tr>
           <!-- Email Body -->
